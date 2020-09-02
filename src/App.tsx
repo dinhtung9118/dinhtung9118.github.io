@@ -1,17 +1,9 @@
 import React from 'react';
-import { Route, Switch } from "react-router-dom";
-import {RouteList} from "./routeList";
-import Login from 'pages/Login'
+import withAuthPersist from "./stores/authenticationsStore/withAuthPersist";
+import Routes from "./pages/Routes";
 
 function App() {
-  return (
-    <div>
-      <Switch>
-        <Route path={RouteList.auth.login} component={Login} />
-        <Route path={RouteList.dashboard} component={Login} />
-      </Switch>
-    </div>
-  );
+  return <Routes/>
 }
 
-export default App;
+export default withAuthPersist(App);

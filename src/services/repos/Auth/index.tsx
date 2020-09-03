@@ -5,7 +5,8 @@ import {Account} from "../../../models/account";
 
 class RepoAuth {
   async login(email: string, password: string){
-    const data = await http.post<IResAuthLogin>(ApiConfig.API.AUTH_SERVICE, {
+    console.log('api',ApiConfig.API.AUTH_SERVICE);
+    const {data: {data}} = await http.post<IResAuthLogin>(ApiConfig.API.AUTH_SERVICE, {
       email,
       password,
     });

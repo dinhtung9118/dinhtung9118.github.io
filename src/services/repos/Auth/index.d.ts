@@ -1,4 +1,4 @@
-import { Account } from "models";
+import { Account } from "models/account";
 
 export type IResponse<T = unknown> = {
   data?: T;

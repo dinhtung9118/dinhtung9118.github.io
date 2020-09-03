@@ -1,15 +1,14 @@
 import {
-  createStore,
+  createContainer,
   createHook,
-  StoreActionApi,
-  createContainer
+  createStore,
+  StoreActionApi
 } from "react-sweet-state";
 import {LoginFormValues} from 'components/FormLogin/index.d'
-import { auth as authRepo } from "services/repos/Auth/index";
+import {auth as authRepo} from "services/repos/Auth/index";
 import {setHttpAuth} from "../../services/clients";
-import {Account} from "../../models/account";
-import databases from "../../storages";
-// export const storeKey = `${Store.key.join('__')}@__global__`;
+import {Account, AccountRole, AccountStatus} from "../../models/account";
+
 
 type StoreApi = StoreActionApi<IAuthState>;
 type Actions = typeof actions;
@@ -19,13 +18,31 @@ export enum AuthStatus {
   LOGGED,
   PROTECTED,
 }
-const logged = false
+
+// @ts-ignore
+
 
 export interface IAuthState<A = Account> {
   account?: A;
   status: AuthStatus;
   token?: string;
-  error?: Error;
+}
+
+export const initialStoreState = {
+  account: new Account({
+    id:'',
+    email:'',
+    firstName:'',
+    lastName:'',
+    phoneNumber:'',
+    password:'',
+    role:AccountRole.DOCTOR,
+    status:AccountStatus.ACTIVE,
+    active: true,
+    avatar:''
+  }),
+  status: AuthStatus.INITIAL,
+  token: '',
 }
 export const AUTHENTICATION_STORE = 'StoreAuthentication';
 
@@ -41,19 +58,27 @@ export const actions = {
   })
 }
 
-export const Store: any = createStore<IAuthState, Actions>({
+export const Store = createStore<IAuthState, Actions>({
   name: AUTHENTICATION_STORE,
-  initialState: logged
-    ? { ...logged, status: AuthStatus.VERIFY }
-    : { status: AuthStatus.INITIAL },
+  initialState: initialStoreState,
   actions
    });
 
-export const AuthenticationContainer = createContainer<IAuthState, Actions>(Store);
-
-// @ts-ignore
 export const storeKey = `${Store.key.join('__')}@__global__`;
 
+type StoreContainerProps = {
+  initialState: IAuthState;
+};
+
+export const AuthenticationContainer = createContainer<IAuthState, Actions, StoreContainerProps>(Store,{
+  onInit: () => ({ setState }: StoreApi, { initialState }) => {
+    setState({ ...initialState });
+  },
+});
+
+
 const useAuthentication = createHook(Store);
+
+export default useAuthentication;
 
 

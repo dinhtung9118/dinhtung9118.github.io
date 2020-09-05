@@ -1,10 +1,10 @@
 import React from 'react';
-import withAuthPersist from "./stores/authenticationsStore/withAuthPersist";
+import withAuthPersist from "stores/AuthenticationsStore/withAuthPersist";
 import Routes from "./pages/Routes";
 import 'middlewares/logger'
 import 'middlewares/persistent'
 
-function App() {
+export const App:React.FC = () => {
   return <Routes/>
 }
 

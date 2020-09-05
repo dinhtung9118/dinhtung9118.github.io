@@ -24,7 +24,7 @@ const Store = createStore({
       })();
 
       const { completer } = getState();
-      await Promise.all([Promise.resolve(lazy), promise.catch(console.warn)]);
+      await Promise.all([Promise.delay(lazy), promise.catch(console.warn)]);
 
       (() => {
         const { count, total } = getState();

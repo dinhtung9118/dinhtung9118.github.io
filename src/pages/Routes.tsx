@@ -4,6 +4,7 @@ import {RouteList} from "../routeList";
 import Login from "./Login";
 import DashBoard from "./DashBoard";
 import LinearIndeterminate from "../components/LinearIndeterminate";
+import PrivateRoute from "./PrivateRoute";
 
 const Routes: React.FC = (): JSX.Element => {
   return (
@@ -11,7 +12,7 @@ const Routes: React.FC = (): JSX.Element => {
       <LinearIndeterminate/>
       <Switch>
         <Route path={RouteList.auth.login} component={Login} />
-        <Route path={RouteList.dashboard} component={DashBoard} />
+        <PrivateRoute path={RouteList.dashboard} component={DashBoard} />
       </Switch>
     </>
   )

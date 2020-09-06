@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     '& > * + *': {
-      marginTop: theme.spacing(2),
+      marginTop: theme.spacing(-2),
     },
   },
 }));
@@ -16,7 +16,7 @@ export default function LinearIndeterminate() {
 
   return (
     <div className={classes.root}>
-      <LinearProgress color="secondary" />
+      <LinearProgress color="secondary"  />
     </div>
   );
 }

@@ -39,7 +39,7 @@ const InsideFormLogin:React.FC<FormikProps<LoginFormValues> & LoginFormProps> = 
             color="primary"
             type="submit"
           >
-            "Login"
+            Login
           </Button>
         </FormControl>
       </form>

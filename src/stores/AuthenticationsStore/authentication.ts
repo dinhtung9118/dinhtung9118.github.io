@@ -6,8 +6,9 @@ import {
 } from "react-sweet-state";
 import {LoginFormValues} from 'components/FormLogin/index.d'
 import {auth as authRepo} from "services/repos/Auth/index";
-import {setHttpAuth} from "../../services/clients";
-import {Account, AccountRole, AccountStatus} from "../../models/account";
+import {setHttpAuth} from "services/Clients";
+import {IAccount, AccountRole, AccountStatus} from "models/account";
+import databases from "../../storages";
 
 
 type StoreApi = StoreActionApi<IAuthState>;
@@ -18,18 +19,18 @@ export enum AuthStatus {
   LOGGED,
   PROTECTED,
 }
-
 // @ts-ignore
 
 
-export interface IAuthState<A = Account> {
+export interface IAuthState<A = IAccount> {
   account?: A;
   status: AuthStatus;
   token?: string;
+  initiated: boolean;
 }
 
 export const initialStoreState = {
-  account: new Account({
+  account: {
     id:'',
     email:'',
     firstName:'',
@@ -40,9 +41,10 @@ export const initialStoreState = {
     status:AccountStatus.ACTIVE,
     active: true,
     avatar:''
-  }),
+  },
   status: AuthStatus.INITIAL,
   token: '',
+  initiated: false,
 }
 export const AUTHENTICATION_STORE = 'StoreAuthentication';
 
@@ -55,14 +57,25 @@ export const actions = {
     } catch (error) {
       console.warn("TODO:", "Show message login error");
     }
-  })
-}
+  }),
+  logout:() => async ({ setState }: StoreApi) => {
+    try {
+      await databases.removeItem(storeKey);
+      setState({...initialStoreState} );
+    } catch (error) {
+      await databases.removeItem(storeKey);
+      setState({...initialStoreState} );
+      console.warn("TODO:", "Show message login error");
+    }
+  }
+};
 
-export const Store = createStore<IAuthState, Actions>({
-  name: AUTHENTICATION_STORE,
+const Store = createStore<IAuthState, Actions>({
   initialState: initialStoreState,
-  actions
+  actions,
+  name: AUTHENTICATION_STORE,
    });
+const useAuthentication = createHook(Store);
 
 export const storeKey = `${Store.key.join('__')}@__global__`;
 
@@ -75,9 +88,6 @@ export const AuthenticationContainer = createContainer<IAuthState, Actions, Stor
     setState({ ...initialState });
   },
 });
-
-
-const useAuthentication = createHook(Store);
 
 export default useAuthentication;
 

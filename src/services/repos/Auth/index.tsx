@@ -1,7 +1,7 @@
 import {http} from "../../Clients";
 import {IResAuthLogin} from "./index.d";
 import ApiConfig from 'config';
-import {Account} from "../../../models/account";
+import {Account} from "models/account";
 
 class RepoAuth {
   async login(email: string, password: string){

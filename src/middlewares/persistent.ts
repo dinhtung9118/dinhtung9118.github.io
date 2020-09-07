@@ -1,8 +1,9 @@
 import {defaults, StoreState} from 'react-sweet-state'
 import databases from 'storages'
 import {AUTHENTICATION_STORE} from 'stores/AuthenticationsStore/authentication'
+import {UI_STORE} from "../stores/UIstore/UIStore";
 
-const WHITE_LIST = [AUTHENTICATION_STORE];
+const WHITE_LIST = [AUTHENTICATION_STORE, UI_STORE];
 
 const persistent=(storeState: StoreState<any>)=>(next: any)=>(fn: any)=> {
   const result = next(fn);

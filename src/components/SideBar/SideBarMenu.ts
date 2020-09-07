@@ -1,4 +1,5 @@
 import {MockDataSidebarProps} from "./SideBar";
+import {RouteList} from "../../routeList";
 
 export const mockDataSidebar: MockDataSidebarProps = {
   menus: [
@@ -8,6 +9,7 @@ export const mockDataSidebar: MockDataSidebarProps = {
       icon: 'fa-youtube-play',
       subCreateMenus: [],
       subMenus: [],
+      to: RouteList.profile,
     },
     {
       title: 'Lich Tu Van',
@@ -15,6 +17,7 @@ export const mockDataSidebar: MockDataSidebarProps = {
       icon: 'fa-youtube-play',
       subCreateMenus: [],
       subMenus: [],
+      to: RouteList.profile,
     },
     {
       title: 'Hoat Dong',
@@ -22,24 +25,28 @@ export const mockDataSidebar: MockDataSidebarProps = {
       icon: 'fa-youtube-play',
       subCreateMenus: [],
       subMenus: [],
+      to: RouteList.profile,
     },{
       title: 'Ca nhan',
       featureName: '',
       icon: 'fa-youtube-play',
       subCreateMenus: [],
       subMenus: [],
+      to: RouteList.profile,
     },{
       title: 'Ho So Cong Viec',
       featureName: '',
       icon: 'fa-youtube-play',
       subCreateMenus: [],
       subMenus: [],
+      to: RouteList.profile,
     },{
       title: 'Lich lam viec',
       featureName: '',
       icon: 'fa-youtube-play',
       subCreateMenus: [],
       subMenus: [],
+      to: RouteList.profile,
     },
   ]
 };

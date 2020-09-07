@@ -16,32 +16,33 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import {mockDataSidebar} from "./SideBarMenu";
 import {MenuProps} from "./SideBar";
+import useUI from "../../stores/UIstore/UIStore";
 
 
 const SideBar: React.FC = () => {
-  const [open, setOpen] = useState(false);
+  const [state,action] = useUI();
   const classes = useStyles();
   const handlerDrawer = () => {
-    setOpen(!open);
+    action.toggleSideBar(!state.sideBar.collapsed);
   };
 
   return (
     <Drawer
       variant="permanent"
       className={clsx(classes.drawer, {
-        [classes.drawerOpen]: open,
-        [classes.drawerClose]: !open,
+        [classes.drawerOpen]: state.sideBar.collapsed,
+        [classes.drawerClose]: !state.sideBar.collapsed,
       })}
       classes={{
         paper: clsx({
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
+          [classes.drawerOpen]: state.sideBar.collapsed,
+          [classes.drawerClose]: !state.sideBar.collapsed,
         }),
       }}
     >
       <div className={classes.toolbar}>
         <IconButton onClick={handlerDrawer}>
-          {open ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
+          {state.sideBar.collapsed ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
         </IconButton>
       </div>
       <Divider/>

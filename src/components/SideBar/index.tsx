@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React from 'react';
+import {Link} from 'react-router-dom'
 import clsx from 'clsx';
 import {
   Drawer,
@@ -20,7 +21,7 @@ import useUI from "../../stores/UIstore/UIStore";
 
 
 const SideBar: React.FC = () => {
-  const [state,action] = useUI();
+  const [state, action] = useUI();
   const classes = useStyles();
   const handlerDrawer = () => {
     action.toggleSideBar(!state.sideBar.collapsed);
@@ -48,13 +49,15 @@ const SideBar: React.FC = () => {
       <Divider/>
       <List>
         {mockDataSidebar.menus.map((menu: MenuProps, index: number) => (
-          <ListItem button key={menu.featureName}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon/> :
-                <MailIcon/>}
-            </ListItemIcon>
-            <ListItemText primary={menu.title}/>
-          </ListItem>
+          <Link className={`${classes.link} underlineNone`} to={menu.to}>
+            <ListItem button key={menu.featureName}>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon/> :
+                  <MailIcon/>}
+              </ListItemIcon>
+              <ListItemText primary={menu.title}/>
+            </ListItem>
+          </Link>
         ))}
       </List>
     </Drawer>

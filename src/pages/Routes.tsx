@@ -15,9 +15,9 @@ const Routes: React.FC = (): JSX.Element => {
       <LinearIndeterminate/>
       <Switch>
         <Route path={RouteList.auth.login} component={Login} />
-        <PrivateRoute exact path={RouteList.dashboard} component={Profile} />
-        <PrivateRoute exact path={RouteList.profile} component={Profile} />
-        <PrivateRoute exact path={RouteList.profile} component={ProfileEdit} />
+        <PrivateRoute exact={true} path={RouteList.dashboard} component={DashBoard} />
+        <PrivateRoute exact={true} path={RouteList.profile} component={Profile} />
+        <PrivateRoute exact={true} path={RouteList.profileEdit} component={ProfileEdit} />
       </Switch>
     </>
   )

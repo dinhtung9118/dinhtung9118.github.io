@@ -20,7 +20,6 @@ const renderRoute = (Component: React.FC) => (props: RouteProps) => {
 };
 const PrivateRoute: React.FC<IProps & RouteProps> =({component, ...rest}) =>{
   const [state] = useAuthentication();
-  console.log('component', component);
   if(state?.status === AuthStatus.LOGGED){
     return (
       <Layout>

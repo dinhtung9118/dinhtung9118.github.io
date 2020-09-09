@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Container,
   Box,
@@ -17,6 +17,8 @@ import {doctor as repoDoctor} from "services/repos";
 import useAuthentication
   from "../../stores/AuthenticationsStore/authentication";
 import {Doctor} from "../../models";
+import ChangePasswordModal from "./ChangePasswordModal";
+import {ChangePasswordFormValues} from 'components/FormChangePassword/index.d';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,8 +52,9 @@ const Profile: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
   const [state] = useAuthentication();
+  const [toggole, setToggle] = useState(false);
   const [doctorInfor, setDoctorInfor] = useState<Doctor>(new Doctor());
-  useMemo(()=>{
+  useEffect(()=>{
     (async function getPersistData() {
       if(state.account.id){
         const doctor = await repoDoctor.single(state.account.id);
@@ -61,6 +64,14 @@ const Profile: React.FC = () => {
 
 
   },[])
+
+  const handleSubmit=(value: ChangePasswordFormValues)=>{
+    repoDoctor.updatePassword({
+      currentPassword: value.currentPassword,
+      newPassword: value.newPassword});
+    setToggle(false);
+  }
+
   return (
     <>
       <Container>
@@ -83,7 +94,7 @@ const Profile: React.FC = () => {
                   </div>
                   <Grid container spacing={2} xs={12} sm={12}>
                     <Grid item xs={4} sm={4}>
-                      <Button color="primary">
+                      <Button color="primary" onClick={()=>setToggle(true)}>
                         Đổi mật khẩu
                       </Button>
                     </Grid>
@@ -93,10 +104,7 @@ const Profile: React.FC = () => {
                       </Button>
                     </Grid>
                   </Grid>
-
-
                 </Grid>
-
               </Grid>
             </Box>
 
@@ -158,6 +166,11 @@ const Profile: React.FC = () => {
                 </div>
               </Grid>
             </Grid>
+            <ChangePasswordModal
+              open={toggole}
+              handleClose={()=>setToggle(false)}
+              handleSubmit={handleSubmit}
+            />
           </Paper>
         </Box>
       </Container>

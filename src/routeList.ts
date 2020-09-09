@@ -8,5 +8,6 @@ export const RouteList = {
 
   dashboard: "/",
   languages: "/languages",
-  doctors: "/doctors",
+  profile: "/profiles",
+  profileEdit: "/profiles/edit",
 };

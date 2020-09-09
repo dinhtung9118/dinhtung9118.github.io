@@ -21,8 +21,7 @@ export enum AuthStatus {
 }
 // @ts-ignore
 
-
-export interface IAuthState<A = IAccount> {
+export interface IAuthState<A = any> {
   account?: A;
   status: AuthStatus;
   token?: string;
@@ -85,6 +84,7 @@ type StoreContainerProps = {
 
 export const AuthenticationContainer = createContainer<IAuthState, Actions, StoreContainerProps>(Store,{
   onInit: () => ({ setState }: StoreApi, { initialState }) => {
+    setHttpAuth(initialState.token);
     setState({ ...initialState });
   },
 });

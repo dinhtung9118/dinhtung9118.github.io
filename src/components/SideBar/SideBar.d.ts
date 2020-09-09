@@ -11,6 +11,7 @@ export type MenuProps = {
   icon: string;
   subCreateMenus?: SubMenuLevel3[];
   subMenus: SubMenuLevel2[];
+  to: string;
 };
 
 export type MockDataSidebarProps = {

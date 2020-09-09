@@ -71,12 +71,14 @@ async function fetchConfig(code: ICSupports) {
     }),
   );
 
-  code = (mapCode[code] as ICSupports) ?? code;
+  code = (mapCode[code] as ICSupports) || code;
+ console.log('config', result);
 
   return {
-    config: Object.map(result, (value) => {
-      return Object.map(value, (data) => data[code]);
-    }),
+    config:{},
+    // config: Object.map(result, (value) => {
+    //   return Object.map(value, (data) => data[code]);
+    // }),
     errors,
   };
 }

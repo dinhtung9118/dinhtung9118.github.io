@@ -10,7 +10,7 @@ const initialValue = {
 
 const InsideFormLogin:React.FC<FormikProps<LoginFormValues> & LoginFormProps> = ({values,errors,touched, handleChange,handleSubmit}) => {
   return (
-    <Box component="form" >
+    <Box >
       <form onSubmit={handleSubmit}>
         <FormControl fullWidth margin="dense">
           <TextField

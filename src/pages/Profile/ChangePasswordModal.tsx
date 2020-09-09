@@ -13,7 +13,6 @@ interface ChangePasswordModalProps {
   handleSubmit: (value:ChangePasswordFormValues)=> void
 }
 export default function ChangePasswordModal({open, handleClose, handleSubmit}:ChangePasswordModalProps) {
-
   return (
     <div>
       <Dialog

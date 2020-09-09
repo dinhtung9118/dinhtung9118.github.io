@@ -6,10 +6,12 @@ import {RouteList} from "routeList";
 import {LoginFormValues} from "components/FormLogin/index.d";
 import useAuthentication, {AuthStatus} from 'stores/AuthenticationsStore/authentication';
 import {useStyles} from "./index.type";
+import {useI18n} from "stores/Locale/LocaleStore";
 
 export default () => {
   const classes = useStyles();
   const [state, actions] = useAuthentication();
+  const i18n = useI18n();
   const history = useHistory();
   const onSubmit = async (value: LoginFormValues) => {
     await actions.login(value);
@@ -25,7 +27,7 @@ export default () => {
   return (
     <div className={classes.root}>
       <Grid container justify="center">
-        <Grid xs={8}></Grid>
+        <Grid item xs={8}/>
         <Grid xs={4} className={classes.grid}>
           <Paper className={classes.paper}>
             <Box className={classes.logo} display="flex" height="100%"
@@ -36,6 +38,7 @@ export default () => {
             </Box>
             <Box>
               <Typography variant="h5">
+                {i18n}
                 Login
               </Typography>
               <Typography variant="h6">

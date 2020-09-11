@@ -64,6 +64,9 @@ export const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
   },
+  link:{
+    underline: 'none',
+  }
 
 }));
 

@@ -11,6 +11,7 @@ import { Clinic, Specialty, Doctor } from "models";
 import DoctorForm from "components/FormDoctor";
 import useAuthentication
   from "../../stores/AuthenticationsStore/authentication";
+import ChangePasswordModal from "./ChangePasswordModal";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -37,6 +38,7 @@ export default () => {
   const classes = useStyles();
   const [state] = useAuthentication();
   const [datas, setDatas ]= useState<IQueryDatas>();
+
 
   useMemo(()=>{
     (async function getData() {
@@ -108,6 +110,7 @@ export default () => {
             {...datas}
           />
         )}
+
     </Container>
   );
 };

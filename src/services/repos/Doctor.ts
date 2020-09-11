@@ -18,7 +18,13 @@ class RepoDoctor extends RepoAccount<Doctor> {
     return this.query(params);
   }
 
-  single = async (id: string) => new Doctor(await super.single(id));
+  single = async (id: string) => {
+    const { data } = await http.get<IResponse<Doctor>>(`doctors/${id}/detail`);
+      return new Doctor(data.data);
+  };
+  updatePassword = async (data: { newPassword: string; currentPassword: string }) => {
+    await http.patch(`doctors/me/update-password`,data);
+  };
 
   protected pickPayload(payload: IDoctor) {
     const model = new Doctor(payload);

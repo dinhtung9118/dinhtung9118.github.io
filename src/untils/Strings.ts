@@ -7,6 +7,7 @@ declare global {
   }
 }
 
+// eslint-disable-next-line no-extend-native
 Object.defineProperties(String.prototype ,{
   decoding:{
     value(){

@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import Header from "components/Header";
 import SideBar from "components/SideBar";
 import {makeStyles} from "@material-ui/core/styles";
-import useUI, { UISubscriber } from 'stores/UIstore/UIStore';
+import useUI from 'stores/UIstore/UIStore';
 import {drawerWidth} from "../../components/SideBar/index.style";
 
 const useStyles = makeStyles((theme) => ({

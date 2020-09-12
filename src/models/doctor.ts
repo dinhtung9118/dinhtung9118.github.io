@@ -10,9 +10,9 @@ export type IDoctor = IAccount &
     | "partner"
     | "specialties"
     | "education"
-    | "academicRank"
+    | "academicRankCode"
     | "workplace"
-    | "note"
+    | "description"
     >;
 
 export class Doctor extends Account {
@@ -30,6 +30,6 @@ export class Doctor extends Account {
   workplace = Array<string>();
 
   education = "";
-  academicRank = "";
-  note = "";
+  academicRankCode = "";
+  description = "";
 }

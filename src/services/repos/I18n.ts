@@ -1,5 +1,5 @@
-import { I18n, Locale } from "untils";
-import { config as clientConfig } from "../Clients/Http";
+import {I18n, Locale} from "untils";
+import {config as clientConfig} from "../Clients/Http";
 import merge from "lodash.merge";
 
 const en = new I18n();
@@ -72,13 +72,22 @@ async function fetchConfig(code: ICSupports) {
   );
 
   code = (mapCode[code] as ICSupports) || code;
- console.log('config', result);
+
+  const mapDataI18n = ()=>{
+    const out = {} as any;
+    Object.entries(result).forEach(([key, value]) => {
+      const out1 = {} as any;
+      Object.entries(value).forEach(([key1, value1]) => {
+        return out1[key1] = value1[code];
+      });
+      out[key] = out1;
+      return out1
+    });
+    return out
+  }
 
   return {
-    config:{},
-    // config: Object.map(result, (value) => {
-    //   return Object.map(value, (data) => data[code]);
-    // }),
+    config: mapDataI18n(),
     errors,
   };
 }
@@ -102,7 +111,7 @@ class RepoI18n {
       Object.assign(
         locales.find((item) => {
           return `${item.language}-${item.country}` === code;
-        }) ?? {},
+        }) || {},
         locale,
       );
     return (languages[code] = merge({}, languages[code], data));

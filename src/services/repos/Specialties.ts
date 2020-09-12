@@ -9,7 +9,7 @@ class RepoSpecialties {
     } = await http.get<IResList<SpecialtyType>>("/specialties");
 
     return {
-      data: data?.map((item) => new SpecialtyType(item)) ?? [],
+      data: data?.map((item) => new SpecialtyType(item)) || [],
       total,
     };
   }
@@ -20,7 +20,7 @@ class RepoSpecialties {
     } = await http.get<IResList<SpecialtyType>>("/specialty-types");
 
     return {
-      data: data?.map((item) => new SpecialtyType(item)) ?? [],
+      data: data?.map((item) => new SpecialtyType(item)) || [],
       total,
     };
   }
@@ -49,7 +49,7 @@ class RepoSpecialties {
     } = await http.get<IResList<Specialty>>("/specialties");
 
     return {
-      data: data?.map((item) => new Specialty(item)) ?? [],
+      data: data?.map((item) => new Specialty(item)) || [],
       total,
     };
   }
@@ -96,7 +96,7 @@ class RepoSpecialties {
       data: { data, total },
     } = await http.get<IResList<Specialty>>(`/specialties?partnerId=${id}`);
     return {
-      data: data?.map((item) => new Specialty(item)) ?? [],
+      data: data?.map((item) => new Specialty(item)) || [],
       total,
     };
   }

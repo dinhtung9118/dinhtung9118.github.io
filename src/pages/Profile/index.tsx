@@ -8,7 +8,7 @@ import {
   Button,
   Paper
 } from "@material-ui/core";
-import {deepOrange, green, grey} from '@material-ui/core/colors';
+import {deepOrange, green} from '@material-ui/core/colors';
 
 import {makeStyles} from "@material-ui/core/styles";
 import {useHistory} from "react-router";
@@ -19,6 +19,7 @@ import useAuthentication
 import {Doctor} from "../../models";
 import ChangePasswordModal from "./ChangePasswordModal";
 import {ChangePasswordFormValues} from 'components/FormChangePassword/index.d';
+import {useI18n} from "../../stores/Locale/LocaleStore";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,26 +52,29 @@ const useStyles = makeStyles((theme) => ({
 const Profile: React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
+  const i18n = useI18n();
   const [state] = useAuthentication();
   const [toggole, setToggle] = useState(false);
-  const [doctorInfor, setDoctorInfor] = useState<Doctor>(new Doctor());
+  const [doctorInfor, setDoctorInfor] = useState<Doctor>(new Doctor(state.account));
+  const {config} = i18n;
+
   useEffect(()=>{
     (async function getPersistData() {
-      if(state.account.id){
+      if(state.account.id ){
         const doctor = await repoDoctor.single(state.account.id);
+        console.log(doctor);
         setDoctorInfor(doctor);
       }
     })()
-
-
-  },[])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[state.account.id]);
 
   const handleSubmit=(value: ChangePasswordFormValues)=>{
     repoDoctor.updatePassword({
       currentPassword: value.currentPassword,
       newPassword: value.newPassword});
     setToggle(false);
-  }
+  };
 
   return (
     <>
@@ -78,37 +82,39 @@ const Profile: React.FC = () => {
         <Box>
           <Paper className={classes.infoContent}>
             <Box pb={5}>
-              <Grid container spacing={2} xs={8} sm={8}>
-                <Grid item xs={2} sm={2}>
-                  <Avatar variant="square" className={classes.square}>
+              <Grid container spacing={2}>
+                <Grid item xs={1} sm={1}>
+                  <Avatar variant="square" className={classes.square} src={doctorInfor.avatar}>
                     N
                   </Avatar>
                 </Grid>
-                <Grid item xs={8} sm={8}>
-                  <Typography variant="body1">{doctorInfor.fullName}</Typography>
-                  <div>
-                    <Typography variant="caption" component="span"
-                                className={classes.infoEmail}>{doctorInfor.email}</Typography>
-                    <Typography variant="caption" component="span">Đã xác
-                      thực</Typography>
-                  </div>
-                  <Grid container spacing={2} xs={12} sm={12}>
-                    <Grid item xs={4} sm={4}>
-                      <Button color="primary" onClick={()=>setToggle(true)}>
-                        Đổi mật khẩu
-                      </Button>
+                <Grid item xs={10} sm={10}>
+                  <Grid container>
+                    <Typography component="p" variant="body1">{doctorInfor.fullName}</Typography>
+                    <Grid container>
+                      <Typography variant="caption" component="span"
+                                  className={classes.infoEmail}>{doctorInfor.email}</Typography>
+                      <Typography variant="caption" component="span">Đã xác
+                        thực</Typography>
                     </Grid>
-                    <Grid item>
-                      <Button color="primary" onClick={()=>history.push({hash: RouteList.profileEdit,})}>
-                        Chỉnh sửa thông tin
-                      </Button>
+                    <Grid container>
+                      <Grid item >
+                        <Button color="primary" onClick={()=>setToggle(true)}>
+                          Đổi mật khẩu
+                        </Button>
+                      </Grid>
+                      <Grid item>
+                        <Button color="primary" onClick={()=>history.push({hash: RouteList.profileEdit,})}>
+                          Chỉnh sửa thông tin
+                        </Button>
+                      </Grid>
                     </Grid>
                   </Grid>
                 </Grid>
               </Grid>
             </Box>
 
-            <Grid container spacing={2} xs={12} sm={12}>
+            <Grid container spacing={2}>
               <Grid item xs={6} sm={6}>
                 <div>
                   <Typography color="textSecondary" component="span">Ngay
@@ -127,13 +133,13 @@ const Profile: React.FC = () => {
                 <div>
                   <Typography color="textSecondary" component="span">Gioi
                     tính: </Typography>
-                  <Typography component="span">Nu</Typography>
+                  <Typography component="span">{config.gender[doctorInfor.genderCode || "m"]}</Typography>
                   <Box borderColor="grey.500" borderBottom={1}/>
                 </div>
                 <div>
                   <Typography color="textSecondary" component="span">Dan
                     toc: </Typography>
-                  <Typography component="span">Kinh</Typography>
+                  <Typography component="span">{config.nations[doctorInfor.nationCode || "ki"]}</Typography>
                   <Box borderColor="grey.500" borderBottom={1}/>
                 </div>
               </Grid>

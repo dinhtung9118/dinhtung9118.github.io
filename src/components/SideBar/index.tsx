@@ -49,8 +49,8 @@ const SideBar: React.FC = () => {
       <Divider/>
       <List>
         {mockDataSidebar.menus.map((menu: MenuProps, index: number) => (
-          <Link key={menu.featureName} className={`${classes.link} underlineNone`} to={menu.to}>
-            <ListItem button key={menu.featureName}>
+          <Link key={`${menu.title}_${index}`} className={`${classes.link} underlineNone`} to={menu.to}>
+            <ListItem button>
               <ListItemIcon>
                 {index % 2 === 0 ? <InboxIcon/> :
                   <MailIcon/>}

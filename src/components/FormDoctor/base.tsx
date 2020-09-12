@@ -3,8 +3,6 @@ import { FormikProps } from "formik";
 import {
   FormControl,
   TextField,
-  FormControlLabel,
-  Switch,
   Grid,
 } from "@material-ui/core";
 import { Account, IAccount } from "models";
@@ -19,8 +17,6 @@ const listFields: (keyof IAccount)[] = [
   "firstName",
   "lastName",
   "phoneNumber",
-  "email",
-  "password",
 ];
 
 export default function AccountForm<T extends IAccount>(
@@ -33,7 +29,6 @@ export default function AccountForm<T extends IAccount>(
     touched,
     handleSubmit,
     handleChange,
-    validateForm,
   } = props;
 
   return (
@@ -62,26 +57,6 @@ export default function AccountForm<T extends IAccount>(
             </FormControl>
           );
         })}
-        <FormControl component={Grid} item xs={6}>
-          <FormControlLabel
-            control={
-              <Switch
-                name="status"
-                color="primary"
-                checked={Account.statusToBool(values.status)}
-                onChange={(e) => {
-                  values.status = Account.statusFromBool(e.target.checked);
-                  validateForm(values);
-                }}
-              />
-            }
-            label={
-              Account.statusToBool(values.status)
-                ? 'active'
-                : 'inactive'
-            }
-          />
-        </FormControl>
       </Grid>
       {children}
     </form>
@@ -94,8 +69,6 @@ export function createAccountValidation<T extends IAccount>(
   return createValidation<T>({
     firstName: { required: validations.requireString },
     lastName: { required: validations.requireString },
-    email: { required: validations.requireString, pattern: validations.email },
-    password: { required: validations.requireString },
     phoneNumber: { required: validations.requireString },
     ...list,
   });

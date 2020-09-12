@@ -11,7 +11,7 @@ class RepoClinic {
     });
 
     return {
-      data: data?.map((item) => new Clinic(item)) ?? [],
+      data: data?.map((item) => new Clinic(item)) || [],
       total,
     };
   }
@@ -29,7 +29,7 @@ class RepoClinic {
     const { data } = await http.get<IResList<Clinic>>("/partners", {
       params: { status: "ACTIVE" },
     });
-    return data.data?.map((item) => new Clinic(item)) ?? [];
+    return data.data?.map((item) => new Clinic(item)) || [];
   };
 
   async querySpecialties(params: IReqPaging) {
@@ -38,7 +38,7 @@ class RepoClinic {
     } = await http.get<IResList<SpecialtyType>>("/partners/specialtyType");
 
     return {
-      data: data?.map((item) => new SpecialtyType(item)) ?? [],
+      data: data?.map((item) => new SpecialtyType(item)) || [],
       total,
     };
     // return [];

@@ -13,19 +13,12 @@ export const config = axios.create({
 
 const valueNotifier = new ValueNotifier<Error>({} as Error);
 
-const mapError = (error: any) => {
-  if (error.response) {
-    const { data, status, statusText } = error.response;
-    const name = data.errorCode || status;
-    if (name) return createError(name, data.message ?? statusText);
-  }
-  return error;
-};
+const debounce = Promise.debounce(200);
 
 class ErrorNotifier extends ChangeNotifier {
   constructor(protected valueChanged: ValueNotifier<Error>) {
     super();
-    valueChanged.listen(() => Promise.debounce(200)(() => this.notify()));
+    valueChanged.listen(() => debounce(() => this.notify()));
   }
 
   listen(listener: (error: Error) => void) {
@@ -45,8 +38,6 @@ const createError = (name: string, message?: string) => {
   error.name = name;
   return error;
 };
-
-
 
 const offlineHandle = () => {
   valueNotifier.value = createError("offline", "You are in offline mode");

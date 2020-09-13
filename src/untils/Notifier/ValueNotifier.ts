@@ -1,7 +1,5 @@
-// @ts-ignore
 import { ChangeNotifier, ValueListenable } from "./ChangeNotifier";
 
-// @ts-ignore
 export class ValueNotifier<T = any> extends ChangeNotifier
   implements ValueListenable<T> {
   constructor(protected $value: T) {

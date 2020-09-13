@@ -1,6 +1,7 @@
 import axios, {AxiosError} from "axios";
 import {IReqPaging} from "../repos/interface";
 import {ValueNotifier} from "untils/Notifier/ValueNotifier";
+import {ChangeNotifier} from "untils/Notifier/ChangeNotifier";
 
 export const http = axios.create({
   baseURL: process.env.REACT_APP_API_SERVER,
@@ -10,19 +11,47 @@ export const config = axios.create({
   baseURL: process.env.REACT_APP_CONFIG_SERVER,
 });
 
+const valueNotifier = new ValueNotifier<Error>({} as Error);
+
+const mapError = (error: any) => {
+  if (error.response) {
+    const { data, status, statusText } = error.response;
+    const name = data.errorCode || status;
+    if (name) return createError(name, data.message ?? statusText);
+  }
+  return error;
+};
+
+class ErrorNotifier extends ChangeNotifier {
+  constructor(protected valueChanged: ValueNotifier<Error>) {
+    super();
+    valueChanged.listen(() => Promise.debounce(200)(() => this.notify()));
+  }
+
+  listen(listener: (error: Error) => void) {
+    return super.listen(() => listener(this.valueChanged.value));
+  }
+
+  close() {
+    this.valueChanged.close();
+    super.close();
+  }
+}
+
+export const errorNotifier = new ErrorNotifier(valueNotifier);
+
 const createError = (name: string, message?: string) => {
   const error = new Error(message);
   error.name = name;
   return error;
 };
 
-const valueNotifier = new ValueNotifier<Error>({} as Error);
+
 
 const offlineHandle = () => {
   valueNotifier.value = createError("offline", "You are in offline mode");
   return Promise.reject("Offline");
 };
-
 
 http.interceptors.response.use(
   (res) => {

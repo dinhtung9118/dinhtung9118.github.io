@@ -1,5 +1,5 @@
 import { ChangeNotifier, ValueListenable } from "untils/Notifier/ChangeNotifier";
-import { } from "untils/Notifier/ValueNotifier";
+import { useValueChanged } from "untils/Hooks";
 
 class ConnectNotifier extends ChangeNotifier
   implements ValueListenable<boolean> {
@@ -32,4 +32,4 @@ class ConnectNotifier extends ChangeNotifier
 
 export const connectNotifier = new ConnectNotifier();
 
-// export const useConnection = () => useValueChanged(connectNotifier);
+export const useConnection = () => useValueChanged(connectNotifier);

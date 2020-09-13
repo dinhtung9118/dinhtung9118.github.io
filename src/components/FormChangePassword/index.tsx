@@ -4,7 +4,8 @@ import {
   FormControl,
   TextField,
   Box,
-  DialogContent, DialogContentText, DialogActions
+  DialogContent,
+  DialogActions
 } from "@material-ui/core";
 import {ChangePasswordFormValues, ChangePasswordFormProps} from './index.d'
 import {FormikBag, FormikProps, withFormik} from "formik";

@@ -1,4 +1,4 @@
-import React, {lazy, Suspense, useEffect} from 'react'
+import React, { Suspense, useEffect} from 'react'
 import {Redirect, Route, RouteProps} from "react-router";
 import useAuthentication, {AuthStatus} from "stores/AuthenticationsStore/authentication";
 import {RouteList} from "../routeList";

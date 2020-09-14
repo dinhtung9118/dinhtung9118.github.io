@@ -2,6 +2,7 @@ import axios, {AxiosError} from "axios";
 import {IReqPaging} from "../repos/interface";
 import {ValueNotifier} from "untils/Notifier/ValueNotifier";
 import {ChangeNotifier} from "untils/Notifier/ChangeNotifier";
+import {Completer} from "../../untils";
 
 export const http = axios.create({
   baseURL: process.env.REACT_APP_API_SERVER,
@@ -13,12 +14,29 @@ export const config = axios.create({
 
 const valueNotifier = new ValueNotifier<Error>({} as Error);
 
-const debounce = Promise.debounce(200);
+function debounce<T = unknown>(
+  time: number,
+  gCall?: () => T,
+) {
+  let completer: Completer<T>;
+  let timeout: NodeJS.Timeout;
+
+  return (call?: () => T) => {
+    if (completer?.completed !== false) {
+      completer = new Completer<T>();
+    }
+
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      completer.resolve((call || gCall)?.());
+    }, time);
+  };
+};
 
 class ErrorNotifier extends ChangeNotifier {
   constructor(protected valueChanged: ValueNotifier<Error>) {
     super();
-    valueChanged.listen(() => debounce(() => this.notify()));
+    valueChanged.listen(() => debounce(200,() => this.notify()));
   }
 
   listen(listener: (error: Error) => void) {

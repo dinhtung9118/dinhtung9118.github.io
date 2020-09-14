@@ -1,4 +1,4 @@
-import { ITheme } from "./interface";
+import { ITheme } from "./Interface";
 import theme from "./default/main";
 
 export default {

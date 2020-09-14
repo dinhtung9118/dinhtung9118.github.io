@@ -11,7 +11,7 @@ import {
 } from "./LocaleStore";
 import databases from "storages";
 
-const withI18nPersist = <P extends object>(Component: ComponentType<P>): FC<P & any> => ({ ...props }: any) => {
+const withI18nPersist = <P extends object>(Component: ComponentType<P>): FC<P & any> => ({...props}: any) => {
   const [storePersisted, setStorePersisted] = useState(initialState);
 
   useLayoutEffect(() => {
@@ -35,10 +35,10 @@ const withI18nPersist = <P extends object>(Component: ComponentType<P>): FC<P & 
 
   if (storePersisted && !storePersisted.initiated) return null;
   return (
-    <I18NContainer isGlobal={true} initialState={storePersisted} >
-    <Component {...(props as P)} />
-  </I18NContainer>
-);
+    <I18NContainer isGlobal={true} initialState={storePersisted}>
+      <Component {...(props as P)} />
+    </I18NContainer>
+  );
 };
 
 export default withI18nPersist;

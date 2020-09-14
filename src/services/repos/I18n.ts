@@ -42,17 +42,26 @@ const locales = [
   },
 ];
 
-type ICSupports = "en" | "vi";
-type ICData = Record<string, Record<ICSupports, string>>;
-const mapCode: Record<ICSupports | string, string> = { vi: "vn" };
+type TCSupports = "en" | "vi";
+interface ICSupports {
+  code: string;
+  en: string;
+  vn: string
+}
+type ICData = Record<string, ICSupports[]>;
+type TCCode = "en" | "vn"
+const mapCode: Record<TCSupports | string, TCCode> = { vi: "vn" };
 
-async function fetchConfig(code: ICSupports) {
+async function fetchConfig(code: TCCode) {
   const map = {
     gender: "gender.json",
     nations: "nation.json",
     nationality: "nationality.json",
     academicLevel: "academic_level.json",
     hospital: "clinic_hospital.json",
+    diseases: "diseases.json",
+    jobTitle: "jobTitle.json",
+    area: "area.json",
   };
 
   const result: Record<string, ICData> = {};
@@ -71,14 +80,16 @@ async function fetchConfig(code: ICSupports) {
     }),
   );
 
-  code = (mapCode[code] as ICSupports) || code;
-
+  code = (mapCode[code]) || code;
+  console.log('code ===>', code);
   const mapDataI18n = ()=>{
     const out = {} as any;
     Object.entries(result).forEach(([key, value]) => {
       const out1 = {} as any;
-      Object.entries(value).forEach(([key1, value1]) => {
-        return out1[key1] = value1[code];
+      console.log('key ===>', key);
+      // @ts-ignore
+      value?.map<ICSupports>((item: ICSupports) => {
+        return out1[item.code] = item[code];
       });
       out[key] = out1;
       return out1
@@ -98,7 +109,7 @@ class RepoI18n {
   }
 
   async query(code: string) {
-    const { config } = await fetchConfig(code.split("-")[0] as ICSupports);
+    const { config } = await fetchConfig(code.split("-")[0] as TCCode);
     return merge({}, languages[code], { config });
   }
 

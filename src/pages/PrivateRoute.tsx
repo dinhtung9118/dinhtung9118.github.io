@@ -24,10 +24,6 @@ const renderRoute = (Component: React.FC) => (props: RouteProps) => {
 };
 const PrivateRoute: React.FC<IProps & RouteProps> =({component,isHash, ...rest}) =>{
   const [state] = useAuthentication();
-  const [,action] = useLocale();
-  useEffect(()=>{
-    action.load();
-  },[])
   if(state?.status === AuthStatus.LOGGED){
 
     return (<>

@@ -1,4 +1,4 @@
-import { IValidErrorMsgs } from "./Validations.d";
+import {IValidErrorMsgs} from "./Validations.d";
 
 type IMapString = Record<string, string>;
 
@@ -34,10 +34,7 @@ export class I18n {
     nationality: asType<IMapString>({}),
     academicLevel: asType<IMapString>({}),
     hospital: asType<IMapString>({}),
-    gender: asType<IMapString>({
-      fem: "Female",
-      m: "Male",
-    }),
+    gender: asType<IMapString>({}),
   };
 
   system = {

@@ -27,7 +27,7 @@ export default () => {
   return (
     <div className={classes.root}>
       <Grid container justify="center">
-        <Grid xs={8}></Grid>
+        <Grid item xs={8}/>
         <Grid xs={4} className={classes.grid}>
           <Paper className={classes.paper}>
             <Box className={classes.logo} display="flex" height="100%"

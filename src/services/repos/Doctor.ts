@@ -19,8 +19,8 @@ class RepoDoctor extends RepoAccount<Doctor> {
   }
 
   single = async (id: string) => {
-    const { data } = await http.get<IResponse<Doctor>>(`doctors/${id}/detail`);
-      return new Doctor(data.data);
+    const { data } = await http.get<IResponse<Doctor>>(`doctors/me`);
+    return new Doctor(data.data);
   };
   updatePassword = async (data: { newPassword: string; currentPassword: string }) => {
     await http.patch(`doctors/me/update-password`,data);
@@ -33,26 +33,29 @@ class RepoDoctor extends RepoAccount<Doctor> {
         "firstName",
         "lastName",
         "phoneNumber",
-        "email",
-        "password",
         "status",
         "genderCode",
         "avatar",
+        "nationCode",
+        "nationalityCode",
+        "academicRankCode",
+        "specialties",
+        "description"
       ]),
       partner_id: model.partner?.id,
       specialty_ids: model.specialties?.map((item) => item.id) ?? [],
     };
   }
 
-  async uploadAvatar(formData: FormData, fileName: string) {
+  async uploadAvatar(file: File, fileName: string) {
     const {
       data: { data },
     } = await http.post<IResponse<any>>(`/${this.sub}/gen-upload-avatar-url`, {
       contentType: "image/jpeg",
       fullFileName: fileName,
     });
-    await config.put(data.signedUrl, formData, {
-      headers: { "Content-Type": "image/png" },
+    await config.put(data.signedUrl, file, {
+      headers: { 'Content-Type': file.type},
     });
     return data;
   }

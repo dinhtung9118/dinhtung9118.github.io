@@ -29,7 +29,7 @@ export abstract class RepoAccount<T extends Account> {
 
   async update(id: string, payload: Partial<T> | any) {
     const { data: result } = await http.patch<IResponse<T>>(
-      `${this.sub}/${id}`,
+      `${this.sub}/me`,
       this.pickPayload(payload),
     );
     return result.data;

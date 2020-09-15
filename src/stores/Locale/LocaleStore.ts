@@ -9,14 +9,13 @@ import {I18n, Locale} from "untils";
 
 import {i18n as repoI18n} from "services/repos";
 
-
 export const I18N_STORE = 'I18N';
 
 export interface II8nState<A = any> {
   initial: boolean,
   supports: Array<Locale>,
-  locale: any,
-  i18n: any,
+  locale: Locale,
+  i18n: I18n,
   initiated: boolean,
 }
 
@@ -34,9 +33,8 @@ export const actions = {
 
     locale = supports.find((item) => item.code === code) || supports?.first;
     setState({locale, supports, initial: true});
-//
     const i18n = await repoI18n.query(locale.code);
-    console.log('i18n=====>', i18n);
+
     setState({i18n});
   },
 
@@ -53,7 +51,7 @@ export const initialState = {
   initial: false,
   supports: Array<Locale>(),
   locale: Locale.system(),
-  i18n: {},
+  i18n: new I18n(),
   initiated: false
 };
 

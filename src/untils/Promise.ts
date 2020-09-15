@@ -7,7 +7,7 @@ declare global {
     debounce<T = unknown>(
       time: number,
       call?: () => T,
-    ): (call?: () => T) => Promise<T>;
+    ): (call?: () => T) => void;
   }
 }
 
@@ -16,3 +16,24 @@ Promise.delay = function delay<T>(mSeconds?: number, value?: T) {
     setTimeout(() => next(value), mSeconds);
   });
 };
+
+Promise.debounce = function debounce<T = unknown>(
+  time: number,
+  gCall?: () => T,
+) {
+  let completer: Completer<T>;
+  let timeout: NodeJS.Timeout;
+
+  return (call?: () => T) => {
+    if (completer?.completed !== false) {
+      completer = new Completer<T>();
+    }
+
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      completer.resolve((call || gCall)?.());
+    }, time);
+  };
+};
+
+export {};

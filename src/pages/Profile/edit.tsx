@@ -1,17 +1,15 @@
-import React, {useMemo, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Avatar, Button, Container, Typography } from "@material-ui/core";
 
 import {
-  clinic as repoClinic,
   doctor as repoDoctor,
   specialties as repoSpecialties,
 } from "services/repos";
-import { Clinic, Specialty, Doctor } from "models";
+import { Specialty, Doctor } from "models";
 import DoctorForm from "components/FormDoctor";
 import useAuthentication
   from "../../stores/AuthenticationsStore/authentication";
-import ChangePasswordModal from "./ChangePasswordModal";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -29,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 type IQueryDatas = {
-  clinics: Clinic[];
   specialties: Specialty[];
   data?: Doctor;
 };
@@ -40,20 +37,20 @@ export default () => {
   const [datas, setDatas ]= useState<IQueryDatas>();
 
 
-  useMemo(()=>{
+  useEffect(()=>{
     (async function getData() {
       if (state?.account && state.account.id) {
       const doctor = await repoDoctor.single(state?.account?.id);
-      const clinic = await repoClinic.queryAll();
       const {data: specialties} = await repoSpecialties.querySpecialties();
+      setUrlAvatar(doctor.avatar || "");
       setDatas({
-        clinics: clinic,
         specialties: specialties,
         data: doctor,
       })
     }
     })();
-  },[state?.account?.id])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[state?.account?.id]);
 
   const ref = useRef<HTMLInputElement>(null);
   const form = useRef<HTMLFormElement>(null);
@@ -61,17 +58,15 @@ export default () => {
   const [urlAvatar, setUrlAvatar] = useState("");
 
   const fileSlectedHandler = async (event: any) => {
-    const formData = new FormData(form.current!);
-    formData.append("file", event.target.files[0]);
     const dataImg = await repoDoctor.uploadAvatar(
-      formData,
+      event.target.files[0],
       event.target.files[0].name,
     );
     setUrlAvatar(dataImg.fileUrl);
   };
 
   return (
-    <Container style={{ maxWidth: "100%", width: "600px" }}>
+    <Container style={{ maxWidth: "100%", width: "600px" }} component="div">
         <Typography color="inherit" variant="subtitle1" component="div">
           Create Account Doctor
         </Typography>
@@ -101,16 +96,15 @@ export default () => {
         <Typography color="inherit" variant="subtitle1" component="div">
           Info Doctor
         </Typography>
-        {datas && state?.account?.id && (
-          <DoctorForm
+        {
+          datas && <DoctorForm
             submit={async (values) => {
               values.avatar = urlAvatar;
-              // state && await repoDoctor.update(state.account.id, values);
+              state && await repoDoctor.update(state.account.id, values);
             }}
             {...datas}
           />
-        )}
-
+        }
     </Container>
   );
 };

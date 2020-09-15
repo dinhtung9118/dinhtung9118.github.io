@@ -4,7 +4,8 @@ import {
   FormControl,
   TextField,
   Box,
-  DialogContent, DialogContentText, DialogActions
+  DialogContent,
+  DialogActions
 } from "@material-ui/core";
 import {ChangePasswordFormValues, ChangePasswordFormProps} from './index.d'
 import {FormikBag, FormikProps, withFormik} from "formik";
@@ -13,15 +14,14 @@ const initialValue = {
   currentPassword: '',
   newPassword: '',
   confirmNewPassword: '',
-}
+};
 
 const InsideFormChangePass: React.FC<FormikProps<ChangePasswordFormValues> & ChangePasswordFormProps> =
   ({values, errors, touched, handleChange, handleSubmit, handleClose}) => {
     return (
-      <Box component="form">
+      <Box>
         <form onSubmit={handleSubmit}>
           <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
               <FormControl fullWidth margin="dense">
                 <TextField
                   type="password"
@@ -55,7 +55,6 @@ const InsideFormChangePass: React.FC<FormikProps<ChangePasswordFormValues> & Cha
                   onChange={handleChange}
                 />
               </FormControl>
-            </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button onClick={handleClose} color="primary">

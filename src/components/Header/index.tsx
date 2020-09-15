@@ -79,6 +79,17 @@ const Header: React.FC = () => {
         <p>Profile</p>
       </MenuItem>
       <MenuItem >
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Profile</p>
+      </MenuItem>
+      <MenuItem >
         <IconButton onClick={action.logout}>
           <AdjustIcon/>
         </IconButton>

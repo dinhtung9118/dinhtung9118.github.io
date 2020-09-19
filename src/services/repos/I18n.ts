@@ -81,12 +81,10 @@ async function fetchConfig(code: TCCode) {
   );
 
   code = (mapCode[code]) || code;
-  console.log('code ===>', code);
   const mapDataI18n = ()=>{
     const out = {} as any;
     Object.entries(result).forEach(([key, value]) => {
       const out1 = {} as any;
-      console.log('key ===>', key);
       // @ts-ignore
       value?.map<ICSupports>((item: ICSupports) => {
         return out1[item.code] = item[code];

@@ -4,7 +4,7 @@ import {TextField, TextFieldProps} from "@material-ui/core";
 import {IValidError} from "untils";
 import {useI18n} from "../../stores/Locale/LocaleStore";
 
-const Nation: React.FC<Omit<TextFieldProps, "onChange" | "error"> & {
+export const Nation: React.FC<Omit<TextFieldProps, "onChange" | "error"> & {
   onChange: (value?: string) => void;
   error?: IValidError;
 }> = ({
@@ -41,5 +41,3 @@ const Nation: React.FC<Omit<TextFieldProps, "onChange" | "error"> & {
     />
   );
 };
-
-export default Nation;

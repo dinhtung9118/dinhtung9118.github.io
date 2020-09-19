@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import clsx from 'clsx';
 import Header from "components/Header";
 import SideBar from "components/SideBar";
@@ -10,7 +10,7 @@ import {OptionsObject, useSnackbar} from "notistack";
 import {connectNotifier} from "../../stores/Connection/Connection";
 import {CloseButton} from "../../components/Notistack";
 import {errorNotifier} from "../../services/Clients";
-import {useI18n} from "../../stores/Locale/LocaleStore";
+import {useI18n, getI18n} from "../../stores/Locale/LocaleStore";
 
 const useStyles = makeStyles((theme) => ({
   grow:{
@@ -110,6 +110,7 @@ const useConnectSnackBar = (i18n: I18n) => {
 };
 
 const Layout: React.FC = ({children}) => {
+
   const classes = useStyles();
   const [state] = useUI();
   const i18n = useI18n();

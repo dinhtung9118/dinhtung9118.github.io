@@ -4,7 +4,7 @@ import {TextField, InputProps} from "@material-ui/core";
 import {IValidError} from "untils";
 import {useI18n} from "stores/Locale/LocaleStore";
 
-const Nationality: React.FC<Omit<InputProps, "onChange" | "error"> & {
+export const Nationality: React.FC<Omit<InputProps, "onChange" | "error"> & {
   onChange: (value?: string) => void;
   error?: IValidError;
 }> = (
@@ -38,5 +38,3 @@ const Nationality: React.FC<Omit<InputProps, "onChange" | "error"> & {
     />
   );
 };
-
-export default Nationality;

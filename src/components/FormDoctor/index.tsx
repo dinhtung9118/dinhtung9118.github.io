@@ -8,14 +8,19 @@ import {
   Button,
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete/Autocomplete";
-
+import {
+  WorkPlace,
+  Gender,
+  AcademicRank,
+  Nation,
+  Nationality,
+  Diseases,
+  JobTitle,
+} from "components/Input"
 import AccountForm, {createAccountValidation} from "./base";
 import {Specialty, IDoctor, Doctor, Clinic} from "models";
 import {IValidError} from 'untils'
-import Gender from "components/Input/Gender"
-import AcademicRank from "components/Input/AcademicRank"
-import Nation from "components/Input/Nation"
-import Nationality from "components/Input/Nationality"
+
 
 import {useI18n} from "../../stores/Locale/LocaleStore";
 
@@ -41,7 +46,7 @@ const InsideDoctorForm = (
   } = props;
 
   const {
-    component: { doctorForm: i18nForm },
+    component: {doctorForm: i18nForm},
   } = useI18n();
 
   const errorCode = (key: keyof IDoctor) => {
@@ -50,6 +55,7 @@ const InsideDoctorForm = (
 
   const renderSpecialtyTypeBox = () => {
     const isError = Boolean(errors.specialties && touched.specialties);
+    console.log('values.workplace', values.workplace);
     return (
       <Autocomplete
         multiple
@@ -79,29 +85,47 @@ const InsideDoctorForm = (
     <>
       <AccountForm {...props}>
         <Grid container spacing={2}>
-            <FormControl margin="dense" component={Grid} item md={6}>
-              <Gender
-                row
-                name="genderCode"
-                value={values.genderCode || ""}
-                onChange={handleChange}
-                error={errorCode("genderCode")}
-              />
-            </FormControl>
-            <FormControl
-              margin="none"
-              size="small"
-              variant="outlined"
-              fullWidth
-              component={Grid} item md={6}
-            >
-              <AcademicRank
-                name="academicRankCode"
-                value={values.academicRankCode}
-                error={errorCode("academicRankCode")}
-                onChange={handleChange}
-              />
-            </FormControl>
+          <FormControl margin="dense" component={Grid} item md={6}>
+            <Gender
+              row
+              name="genderCode"
+              value={values.genderCode || ""}
+              onChange={handleChange}
+              error={errorCode("genderCode")}
+            />
+          </FormControl>
+          <FormControl
+            margin="none"
+            size="small"
+            variant="outlined"
+            fullWidth
+            component={Grid} item md={6}
+          >
+            <AcademicRank
+              name="academicRankCode"
+              value={values.academicRankCode}
+              error={errorCode("academicRankCode")}
+              onChange={handleChange}
+            />
+          </FormControl>
+          <FormControl
+            margin="dense"
+            size="small"
+            variant="outlined"
+            component={Grid}
+            item
+            xs={6}
+          >
+            <JobTitle
+              name="jobTitle"
+              value={values.jobTitle}
+              error={errorCode("jobTitle")}
+              onChange={(value) => {
+                values.jobTitle = value || "";
+                validateForm(values);
+              }}
+            />
+          </FormControl>
           <FormControl
             margin="dense"
             size="small"
@@ -132,8 +156,45 @@ const InsideDoctorForm = (
               name="nationalityCode"
               value={values.nationalityCode}
               error={errorCode("nationalityCode")}
-              onChange={(value) => {
+              onChange={(value: any) => {
                 values.nationalityCode = value;
+                validateForm(values);
+              }}
+            />
+          </FormControl>
+          <FormControl
+            margin="dense"
+            size="small"
+            variant="outlined"
+            component={Grid}
+            item
+            xs={12}
+          >
+            <WorkPlace
+              name="workplace"
+              value={values.workplace}
+              error={errorCode("workplace")}
+              onChange={(value) => {
+                values.workplace = value || [];
+                validateForm(values);
+              }}
+            />
+          </FormControl>
+
+          <FormControl
+            margin="dense"
+            size="small"
+            variant="outlined"
+            component={Grid}
+            item
+            xs={12}
+          >
+            <Diseases
+              name="diseasesConsultantCode"
+              value={values.diseasesConsultantCode}
+              error={errorCode("diseasesConsultantCode")}
+              onChange={(value) => {
+                values.diseasesConsultantCode = value || [];
                 validateForm(values);
               }}
             />
@@ -183,7 +244,7 @@ export default withFormik<IFormDoctorProps, IDoctor>({
     nationCode: {required: Boolean},
     nationalityCode: {required: Boolean},
     academicRankCode: {required: Boolean},
-    specialties: { required: (list: any[]) => Boolean(list?.length) },
+    specialties: {required: (list: any[]) => Boolean(list?.length)},
   }),
   handleSubmit: async (
     values: IDoctor,

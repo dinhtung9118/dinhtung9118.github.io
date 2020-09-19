@@ -4,12 +4,15 @@ import App from "./App";
 import * as serviceWorker from "serviceWorker";
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import {QueryParamProvider} from 'use-query-params'
+import {SnackbarProvider} from "notistack";
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <QueryParamProvider ReactRouterRoute={Route}>
-       <App />
+        <SnackbarProvider>
+          <App />
+        </SnackbarProvider>
       </QueryParamProvider>
     </Router>
   </React.StrictMode>,

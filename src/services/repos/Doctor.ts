@@ -40,10 +40,13 @@ class RepoDoctor extends RepoAccount<Doctor> {
         "nationalityCode",
         "academicRankCode",
         "specialties",
-        "description"
+        "description",
+        "workplace",
+        "diseasesConsultantCode",
+        "jobTitle",
       ]),
       partner_id: model.partner?.id,
-      specialty_ids: model.specialties?.map((item) => item.id) ?? [],
+      specialty_ids: model.specialties?.map((item) => item.id) || [],
     };
   }
 

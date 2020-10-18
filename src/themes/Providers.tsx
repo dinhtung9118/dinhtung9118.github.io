@@ -1,4 +1,4 @@
-import React, { Props, useCallback } from "react";
+import React, {Props, useCallback} from "react";
 import {
   MuiThemeProvider,
   createMuiTheme,
@@ -19,12 +19,12 @@ const createProvider = (options?: ThemeOptions) => ({
   return <ThemeProvider theme={extend}>{children}</ThemeProvider>;
 };
 
-export const RootThemeProvider = ({ children }: Props<any>) => {
+export const RootThemeProvider = ({children}: Props<any>) => {
   return (
     <MuiThemeProvider theme={createMuiTheme(defaultTheme.theme)}>
-  {children}
-  </MuiThemeProvider>
-);
+      {children}
+    </MuiThemeProvider>
+  );
 };
 
 export const SizeDownProvider = createProvider(defaultTheme.sizeDown);

@@ -10,6 +10,7 @@ import { UIContainer, storeKey, initialState as initialStoreState } from './UISt
 import databases from "storages";
 import {useLocale} from "../Locale/LocaleStore";
 import {useLoaderActions} from "../Loader";
+import {RootThemeProvider} from "../../themes/Providers";
 
 const withUIPersist = <P extends object>(Component: ComponentType<P>): FC<P & any> => ({ ...props }: any) => {
   const [storePersisted, setStorePersisted] = useState(initialStoreState);
@@ -40,7 +41,9 @@ const withUIPersist = <P extends object>(Component: ComponentType<P>): FC<P & an
   if (storePersisted && !storePersisted.initiated) return null;
   return (
     <UIContainer isGlobal={true} initialState={storePersisted}>
-      <Component {...(props as P)} />
+      <RootThemeProvider>
+        <Component {...(props as P)} />
+      </RootThemeProvider>
     </UIContainer>
   );
 };

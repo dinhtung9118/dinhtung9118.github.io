@@ -8,6 +8,7 @@ import PrivateRoute from "./PrivateRoute";
 
 const DashBoard = lazy(() => import('./DashBoard'));
 const Profile = lazy(() => import('./Profile'));
+const SchedulesPage = lazy(() => import('./Schedules'));
 
 const Routes: React.FC = (): JSX.Element => {
   return (
@@ -25,6 +26,10 @@ const Routes: React.FC = (): JSX.Element => {
           exact={true}
           path={RouteList.profile}
           component={Profile}/>
+        <PrivateRoute
+          exact={true}
+          path={RouteList.schedules}
+          component={SchedulesPage}/>
 
       </Switch>
     </>

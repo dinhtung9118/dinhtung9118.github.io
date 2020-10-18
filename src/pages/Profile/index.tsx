@@ -55,13 +55,14 @@ const Profile: React.FC = () => {
   const i18n = useI18n();
   const [state] = useAuthentication();
   const [toggole, setToggle] = useState(false);
-  const [doctorInfor, setDoctorInfor] = useState<Doctor>(new Doctor(state.account));
+  const [doctorInfor, setDoctorInfor] = useState<Doctor>();
   const {config} = i18n;
 
   useEffect(() => {
     (async function getPersistData() {
       if (state.account.id) {
         const doctor = await repoDoctor.single(state.account.id);
+        console.log('hdhdhd', doctor);
         setDoctorInfor(doctor);
       }
     })()
@@ -85,17 +86,17 @@ const Profile: React.FC = () => {
               <Grid container spacing={2}>
                 <Grid item xs={1} sm={1}>
                   <Avatar variant="square" className={classes.square}
-                          src={doctorInfor.avatar}>
+                          src={doctorInfor?.avatar}>
                     N
                   </Avatar>
                 </Grid>
                 <Grid item xs={10} sm={10}>
                   <Grid container>
                     <Typography component="p"
-                                variant="body1">{doctorInfor.fullName}</Typography>
+                                variant="body1">{doctorInfor?.fullName}</Typography>
                     <Grid container>
                       <Typography variant="caption" component="span"
-                                  className={classes.infoEmail}>{doctorInfor.email}</Typography>
+                                  className={classes.infoEmail}>{doctorInfor?.email}</Typography>
                       <Typography variant="caption" component="span">Đã xác
                         thực</Typography>
                     </Grid>
@@ -137,14 +138,14 @@ const Profile: React.FC = () => {
                   <Typography color="textSecondary" component="span">Gioi
                     tính: </Typography>
                   <Typography
-                    component="span">{config.gender[doctorInfor.genderCode || "m"]}</Typography>
+                    component="span">{config.gender[doctorInfor?.genderCode || "m"]}</Typography>
                   <Box borderColor="grey.500" borderBottom={1}/>
                 </div>
                 <div>
                   <Typography color="textSecondary" component="span">Dan
                     toc: </Typography>
                   <Typography
-                    component="span">{config.nations[doctorInfor.nationCode || "ki"]}</Typography>
+                    component="span">{config.nations[doctorInfor?.nationCode || "ki"]}</Typography>
                   <Box borderColor="grey.500" borderBottom={1}/>
                 </div>
               </Grid>
@@ -153,13 +154,13 @@ const Profile: React.FC = () => {
                 <Typography color="textSecondary" component="span">Job
                   Title: </Typography>
                 <Typography
-                  component="span">{config.nations[doctorInfor.jobTitle || ""]}</Typography>
+                  component="span">{config.nations[doctorInfor?.jobTitle || ""]}</Typography>
                 <Box borderColor="grey.500" borderBottom={1}/>
               </div>
               <div>
                 <Typography color="textSecondary" component="span">Diseases: </Typography>{
-                doctorInfor.diseasesConsultantCode &&
-                doctorInfor.diseasesConsultantCode.map((diseases) => {
+                doctorInfor?.diseasesConsultantCode &&
+                doctorInfor?.diseasesConsultantCode.map((diseases) => {
                   return (
                     <Typography
                       component="span">{config.diseases[diseases || ""]}
@@ -173,8 +174,8 @@ const Profile: React.FC = () => {
                 <div>
                   <Typography color="textSecondary" component="span">Work Place: </Typography>
                   {
-                  doctorInfor.workplace &&
-                  doctorInfor.workplace.map((workplace) => {
+                  doctorInfor?.workplace &&
+                  doctorInfor?.workplace.map((workplace) => {
                     return (
                       <Typography
                         component="span">{config.hospital[workplace || ""]}
@@ -186,7 +187,7 @@ const Profile: React.FC = () => {
                 <div>
                   <Typography color="textSecondary" component="span">Academic Rank: </Typography>
                   <Typography
-                    component="span">{config.academicLevel[doctorInfor.academicRankCode || ""]}</Typography>
+                    component="span">{config.academicLevel[doctorInfor?.academicRankCode || ""]}</Typography>
                   <Box borderColor="grey.500" borderBottom={1}/>
                 </div>
               </Grid>

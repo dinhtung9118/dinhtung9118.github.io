@@ -9,5 +9,6 @@ export const RouteList = {
   dashboard: "/",
   languages: "/languages",
   profile: "/profiles",
+  schedules: "/schedules",
   profileEdit: "/profiles/edit",
 };

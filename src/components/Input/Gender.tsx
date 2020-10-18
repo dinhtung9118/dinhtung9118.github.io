@@ -12,7 +12,7 @@ import {IValidError} from 'untils'
 
 import {useI18n} from "stores/Locale/LocaleStore";
 
-const Gender:React.FC<RadioGroupProps & { error?: IValidError }> = ({error,...props}) => {
+export const Gender:React.FC<RadioGroupProps & { error?: IValidError }> = ({error,...props}) => {
   const {
     config: {gender},
     component: {inputs},
@@ -42,5 +42,3 @@ const Gender:React.FC<RadioGroupProps & { error?: IValidError }> = ({error,...pr
       </>
   )
 };
-
-export default Gender;

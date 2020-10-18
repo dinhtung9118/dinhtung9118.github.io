@@ -28,6 +28,8 @@ export type IAccount = Pick<
   | "status"
   | "active"
   | "avatar"
+  | "groupId"
+  | "externalId"
   >;
 
 
@@ -54,7 +56,8 @@ export class Account extends BaseModel {
   email = "";
   status = ModelStatus.INACTIVE;
   role = AccountRole.PATIENT;
-
+  groupId = "";
+  externalId = "";
   password?: string;
   active?: boolean;
   avatar?: string;

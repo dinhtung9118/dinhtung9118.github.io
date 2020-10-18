@@ -12,6 +12,8 @@ export type IDoctor = IAccount &
     | "education"
     | "academicRankCode"
     | "workplace"
+    | "diseasesConsultantCode"
+    | "jobTitle"
     | "description"
     >;
 
@@ -28,7 +30,9 @@ export class Doctor extends Account {
   partner?: { id: string; name: string };
   specialties = Array<Specialty>();
   workplace = Array<string>();
+  diseasesConsultantCode = Array<string>();
 
+  jobTitle = "";
   education = "";
   academicRankCode = "";
   description = "";

@@ -14,7 +14,6 @@ export default () => {
   useEffect(() => {
     (async function getPersistData() {
       const data = await databases.getItem(storeKey).catch((err: Error) => {
-        console.log('errors', data);
         // tslint:disable-next-line:no-console
         console.error(err);
       });

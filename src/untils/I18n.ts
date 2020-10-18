@@ -35,6 +35,9 @@ export class I18n {
     academicLevel: asType<IMapString>({}),
     hospital: asType<IMapString>({}),
     gender: asType<IMapString>({}),
+    diseases: asType<IMapString>({}),
+    jobTitle: asType<IMapString>({}),
+    area: asType<IMapString>({}),
   };
 
   system = {
@@ -91,16 +94,22 @@ export class I18n {
       signIn: "Login",
     },
     inputs: asFormFields({
-      clinic: {
-        label: "Clinic",
-        errors: {
-          required: "Clinic is required",
-        },
-      },
       workplace: {
         label: "Work places",
         errors: {
           required: "Worl places is required",
+        },
+      },
+      diseases: {
+        label: "Diseases",
+        errors: {
+          required: "Diseases is required",
+        },
+      },
+      jobTitle: {
+        label: "Job title",
+        errors: {
+          required: "Job title is required",
         },
       },
       gender: {

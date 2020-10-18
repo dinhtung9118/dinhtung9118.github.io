@@ -34,7 +34,6 @@ export const actions = {
     locale = supports.find((item) => item.code === code) || supports?.first;
     setState({locale, supports, initial: true});
     const i18n = await repoI18n.query(locale.code);
-
     setState({i18n});
   },
 
@@ -72,9 +71,9 @@ export const I18NContainer = createContainer<II8nState, Actions, StoreContainerP
 
 export const storeKey = `${Store.key.join('__')}@__global__`;
 
-const getI18n = createHook(Store, {selector: ({i18n}) => i18n});
+export const getI18n = createHook(Store, {selector: ({i18n}) => i18n});
 
-export const useI18n = () => getI18n()[0];
+export const useI18n = () => getI18n()[0] as I18n;
 
 export const useLocale = createHook(Store, {
   selector: ({locale, supports, initial}) => ({

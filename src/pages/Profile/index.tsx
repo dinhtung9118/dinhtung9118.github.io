@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   infoContent: {
     padding: theme.spacing(2)
   },
-  itemInforField:{
+  itemInforField: {
     borderBottomWidth: 1,
   }
 }));
@@ -55,24 +55,25 @@ const Profile: React.FC = () => {
   const i18n = useI18n();
   const [state] = useAuthentication();
   const [toggole, setToggle] = useState(false);
-  const [doctorInfor, setDoctorInfor] = useState<Doctor>(new Doctor(state.account));
+  const [doctorInfor, setDoctorInfor] = useState<Doctor>();
   const {config} = i18n;
 
-  useEffect(()=>{
+  useEffect(() => {
     (async function getPersistData() {
-      if(state.account.id ){
+      if (state.account.id) {
         const doctor = await repoDoctor.single(state.account.id);
-        console.log(doctor);
+        console.log('hdhdhd', doctor);
         setDoctorInfor(doctor);
       }
     })()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[state.account.id]);
+  }, [state.account.id]);
 
-  const handleSubmit=(value: ChangePasswordFormValues)=>{
+  const handleSubmit = (value: ChangePasswordFormValues) => {
     repoDoctor.updatePassword({
       currentPassword: value.currentPassword,
-      newPassword: value.newPassword});
+      newPassword: value.newPassword
+    });
     setToggle(false);
   };
 
@@ -84,27 +85,30 @@ const Profile: React.FC = () => {
             <Box pb={5}>
               <Grid container spacing={2}>
                 <Grid item xs={1} sm={1}>
-                  <Avatar variant="square" className={classes.square} src={doctorInfor.avatar}>
+                  <Avatar variant="square" className={classes.square}
+                          src={doctorInfor?.avatar}>
                     N
                   </Avatar>
                 </Grid>
                 <Grid item xs={10} sm={10}>
                   <Grid container>
-                    <Typography component="p" variant="body1">{doctorInfor.fullName}</Typography>
+                    <Typography component="p"
+                                variant="body1">{doctorInfor?.fullName}</Typography>
                     <Grid container>
                       <Typography variant="caption" component="span"
-                                  className={classes.infoEmail}>{doctorInfor.email}</Typography>
+                                  className={classes.infoEmail}>{doctorInfor?.email}</Typography>
                       <Typography variant="caption" component="span">Đã xác
                         thực</Typography>
                     </Grid>
                     <Grid container>
-                      <Grid item >
-                        <Button color="primary" onClick={()=>setToggle(true)}>
+                      <Grid item>
+                        <Button color="primary" onClick={() => setToggle(true)}>
                           Đổi mật khẩu
                         </Button>
                       </Grid>
                       <Grid item>
-                        <Button color="primary" onClick={()=>history.push({hash: RouteList.profileEdit,})}>
+                        <Button color="primary"
+                                onClick={() => history.push({hash: RouteList.profileEdit,})}>
                           Chỉnh sửa thông tin
                         </Button>
                       </Grid>
@@ -133,13 +137,57 @@ const Profile: React.FC = () => {
                 <div>
                   <Typography color="textSecondary" component="span">Gioi
                     tính: </Typography>
-                  <Typography component="span">{config.gender[doctorInfor.genderCode || "m"]}</Typography>
+                  <Typography
+                    component="span">{config.gender[doctorInfor?.genderCode || "m"]}</Typography>
                   <Box borderColor="grey.500" borderBottom={1}/>
                 </div>
                 <div>
                   <Typography color="textSecondary" component="span">Dan
                     toc: </Typography>
-                  <Typography component="span">{config.nations[doctorInfor.nationCode || "ki"]}</Typography>
+                  <Typography
+                    component="span">{config.nations[doctorInfor?.nationCode || "ki"]}</Typography>
+                  <Box borderColor="grey.500" borderBottom={1}/>
+                </div>
+              </Grid>
+              <Grid item xs={6} sm={6}>
+              <div>
+                <Typography color="textSecondary" component="span">Job
+                  Title: </Typography>
+                <Typography
+                  component="span">{config.nations[doctorInfor?.jobTitle || ""]}</Typography>
+                <Box borderColor="grey.500" borderBottom={1}/>
+              </div>
+              <div>
+                <Typography color="textSecondary" component="span">Diseases: </Typography>{
+                doctorInfor?.diseasesConsultantCode &&
+                doctorInfor?.diseasesConsultantCode.map((diseases) => {
+                  return (
+                    <Typography
+                      component="span">{config.diseases[diseases || ""]}
+                    </Typography>)
+                })
+              }
+                <Box borderColor="grey.500" borderBottom={1}/>
+              </div>
+            </Grid>
+              <Grid item xs={6} sm={6}>
+                <div>
+                  <Typography color="textSecondary" component="span">Work Place: </Typography>
+                  {
+                  doctorInfor?.workplace &&
+                  doctorInfor?.workplace.map((workplace) => {
+                    return (
+                      <Typography
+                        component="span">{config.hospital[workplace || ""]}
+                      </Typography>)
+                  })
+                }
+                  <Box borderColor="grey.500" borderBottom={1}/>
+                </div>
+                <div>
+                  <Typography color="textSecondary" component="span">Academic Rank: </Typography>
+                  <Typography
+                    component="span">{config.academicLevel[doctorInfor?.academicRankCode || ""]}</Typography>
                   <Box borderColor="grey.500" borderBottom={1}/>
                 </div>
               </Grid>
@@ -174,7 +222,7 @@ const Profile: React.FC = () => {
             </Grid>
             <ChangePasswordModal
               open={toggole}
-              handleClose={()=>setToggle(false)}
+              handleClose={() => setToggle(false)}
               handleSubmit={handleSubmit}
             />
           </Paper>

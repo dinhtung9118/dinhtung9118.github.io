@@ -10,7 +10,7 @@ import {
 import {IValidError} from "untils";
 import {useI18n} from "stores/Locale/LocaleStore";
 
-const AcademicRank: React.FC<Omit<SelectProps, "error"> & { error?: IValidError }> = ({
+export const AcademicRank: React.FC<Omit<SelectProps, "error"> & { error?: IValidError }> = ({
                                                                                         error,
                                                                                         ...props
                                                                                       }) => {
@@ -50,5 +50,3 @@ const AcademicRank: React.FC<Omit<SelectProps, "error"> & { error?: IValidError 
     </>
   );
 };
-
-export default AcademicRank;

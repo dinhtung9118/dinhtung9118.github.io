@@ -13,6 +13,7 @@ module.exports = function (app) {
     'specialty-types': 8081,
     cats: 8082,
     doctors: 8082,
+    'working-time': 8082,
     patients: 8083,
   }).forEach(([name, port]) => {
     app.use(

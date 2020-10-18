@@ -45,7 +45,7 @@ export default () => {
       setUrlAvatar(doctor.avatar || "");
       setDatas({
         specialties: specialties,
-        data: doctor,
+        data: new Doctor(doctor),
       })
     }
     })();

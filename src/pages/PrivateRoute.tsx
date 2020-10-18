@@ -1,10 +1,9 @@
-import React, { Suspense, useEffect} from 'react'
+import React, { Suspense} from 'react'
 import {Redirect, Route, RouteProps} from "react-router";
 import useAuthentication, {AuthStatus} from "stores/AuthenticationsStore/authentication";
 import {RouteList} from "../routeList";
 import Layout from "./Layout";
 import Spinner from "components/Spinner";
-import { useLocale} from "../stores/Locale/LocaleStore";
 import {HashDrawerSwitch} from "../components/HashDrawer";
 import {HashRoutes, IHashRoute} from "./HashRoutes";
 

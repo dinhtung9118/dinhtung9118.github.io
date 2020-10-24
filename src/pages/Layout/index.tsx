@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo} from 'react';
+import React, {useEffect} from 'react';
 import clsx from 'clsx';
 import Header from "components/Header";
 import SideBar from "components/SideBar";
@@ -10,7 +10,7 @@ import {OptionsObject, useSnackbar} from "notistack";
 import {connectNotifier} from "../../stores/Connection/Connection";
 import {CloseButton} from "../../components/Notistack";
 import {errorNotifier} from "../../services/Clients";
-import {useI18n, getI18n} from "../../stores/Locale/LocaleStore";
+import {useI18n} from "../../stores/Locale/LocaleStore";
 
 const useStyles = makeStyles((theme) => ({
   grow:{
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: 50,
+    marginLeft: -0,
   },
   contentShift: {
     transition: theme.transitions.create('margin', {

@@ -352,6 +352,9 @@ export class I18n {
     login: {
       forgot: "Forgot password",
     },
+    consultationSchedule:{
+      title: "Consultantion Schedule Partiens"
+    },
     error404: {
       goToHome: "Go to home",
     },

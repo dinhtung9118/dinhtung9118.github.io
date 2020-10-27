@@ -1,6 +1,7 @@
-import React, {useEffect, useMemo, useState} from "react"
+import React, {useEffect, useState} from "react"
 
-import {Paper, Box, Button} from '@material-ui/core';
+import {Paper, Box, Button, useTheme} from '@material-ui/core';
+import moment from "moment";
 import {
   doctor as repoDoctor,
 } from "services/repos";
@@ -18,23 +19,12 @@ import {
   AppointmentTooltip,
   CurrentTimeIndicator,
   Resources,
-  AppointmentForm
 } from "@devexpress/dx-react-scheduler-material-ui";
 
 import {ViewState} from "@devexpress/dx-react-scheduler";
-import {AccountStatus} from "../../models";
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import {AccountStatus, ModelStatus} from "../../models";
 
-export const resourcesData = [
-  {
-    text: 'Active',
-    id: AccountStatus.ACTIVE,
-    color: '#E91E63',
-  }, {
-    text: 'Inactive',
-    id: AccountStatus.INACTIVE,
-    color: '#7E57C2',
-  },
-];
 
 interface IMapped {
   startDay: number,
@@ -43,6 +33,18 @@ interface IMapped {
 }
 
 const SchedulesPage: React.FC = () => {
+  const theme = useTheme();
+  const resourcesData = [
+    {
+      text: 'Active',
+      id: AccountStatus.ACTIVE,
+      color: theme.palette.success.main,
+    }, {
+      text: 'Inactive',
+      id: AccountStatus.INACTIVE,
+      color: theme.palette.text.disabled,
+    },
+  ];
   const [currentDate, setCurrentDate] = React.useState(() => new Date());
   const [mapped, setMapped]= useState<IMapped>({
     startDay: 8,
@@ -93,16 +95,36 @@ const SchedulesPage: React.FC = () => {
   };
 
   const renderDetailSession = (props: any) => {
-    const sessions = props.appointmentData?.data;
-    console.log('props', sessions);
+    const workingTime: WorkingTime = props.appointmentData?.data;
+    if(workingTime && !workingTime.sessions) return (<></>);
+    console.log(workingTime.sessions[0].from);
+    console.log(workingTime.sessions[0].to);
+    const startTime = WorkingTime.minusFormat(workingTime.sessions[0].from || 0) || '';
+    const endTime = WorkingTime.minusFormat(workingTime.sessions[0].to || 0) || '';
+    console.log('props', workingTime);
     return (
-      <Box width={100} p={2}>
-
-        <Button onClick={() => handlerChangeStatusSessions(sessions)}>
-          {sessions.status === "ACTIVE" ? "Active" : "Inactive"}
-        </Button>
+      <Box p={2}>
+        <Box alignItems="center" display="flex" flexDirection="row" mb={1}>
+          <Box width="1.5em" height="1.5em" bgcolor={workingTime.status === "ACTIVE"?
+            'success.main':
+            'text.disabled'
+          } borderRadius="50%" />
+          <Box ml={1}>{moment(workingTime.date).format('DD MMMM YYYY')}</Box>
+        </Box>
+        <Box alignItems="center" display="flex" flexDirection="row">
+          <Box mr={1}>
+            <AccessTimeIcon />
+          </Box>
+          <Box>{startTime} - {endTime}</Box>
+        </Box>
+        <Box display="flex" justifyContent="flex-end">
+          <Button variant="contained"
+                  color={workingTime.status === ModelStatus.INACTIVE ?'primary':'default'}
+                  onClick={() => handlerChangeStatusSessions(workingTime)}>
+            {workingTime.status === ModelStatus.ACTIVE ? "Inactive" : "Active"}
+          </Button>
+        </Box>
       </Box>)
-
   }
 
   return (<Paper>

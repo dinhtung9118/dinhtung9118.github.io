@@ -30,7 +30,7 @@ const PrivateRoute: React.FC<IProps & RouteProps> =({component,isHash, ...rest})
         <Route {...rest} component={renderRoute(component)} />
       </Layout>
       {
-        <HashDrawerSwitch routes={HashRoutes.map<IHashRoute>((item: IHashRoute) =>{
+        <HashDrawerSwitch routes={HashRoutes.map<IHashRoute>((item: IHashRoute) => {
           return {
             path: item.path,
             component: renderRoute(item.component)
@@ -42,6 +42,6 @@ const PrivateRoute: React.FC<IProps & RouteProps> =({component,isHash, ...rest})
     )
   }
  return <Redirect to={{pathname: RouteList.auth.login}}/>
-}
+};
 
 export default PrivateRoute;

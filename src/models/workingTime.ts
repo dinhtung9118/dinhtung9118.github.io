@@ -44,6 +44,7 @@ export class WorkingTime extends BaseModel {
   }
 
   static minusFormat(minus: number) {
+    debugger
     const hours = Math.floor(minus / 60).pad(2);
     const min = (minus % 60).pad(2);
     return `${hours}:${min}`;

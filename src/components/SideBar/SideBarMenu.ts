@@ -17,7 +17,7 @@ export const mockDataSidebar: MockDataSidebarProps = {
       icon: 'fa-youtube-play',
       subCreateMenus: [],
       subMenus: [],
-      to: RouteList.profile,
+      to: RouteList.consultationSchedule,
     },
     {
       title: 'Hoat Dong',

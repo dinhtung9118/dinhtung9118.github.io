@@ -5,6 +5,8 @@ import 'middlewares/logger'
 import 'middlewares/persistent'
 import withUIPersist from "./stores/UIstore/withUIStore";
 import withI18nPersist from "./stores/Locale/withLocalePersist";
+import "react-datepicker/dist/react-datepicker-cssmodules.css";
+import "react-datepicker/dist/react-datepicker.css";
 
 export const App:React.FC = () => {
   return <Routes/>

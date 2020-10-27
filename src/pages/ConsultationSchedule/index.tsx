@@ -17,6 +17,8 @@ import {useI18n} from "../../stores/Locale/LocaleStore";
 import CommonPage from "../CommonPage";
 import ConsultationPatient from "./ConsultaionWrapper/patientList";
 import DatePicker from "../../components/DatePicker";
+import { doctor as repoDoctor } from "../../services/repos";
+import { Data } from "../../services/repos/__mock__/__booking__";
 
 const BootstrapInput = withStyles((theme: Theme) =>
   createStyles({
@@ -69,6 +71,14 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+const defaultPropsBorder = {
+  bgcolor: 'background.paper.light',
+  borderColor: 'text.primary.light',
+  m: 1,
+  border: 3,
+  style: { width: 8, height: 8 },
+};
+
 const ConsultationSchedule: React.FC = () => {
   const classes = useStyles();
   const i18n = useI18n();
@@ -77,6 +87,22 @@ const ConsultationSchedule: React.FC = () => {
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setTimeWorking(event.target.value as string);
   };
+
+  const dataMappingFunction = (item: Data) =>{
+    return {
+      ...item,
+      status: (<Box display="flex" alignItems="center" justifyContent="flex-start">
+        <Box
+          {...defaultPropsBorder}
+          borderRadius="50%"
+          borderColor= 'text.primary.light'
+          bgcolor="primary.main"
+        />
+        <Box>{item.status}</Box>
+      </Box>)
+    }
+  }
+
   return (
     <>
       <Box mb={2} display="flex" alignItems="center"
@@ -113,7 +139,10 @@ const ConsultationSchedule: React.FC = () => {
         </Box>
       </Box>
       <Paper className={classes.root}>
-        <CommonPage>
+        <CommonPage
+          dataMappingFunction={dataMappingFunction}
+          query={repoDoctor.getBookings}
+        >
           {ConsultationPatient}
         </CommonPage>
       </Paper>

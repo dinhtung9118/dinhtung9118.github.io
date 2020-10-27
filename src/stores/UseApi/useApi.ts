@@ -8,5 +8,6 @@ export function useApi<R>(query:() => Promise<R>, deps: any[] = []) {
   useEffect(()=>{
     loader.push(query().then(setState));
   }, [loader, query]);
+  debugger
   return state
 }

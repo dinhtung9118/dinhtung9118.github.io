@@ -5,6 +5,7 @@ import {Doctor, IDoctor, ModelStatus} from "models";
 import {IReqPaging, IResList, IResponse} from "./interface";
 import {RepoAccount} from "./Account";
 import {WorkingTime} from "models/workingTime";
+import { bookingMockData } from "./__mock__/__booking__";
 
 const time = moment(moment().format("YYYY-MM-DD")).subtract(1, "day");
 
@@ -95,6 +96,12 @@ class RepoDoctor extends RepoAccount<Doctor> {
       ]),
       partner_id: model.partner?.id,
       specialty_ids: model.specialties?.map((item) => item.id) || [],
+    };
+  };
+
+  getBookings = async (payload: any) =>{
+    return {
+      data: bookingMockData
     };
   }
 

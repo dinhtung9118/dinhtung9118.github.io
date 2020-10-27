@@ -61,6 +61,7 @@ const SchedulesPage: React.FC = () => {
   const data = useApi(() => repoDoctor.getWorkingTime(payload));
 
   useEffect(() => {
+
     if (data) {
       let startDay = 8;
       let endDay = 18;

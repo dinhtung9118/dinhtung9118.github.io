@@ -23,27 +23,27 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
   const titleList: TitleWithClassName[] = [{
     className:'',
     cellRender: 'Name Patient',
-    align: 'right',
+    align: 'left',
     minWidth: 120,
   },{
     className:'',
     cellRender: 'Code Patient Consultation',
-    align: 'right',
+    align: 'left',
     minWidth: 120,
   },{
     className:'',
     cellRender: 'Specitialy',
-    align: 'right',
+    align: 'left',
     minWidth: 120,
   },{
     className:'',
     cellRender: 'Time Consultation',
-    align: 'right',
+    align: 'left',
     minWidth: 120,
   },{
     className:'',
     cellRender: 'Status',
-    align: 'right',
+    align: 'left',
     minWidth: 120,
   }];
   const pathList = [

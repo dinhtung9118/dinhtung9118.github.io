@@ -23,7 +23,7 @@ export interface DatePickerProps {
   disabled?: boolean;
   isShowYearPicker?: boolean;
   useCustomHeader?: boolean;
-  rtl?: boolean;
+  dataValue?: Date;
 }
 
 export interface CustomHeaderProps {

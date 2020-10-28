@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Typography,
@@ -13,12 +13,14 @@ import {
   createStyles,
   makeStyles
 } from '@material-ui/core';
-import {useI18n} from "../../stores/Locale/LocaleStore";
+import { useI18n } from "../../stores/Locale/LocaleStore";
 import CommonPage from "../CommonPage";
 import ConsultationPatient from "./ConsultaionWrapper/patientList";
 import DatePicker from "../../components/DatePicker";
 import { doctor as repoDoctor } from "../../services/repos";
 import { Data } from "../../services/repos/__mock__/__booking__";
+import useAuthentication from "../../stores/AuthenticationsStore/authentication";
+import { ISession, WorkingTime } from "../../models/workingTime";
 
 const BootstrapInput = withStyles((theme: Theme) =>
   createStyles({
@@ -82,20 +84,38 @@ const defaultPropsBorder = {
 const ConsultationSchedule: React.FC = () => {
   const classes = useStyles();
   const i18n = useI18n();
-  const {pages} = i18n;
+  const { pages } = i18n;
   const [timeWorking, setTimeWorking] = React.useState('10');
+  const [listWorkingtime, setListWorkingTime] = React.useState<ISession[]>([]);
+  const [state] = useAuthentication();
+
+  useEffect(() => {
+    const payload = {
+      doctorId: state.account.externalId,
+      offset: 0,
+      limit: 50,
+      date: 1603818000000,
+    }
+    repoDoctor.getWorkingTime(payload).then((rs) => {
+      console.log('response', rs);
+      if (rs.data && rs.data.length > 0) {
+        setListWorkingTime(rs?.data[0].sessions || [])
+      }
+    })
+  });
+
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setTimeWorking(event.target.value as string);
   };
 
-  const dataMappingFunction = (item: Data) =>{
+  const dataMappingFunction = (item: Data) => {
     return {
       ...item,
       status: (<Box display="flex" alignItems="center" justifyContent="flex-start">
         <Box
           {...defaultPropsBorder}
           borderRadius="50%"
-          borderColor= 'text.primary.light'
+          borderColor='text.primary.light'
           bgcolor="primary.main"
         />
         <Box>{item.status}</Box>
@@ -131,8 +151,14 @@ const ConsultationSchedule: React.FC = () => {
                 input={<BootstrapInput/>}
               >
                 <MenuItem value={10}>All</MenuItem>
-                <MenuItem value={20}>8:00 -12:00</MenuItem>
-                <MenuItem value={30}>2:00 -18:00</MenuItem>
+                {listWorkingtime.length > 0 && listWorkingtime.map((time) => {
+                  const startTime = WorkingTime.minusFormat(time.from);
+                  const endTime = WorkingTime.minusFormat(time.to);
+                  return (
+                    <MenuItem value={`${time.from}-${time.to}`}>{startTime} - {endTime}</MenuItem>
+                  )
+                })}
+
               </Select>
             </FormControl>
           </Box>

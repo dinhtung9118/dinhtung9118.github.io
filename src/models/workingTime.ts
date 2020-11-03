@@ -23,11 +23,11 @@ export class WorkingTime extends BaseModel {
       },
     });
   }
-  id!: string;
-  doctorId!: string;
-  status!: string;
-  date!: string;
-  sessions!: ISession[];
+  id: string = '';
+  doctorId: string = '';
+  status: string = '';
+  date: string = '';
+  sessions: ISession[] = [];
 
   static toSchedule(workingTimes: WorkingTime[]) {
     return workingTimes.reduce<AppointmentModel[]>((schedules, workingTime) => {
@@ -44,7 +44,6 @@ export class WorkingTime extends BaseModel {
   }
 
   static minusFormat(minus: number) {
-    debugger
     const hours = Math.floor(minus / 60).pad(2);
     const min = (minus % 60).pad(2);
     return `${hours}:${min}`;

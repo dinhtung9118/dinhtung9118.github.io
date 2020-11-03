@@ -1,0 +1,7 @@
+export enum BookingStatus {
+  NEW = "NEW",
+  CONFIRMED = "CONFIRMED",
+  OUT_OF_DATE = "OUT_OF_DATE",
+  COMPELETED = "COMPELETED",
+  CANCELED = "CANCELED"
+}

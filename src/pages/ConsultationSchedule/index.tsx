@@ -1,58 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import {Link} from 'react-router-dom'
 import {
   Box,
   Typography,
   Paper,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  InputBase,
-  withStyles,
   Theme,
   createStyles,
   makeStyles
 } from '@material-ui/core';
-import {useI18n} from "../../stores/Locale/LocaleStore";
+import { useI18n } from "../../stores/Locale/LocaleStore";
 import CommonPage from "../CommonPage";
 import ConsultationPatient from "./ConsultaionWrapper/patientList";
-import DatePicker from "../../components/DatePicker";
+import { doctor as repoDoctor } from "../../services/repos";
 
-const BootstrapInput = withStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      'label + &': {
-        marginTop: theme.spacing(0),
-      },
-    },
-    input: {
-      borderRadius: 4,
-      position: 'relative',
-      backgroundColor: theme.palette.background.paper,
-      border: '1px solid #ced4da',
-      fontSize: 16,
-      padding: '10px 26px 10px 12px',
-      // Use the system font instead of the default Roboto font.
-      fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Roboto',
-        '"Helvetica Neue"',
-        'Arial',
-        'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-      ].join(','),
-      '&:focus': {
-        borderRadius: 4,
-        borderColor: '#80bdff',
-        boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-      },
-    },
-  }),
-)(InputBase);
+import {BookingStatus} from "../../constants/enums";
+import {Booking} from "../../models/booking";
+import {RouteList} from "../../routeList";
+import moment from "moment";
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -66,17 +31,61 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       margin: theme.spacing(1),
     },
+    link:{
+      textDecoration: 'none'
+    }
   }),
 );
+
+const defaultPropsBorder = {
+  bgcolor: 'background.paper.light',
+  borderColor: 'text.primary.light',
+  m: 1,
+  border: 3,
+  style: { width: 8, height: 8 },
+};
 
 const ConsultationSchedule: React.FC = () => {
   const classes = useStyles();
   const i18n = useI18n();
-  const {pages} = i18n;
-  const [timeWorking, setTimeWorking] = React.useState('10');
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setTimeWorking(event.target.value as string);
+  const { pages } = i18n;
+  const advanceFilterValue = ['start', 'status', 'type'];
+
+
+  const mapStatusToColor = (status: BookingStatus | string) => {
+    switch (status) {
+      case BookingStatus.NEW:
+        return 'warning';
+      case BookingStatus.COMPELETED:
+        return 'success';
+      case BookingStatus.CONFIRMED:
+        return 'info';
+      case BookingStatus.CANCELED:
+        return '';
+      default:
+        return ''
+    }
   };
+
+  const dataMappingFunction = (item: Booking) => {
+    return {
+      ...item,
+      name: (<Link className={classes.link} to={`${RouteList.bookingInfo}?bookingId=${item.id}`}>Patient Tung</Link>),
+      speciality: item.specialty?.name || '-',
+      start: moment(item.start).format('hh:mm MM-DD-YYYY'),
+      code: <Link className={classes.link} to={`${RouteList.bookingInfo}?bookingId=${item.id}`}>MC_00</Link>,
+      status: (<Box display="flex" alignItems="center" justifyContent="flex-start">
+        <Box
+          {...defaultPropsBorder}
+          borderRadius="50%"
+          borderColor= {`${mapStatusToColor(item.status)}.light`}
+          bgcolor={`${mapStatusToColor(item.status)}.main`}
+        />
+        <Box>{item.status}</Box>
+      </Box>)
+    }
+  };
+
   return (
     <>
       <Box mb={2} display="flex" alignItems="center"
@@ -87,33 +96,13 @@ const ConsultationSchedule: React.FC = () => {
             {pages.consultationSchedule.title}
           </Box>
         </Typography>
-        <Box display="flex" alignItems="center" justifyContent="center">
-          <Box display="flex" alignItems="center">
-            <Box mr={1}>
-              <InputLabel>Date Consulting</InputLabel>
-            </Box>
-            <DatePicker name="Date"/>
-          </Box>
-          <Box minWidth={80} display="flex" alignItems="center" ml={2}>
-            <InputLabel>Time Consulting</InputLabel>
-            <FormControl className={classes.margin}>
-              <Select
-                labelId="demo-customized-select-label"
-                id="demo-customized-select"
-                value={timeWorking}
-                onChange={handleChange}
-                input={<BootstrapInput/>}
-              >
-                <MenuItem value={10}>All</MenuItem>
-                <MenuItem value={20}>8:00 -12:00</MenuItem>
-                <MenuItem value={30}>2:00 -18:00</MenuItem>
-              </Select>
-            </FormControl>
-          </Box>
-        </Box>
       </Box>
       <Paper className={classes.root}>
-        <CommonPage>
+        <CommonPage
+          advanceFilterList={advanceFilterValue}
+          dataMappingFunction={dataMappingFunction}
+          query={repoDoctor.getBookings}
+        >
           {ConsultationPatient}
         </CommonPage>
       </Paper>

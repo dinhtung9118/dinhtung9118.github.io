@@ -9,7 +9,7 @@ export abstract class BaseModel {
     map?: Partial<Record<K, (value: any) => this[K]>>,
   ) {
     if (!props) return;
-    props.id = props.id ?? props._id;
+    props.id = props.id || props._id;
     const mapValues = {} as this;
 
     Object.getOwnPropertyNames(this).forEach((name) => {

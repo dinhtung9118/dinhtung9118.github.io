@@ -10,6 +10,7 @@ const DashBoard = lazy(() => import('./DashBoard'));
 const Profile = lazy(() => import('./Profile'));
 const SchedulesPage = lazy(() => import('./Schedules'));
 const ConsultationSchedule = lazy(() => import('./ConsultationSchedule'));
+const BookingInfo = lazy(() => import('./ConsultationSchedule/BookingInfo'));
 
 const Routes: React.FC = (): JSX.Element => {
   return (
@@ -35,6 +36,10 @@ const Routes: React.FC = (): JSX.Element => {
           exact={true}
           path={RouteList.consultationSchedule}
           component={ConsultationSchedule}/>
+        <PrivateRoute
+          exact={true}
+          path={RouteList.bookingInfo}
+          component={BookingInfo}/>
       </Switch>
     </>
   )

@@ -6,6 +6,7 @@ export function useApi<R>(query:() => Promise<R>, deps: any[] = []) {
   const [state, setState] = useState<R | undefined>();
   query = useCallback(query, deps);
   useEffect(()=>{
+    console.log('deps =>>>',deps);
     loader.push(query().then(setState));
   }, [loader, query]);
   return state

@@ -1,7 +1,7 @@
 export interface TitleWithClassName {
   className: string;
   cellRender: string | React.ReactNode;
-  align?: 'right';
+  align?: 'right' | 'left' | 'center';
   minWidth: number;
 }
 interface DataType {
@@ -19,5 +19,4 @@ export interface TTableProps {
   className?: string;
   children?: React.ReactNode;
   readonly?: boolean;
-  className: string;
 }

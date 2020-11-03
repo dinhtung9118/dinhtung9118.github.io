@@ -17,13 +17,15 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   content: {
+    background: theme.palette.grey[50],
     flexGrow: 1,
+    marginTop: theme.spacing(6),
     padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: -0,
+    marginLeft: -drawerWidth + theme.spacing(7) + 1,
   },
   contentShift: {
     transition: theme.transitions.create('margin', {
@@ -117,9 +119,7 @@ const Layout: React.FC = ({children}) => {
   useConnectSnackBar(i18n);
   return (
     <div>
-        <Header/>
         <SideBar/>
-        <div className={classes.toolbar} />
         <main className={clsx(classes.content, {
           [classes.contentShift]: state.sideBar.collapsed,
         })} >

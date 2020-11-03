@@ -20,7 +20,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
+    background: theme.palette.grey[50],
+    zIndex: theme.zIndex.drawer,
+    boxShadow: 'none',
   },
   sectionDesktop: {
     display: 'none',
@@ -36,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Header: React.FC = () => {
+const Header: React.FC<{className: string}> = ({className}) => {
   const [, action] = useAuthentication();
   const classes = useStyles();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -60,7 +62,7 @@ const Header: React.FC = () => {
       onClose={handleMobileMenuClose}
     >
       <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
+        <IconButton aria-label="show 11 new notifications" color="primary">
           <Badge badgeContent={11} color="secondary">
             <NotificationsIcon />
           </Badge>
@@ -72,7 +74,7 @@ const Header: React.FC = () => {
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
           aria-haspopup="true"
-          color="inherit"
+          color="primary"
         >
           <AccountCircle />
         </IconButton>
@@ -83,9 +85,9 @@ const Header: React.FC = () => {
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
           aria-haspopup="true"
-          color="inherit"
+          color="primary"
         >
-          <AccountCircle />
+          <AccountCircle  />
         </IconButton>
         <p>Profile</p>
       </MenuItem>
@@ -100,23 +102,20 @@ const Header: React.FC = () => {
 
   return (
     <div>
-      <AppBar className={classes.appBar}>
+      <AppBar className={`${classes.appBar} ${className}`}>
         <Toolbar>
-          <Typography variant="h6" noWrap>
-            MebX
-          </Typography>
           <div className={classes.grow}/>
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
+            <IconButton aria-label="show 17 new notifications" color="primary">
               <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon/>
+                <NotificationsIcon color='primary'/>
               </Badge>
             </IconButton>
-            <IconButton>
-              <AccountCircle/>
+            <IconButton color='primary'>
+              <AccountCircle color='primary'/>
             </IconButton>
-            <IconButton onClick={action.logout}>
-              <AdjustIcon/>
+            <IconButton onClick={action.logout} color='primary'>
+              <AdjustIcon color='primary'/>
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>

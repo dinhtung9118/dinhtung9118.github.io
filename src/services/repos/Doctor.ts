@@ -5,9 +5,16 @@ import {Doctor, IDoctor, ModelStatus} from "models";
 import {IReqPaging, IResList, IResponse} from "./interface";
 import {RepoAccount} from "./Account";
 import {WorkingTime} from "models/workingTime";
-import { bookingMockData } from "./__mock__/__booking__";
+import {Booking} from "../../models/booking";
+import {BookingStatus} from "../../constants/enums";
 
 const time = moment(moment().format("YYYY-MM-DD")).subtract(1, "day");
+
+interface PayloadStatusBooking {
+  status: BookingStatus | string,
+  notes: string,
+  cancelReason?: string,
+}
 
 const demoWokingTime = Array.from({length: 30}, ($, index) => {
   time.add(1, "day");
@@ -58,9 +65,11 @@ class RepoDoctor extends RepoAccount<Doctor> {
     const model = new WorkingTime(payload);
     model.status = model.status === ModelStatus.ACTIVE ? ModelStatus.INACTIVE : ModelStatus.ACTIVE;
     const body = model.pickPayload(['status', 'date', 'sessions']);
-    await http.patch<IResList<WorkingTime>>(`/working-time/${payload.id}`, {
+    const {data} = await http.patch<IResponse<WorkingTime>>(`/working-time/${payload.id}`, {
       ...body,
     });
+    console.log('updateWorkingTime=>>', data);
+    return new WorkingTime(data.data!)
   };
 
   getWorkingTime = async (payload: any) => {
@@ -99,11 +108,29 @@ class RepoDoctor extends RepoAccount<Doctor> {
     };
   };
 
-  getBookings = async (payload: any) =>{
+  getBookings = async (payload: any) => {
+    const {data: {data, total}} = await http.get<IResList<Booking>>(`/booking/doctor`,{
+      params: payload,
+    });
     return {
-      data: bookingMockData
-    };
-  }
+      data: data?.map((item: Booking) => new Booking(item)),
+      total,
+    }
+  };
+
+  getBookingInfo = async (id: string) =>{
+    const {data}= await http.get(`/booking/doctor/${id}`);
+    console.log('dattatata', data);
+    return new Booking(data);
+  };
+
+    updateStatusBooking = async (id: string, payloadStatusBooking: PayloadStatusBooking) => {
+    const {data} = await http.patch<IResponse<Booking>>(`/booking/doctor/${id}`,{
+       ...payloadStatusBooking
+    });
+    console.log(data);
+    return new Booking(data.data!);
+  };
 
   async uploadAvatar(file: File, fileName: string) {
     const {

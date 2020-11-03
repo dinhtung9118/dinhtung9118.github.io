@@ -8,12 +8,26 @@ export const useStyles = makeStyles((theme) => ({
   hide:{
     display: 'none',
   },
+  appBar: {
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: drawerWidth,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
   toolbar:{
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'flex-end',
-      marginTop: theme.spacing(6),
-      padding: theme.spacing(0, 1),
+      justifyContent: 'space-between',
+      marginTop: theme.spacing(1),
+      padding: theme.spacing(0, 1,0,2),
       // necessary for content to be below app bar
       ...theme.mixins.toolbar,
   },
@@ -21,6 +35,7 @@ export const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
+    background: theme.palette.text.disabled
   },
   drawerOpen: {
     width: drawerWidth,
@@ -65,8 +80,16 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
   },
   link:{
-    underline: 'none',
+    textDecoration: 'none',
+    color: theme.palette.common.white,
+  },
+  IconMenu:{
+    color: theme.palette.common.white,
+  },
+  '@global': {
+    '.MuiDrawer-paper':{
+      background: '#3f4651',
+    }
   }
-
 }));
 

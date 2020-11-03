@@ -7,7 +7,6 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  makeStyles
 } from '@material-ui/core';
 
 import {
@@ -29,7 +28,7 @@ const CommonTable: React.FC<TTableProps> = ({
     return (
       children || (
         <TableRow>
-          <TableCell colSpan={pathList!.length} className="text-center">
+          <TableCell align="center" colSpan={pathList!.length} className="text-center">
             'NO_DATA'
           </TableCell>
         </TableRow>
@@ -71,7 +70,7 @@ const CommonTable: React.FC<TTableProps> = ({
             <TableRow hover role="checkbox" tabIndex={-1} key={indexRow}>
               {pathList.map((path, index) => {
                 return (
-                  <TableCell key={path} align={'right'}>
+                  <TableCell key={path} align={(titleList[index] as TitleWithClassName)?.align || 'left'}>
                     {row[path] || ''}
                   </TableCell>
                 );

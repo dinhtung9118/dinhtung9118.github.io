@@ -1,6 +1,16 @@
 import React, {useEffect, useState} from "react"
+import {Link} from 'react-router-dom'
 
-import {Paper, Box, Button, useTheme} from '@material-ui/core';
+import {
+  Paper,
+  Box,
+  Button,
+  FormControlLabel,
+  Switch,
+  useTheme,
+  Theme,
+  makeStyles
+} from '@material-ui/core';
 import moment from "moment";
 import {
   doctor as repoDoctor,
@@ -24,6 +34,8 @@ import {
 import {ViewState} from "@devexpress/dx-react-scheduler";
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import {AccountStatus, ModelStatus} from "../../models";
+import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
+import {RouteList} from "../../routeList";
 
 
 interface IMapped {
@@ -32,8 +44,16 @@ interface IMapped {
   schedules: any[],
 }
 
+const useStyles = makeStyles((theme: Theme) => ({
+  link:{
+    textDecoration: 'none',
+    color: theme.palette.primary.main,
+  }
+}));
+
 const SchedulesPage: React.FC = () => {
   const theme = useTheme();
+  const classes = useStyles();
   const resourcesData = [
     {
       text: 'Active',
@@ -46,28 +66,35 @@ const SchedulesPage: React.FC = () => {
     },
   ];
   const [currentDate, setCurrentDate] = React.useState(() => new Date());
-  const [mapped, setMapped]= useState<IMapped>({
+  const [mapped, setMapped] = useState<IMapped>({
     startDay: 8,
     endDay: 18,
     schedules: [],
   });
   const [state] = useAuthentication();
+  const [active, setActive] = useState(false);
+  const [data, setData] = useState<WorkingTime[]>();
   const payload = {
     doctorId: state.account.externalId,
     offset: 0,
     limit: 50,
     // date: timeExpired,
   };
-  const data = useApi(() => repoDoctor.getWorkingTime(payload));
+
+
+  const dataRs = useApi(() => repoDoctor.getWorkingTime(payload));
+  useEffect(()=>{
+    dataRs && setData(dataRs.data)
+  }, [dataRs]);
 
   useEffect(() => {
-
+    console.log('useEffect1');
     if (data) {
       let startDay = 8;
       let endDay = 18;
 
       const schedules = WorkingTime
-        .toSchedule(data.data || [])
+        .toSchedule(data || [])
         .map((s) => {
           console.log('ssssss=>', s);
           const start = (s.startDate as Date).getHours();
@@ -75,8 +102,8 @@ const SchedulesPage: React.FC = () => {
           if (startDay > start) startDay = start;
           if (endDay < end) endDay = end;
           return {...s, status: s.data.status}
-        }) ;
-
+        });
+      console.log('useEffect 2');
       setMapped({
         startDay,
         endDay,
@@ -84,6 +111,7 @@ const SchedulesPage: React.FC = () => {
       })
     }
   }, [data]);
+
   const resources = [
     {
       fieldName: 'status',
@@ -92,38 +120,64 @@ const SchedulesPage: React.FC = () => {
   ];
 
   const handlerChangeStatusSessions = (sessionWorking: WorkingTime) => {
-    repoDoctor.updateWorkingTime(sessionWorking);
+    setActive(!active);
+    repoDoctor.updateWorkingTime(sessionWorking).then((rs) => {
+
+      const newWorkingTime = data || [];
+      const indexOfScheduleUpdate = newWorkingTime.findIndex((value) => rs.id === value.id);
+      if (newWorkingTime?.length > 0 && indexOfScheduleUpdate !== -1) {
+        newWorkingTime[indexOfScheduleUpdate] = rs;
+        setData([...newWorkingTime])
+      }
+    });
   };
 
   const renderDetailSession = (props: any) => {
     const workingTime: WorkingTime = props.appointmentData?.data;
-    if(workingTime && !workingTime.sessions) return (<></>);
-    console.log(workingTime.sessions[0].from);
-    console.log(workingTime.sessions[0].to);
+    const readOnly = new Date().getTime() > new Date(workingTime.date).getTime() + workingTime.sessions[0].to;
+    if (workingTime && !workingTime.sessions) return (<></>);
     const startTime = WorkingTime.minusFormat(workingTime.sessions[0].from || 0) || '';
     const endTime = WorkingTime.minusFormat(workingTime.sessions[0].to || 0) || '';
     console.log('props', workingTime);
+    setActive(workingTime.status === ModelStatus.ACTIVE);
     return (
       <Box p={2}>
         <Box alignItems="center" display="flex" flexDirection="row" mb={1}>
-          <Box width="1.5em" height="1.5em" bgcolor={workingTime.status === "ACTIVE"?
-            'success.main':
-            'text.disabled'
-          } borderRadius="50%" />
+          <Box width="1.5em" height="1.5em"
+               bgcolor={workingTime.status === "ACTIVE" ?
+                 'success.main' :
+                 'text.disabled'
+               } borderRadius="50%"/>
           <Box ml={1}>{moment(workingTime.date).format('DD MMMM YYYY')}</Box>
         </Box>
         <Box alignItems="center" display="flex" flexDirection="row">
           <Box mr={1}>
-            <AccessTimeIcon />
+            <AccessTimeIcon/>
           </Box>
           <Box>{startTime} - {endTime}</Box>
         </Box>
-        <Box display="flex" justifyContent="flex-end">
-          <Button variant="contained"
-                  color={workingTime.status === ModelStatus.INACTIVE ?'primary':'default'}
-                  onClick={() => handlerChangeStatusSessions(workingTime)}>
-            {workingTime.status === ModelStatus.ACTIVE ? "Inactive" : "Active"}
-          </Button>
+        <Box alignItems="center" display="flex" flexDirection="row">
+          <Box mr={1}>
+            <AssignmentIndIcon/>
+          </Box>
+          <Link
+            className={classes.link}
+           to={`${RouteList.consultationSchedule}?date=${workingTime.date}`}>
+            Go to Consultation Schedule</Link>
+        </Box>
+        <Box mb={2}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={active}
+                disabled={readOnly}
+                onChange={() => handlerChangeStatusSessions(workingTime)}
+                name="activeWorking"
+                color="secondary"
+              />
+            }
+            label={workingTime.status === ModelStatus.ACTIVE ? "Active" : "Inactive"}
+          />
         </Box>
       </Box>)
   }

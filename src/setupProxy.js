@@ -12,6 +12,7 @@ module.exports = function (app) {
     specialty: 8081,
     'specialty-types': 8081,
     cats: 8082,
+    booking: 8082,
     doctors: 8082,
     'working-time': 8082,
     patients: 8083,

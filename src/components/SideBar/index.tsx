@@ -4,11 +4,10 @@ import clsx from 'clsx';
 import {
   Drawer,
   IconButton,
-  Divider,
   List,
   ListItem,
   ListItemIcon,
-  ListItemText
+  ListItemText, Typography
 } from '@material-ui/core';
 import {useStyles} from "./index.style";
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -18,6 +17,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import {mockDataSidebar} from "./SideBarMenu";
 import {MenuProps} from "./SideBar";
 import useUI from "../../stores/UIstore/UIStore";
+import Header from "../Header";
 
 
 const SideBar: React.FC = () => {
@@ -28,39 +28,48 @@ const SideBar: React.FC = () => {
   };
 
   return (
-    <Drawer
-      variant="permanent"
-      className={clsx(classes.drawer, {
-        [classes.drawerOpen]: state.sideBar.collapsed,
-        [classes.drawerClose]: !state.sideBar.collapsed,
-      })}
-      classes={{
-        paper: clsx({
+    <>
+      <Header className={clsx(classes.appBar, {
+        [classes.appBarShift]: state.sideBar.collapsed,
+      })}/>
+      <Drawer
+        variant="permanent"
+        className={clsx(classes.drawer, {
           [classes.drawerOpen]: state.sideBar.collapsed,
           [classes.drawerClose]: !state.sideBar.collapsed,
-        }),
-      }}
-    >
-      <div className={classes.toolbar}>
-        <IconButton onClick={handlerDrawer}>
-          {state.sideBar.collapsed ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
-        </IconButton>
-      </div>
-      <Divider/>
-      <List>
-        {mockDataSidebar.menus.map((menu: MenuProps, index: number) => (
-          <Link key={`${menu.title}_${index}`} className={`${classes.link} underlineNone`} to={menu.to}>
-            <ListItem button>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon/> :
-                  <MailIcon/>}
-              </ListItemIcon>
-              <ListItemText primary={menu.title}/>
-            </ListItem>
-          </Link>
-        ))}
-      </List>
-    </Drawer>
+        })}
+        classes={{
+          paper: clsx({
+            [classes.drawerOpen]: state.sideBar.collapsed,
+            [classes.drawerClose]: !state.sideBar.collapsed,
+          }),
+        }}
+      >
+        <div className={classes.toolbar}>
+          <Typography variant="h5" noWrap color="primary">
+            MebX
+          </Typography>
+          <IconButton onClick={handlerDrawer}>
+            {state.sideBar.collapsed ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
+          </IconButton>
+        </div>
+        <List>
+          {mockDataSidebar.menus.map((menu: MenuProps, index: number) => (
+            <Link
+              key={`${menu.title}_${index}`} className={`${classes.link}`}
+              to={menu.to}>
+              <ListItem button>
+                <ListItemIcon>
+                  {index % 2 === 0 ? <InboxIcon className={classes.IconMenu}/> :
+                    <MailIcon className={classes.IconMenu}/>}
+                </ListItemIcon>
+                <ListItemText primary={menu.title}/>
+              </ListItem>
+            </Link>
+          ))}
+        </List>
+      </Drawer>
+    </>
   );
 }
 

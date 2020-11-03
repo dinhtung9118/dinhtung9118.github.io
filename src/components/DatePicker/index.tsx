@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactDatePicker from "react-datepicker";
 import moment from "moment";
 import {makeStyles, createStyles, Theme} from '@material-ui/core';
@@ -73,14 +73,18 @@ const DatePicker: React.FC<TDatePicker> = ({
                                              onChange,
                                              useCustomHeader,
                                              yearDropdownItemNumber = DEFAULT_YEAR_DROPDOWN_ITEM,
+                                             dateValue
                                            }) => {
   const classes = useStyles();
   const [isFocusDatePicker, setFocusDatePicker] = useState(false);
   const [value, setValue] = useState(new Date());
+  useEffect(()=>{
+    dateValue && setValue(dateValue);
+  },[dateValue]);
 
-  const handleChangeDate = (date: Date) => {
+  const handleChangeDate = (date: Date, e: React.SyntheticEvent<any> | undefined) => {
     setFocusDatePicker(false);
-    setValue(date);
+    onChange && onChange(date, e);
   };
 
   return (

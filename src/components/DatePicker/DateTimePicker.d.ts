@@ -5,7 +5,7 @@ import { ReactDatePickerProps } from 'react-datepicker';
  * The origin props of react-datepicker which will be used as options
  */
 export interface OptionalDatePickerProps extends ReactDatePickerProps {
-  onChange?(date: Date | null, event: React.SyntheticEvent<any> | undefined): void;
+  onChange (date: Date | null, event: React.SyntheticEvent<any> | undefined): void;
 }
 
 /**
@@ -23,7 +23,7 @@ export interface DatePickerProps {
   disabled?: boolean;
   isShowYearPicker?: boolean;
   useCustomHeader?: boolean;
-  dataValue?: Date;
+  dateValue?: Date;
 }
 
 export interface CustomHeaderProps {

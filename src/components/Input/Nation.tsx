@@ -1,22 +1,20 @@
-import React, {useMemo} from "react";
+import React, { useMemo } from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import {TextField, TextFieldProps} from "@material-ui/core";
-import {IValidError} from "untils";
-import {useI18n} from "../../stores/Locale/LocaleStore";
+import { TextField, TextFieldProps } from "@material-ui/core";
+import { IValidError } from "untils";
+import { useI18n } from "../../stores/Locale/LocaleStore";
 
-export const Nation: React.FC<Omit<TextFieldProps, "onChange" | "error"> & {
-  onChange: (value?: string) => void;
-  error?: IValidError;
-}> = ({
-        onChange,
-        error,
-        ...props
-      }) => {
+export const Nation: React.FC<
+  Omit<TextFieldProps, "onChange" | "error"> & {
+    onChange: (value?: string) => void;
+    error?: IValidError;
+  }
+> = ({ onChange, error, ...props }) => {
   const {
-    config: {nations},
-    component: {inputs},
+    config: { nations },
+    component: { inputs },
   } = useI18n();
-  const {errors = {}} = inputs.nation;
+  const { errors = {} } = inputs.nation;
 
   const options = useMemo(() => Object.entries(nations), [nations]);
 

@@ -1,4 +1,4 @@
-import {BaseModel} from "./base";
+import { BaseModel } from "./base";
 
 export enum ModelStatus {
   ACTIVE = "ACTIVE",
@@ -30,8 +30,7 @@ export type IAccount = Pick<
   | "avatar"
   | "groupId"
   | "externalId"
-  >;
-
+>;
 
 export class Account extends BaseModel {
   constructor(props?: IAccount) {

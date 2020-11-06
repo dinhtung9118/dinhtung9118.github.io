@@ -4,9 +4,9 @@ import { IconButton, Box } from "@material-ui/core";
 import { useSnackbar } from "notistack";
 
 export const CloseButton = ({
-                              name,
-                              message,
-                            }: {
+  name,
+  message,
+}: {
   name: string;
   message: string;
 }) => {

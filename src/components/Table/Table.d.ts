@@ -1,7 +1,7 @@
 export interface TitleWithClassName {
   className: string;
   cellRender: string | React.ReactNode;
-  align?: 'right' | 'left' | 'center';
+  align?: "right" | "left" | "center";
   minWidth: number;
 }
 interface DataType {

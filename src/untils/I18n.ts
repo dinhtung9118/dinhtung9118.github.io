@@ -1,4 +1,4 @@
-import {IValidErrorMsgs} from "./Validations.d";
+import { IValidErrorMsgs } from "./Validations.d";
 
 type IMapString = Record<string, string>;
 
@@ -352,8 +352,8 @@ export class I18n {
     login: {
       forgot: "Forgot password",
     },
-    consultationSchedule:{
-      title: "Consultantion Schedule Partiens"
+    consultationSchedule: {
+      title: "Consultantion Schedule Partiens",
     },
     error404: {
       goToHome: "Go to home",

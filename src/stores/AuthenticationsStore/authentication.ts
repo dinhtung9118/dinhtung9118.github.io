@@ -2,14 +2,13 @@ import {
   createContainer,
   createHook,
   createStore,
-  StoreActionApi
+  StoreActionApi,
 } from "react-sweet-state";
-import {LoginFormValues} from 'components/FormLogin/index.d'
-import {auth as authRepo} from "services/repos/Auth/index";
-import {setHttpAuth} from "services/Clients";
-import { AccountRole, AccountStatus} from "models/account";
+import { LoginFormValues } from "components/FormLogin/index.d";
+import { auth as authRepo } from "services/repos/Auth/index";
+import { setHttpAuth } from "services/Clients";
+import { AccountRole, AccountStatus } from "models/account";
 import databases from "../../storages";
-
 
 type StoreApi = StoreActionApi<IAuthState>;
 type Actions = typeof actions;
@@ -30,25 +29,28 @@ export interface IAuthState<A = any> {
 
 export const initialStoreState = {
   account: {
-    id:'',
-    email:'',
-    firstName:'',
-    lastName:'',
-    phoneNumber:'',
-    password:'',
-    role:AccountRole.DOCTOR,
-    status:AccountStatus.ACTIVE,
+    id: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    password: "",
+    role: AccountRole.DOCTOR,
+    status: AccountStatus.ACTIVE,
     active: true,
-    avatar:''
+    avatar: "",
   },
   status: AuthStatus.INITIAL,
-  token: '',
+  token: "",
   initiated: false,
-}
-export const AUTHENTICATION_STORE = 'StoreAuthentication';
+};
+export const AUTHENTICATION_STORE = "StoreAuthentication";
 
 export const actions = {
-  login: ((value: LoginFormValues) => async ({getState, setState}: StoreActionApi<IAuthState>) =>{
+  login: (value: LoginFormValues) => async ({
+    getState,
+    setState,
+  }: StoreActionApi<IAuthState>) => {
     try {
       const state = await authRepo.login(value.email, value.password);
       setHttpAuth(state.token);
@@ -56,33 +58,37 @@ export const actions = {
     } catch (error) {
       console.warn("TODO:", "Show message login error");
     }
-  }),
-  logout:() => async ({ setState }: StoreApi) => {
+  },
+  logout: () => async ({ setState }: StoreApi) => {
     try {
       await databases.removeItem(storeKey);
-      setState({...initialStoreState} );
+      setState({ ...initialStoreState });
     } catch (error) {
       await databases.removeItem(storeKey);
-      setState({...initialStoreState} );
+      setState({ ...initialStoreState });
       console.warn("TODO:", "Show message login error");
     }
-  }
+  },
 };
 
 const Store = createStore<IAuthState, Actions>({
   initialState: initialStoreState,
   actions,
   name: AUTHENTICATION_STORE,
-   });
+});
 const useAuthentication = createHook(Store);
 
-export const storeKey = `${Store.key.join('__')}@__global__`;
+export const storeKey = `${Store.key.join("__")}@__global__`;
 
 type StoreContainerProps = {
   initialState: IAuthState;
 };
 
-export const AuthenticationContainer = createContainer<IAuthState, Actions, StoreContainerProps>(Store,{
+export const AuthenticationContainer = createContainer<
+  IAuthState,
+  Actions,
+  StoreContainerProps
+>(Store, {
   onInit: () => ({ setState }: StoreApi, { initialState }) => {
     setHttpAuth(initialState.token);
     setState({ ...initialState });
@@ -90,5 +96,3 @@ export const AuthenticationContainer = createContainer<IAuthState, Actions, Stor
 });
 
 export default useAuthentication;
-
-

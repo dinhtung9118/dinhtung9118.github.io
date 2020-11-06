@@ -7,7 +7,7 @@
   "rules": {
     "import-name": false,
     "max-line-length": {
-      "options": [80]
+      "options": [120]
     },
     "new-parens": true,
     "no-arg": true,

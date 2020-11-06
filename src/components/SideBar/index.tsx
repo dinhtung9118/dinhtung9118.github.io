@@ -1,24 +1,24 @@
-import React from 'react';
-import {Link} from 'react-router-dom'
-import clsx from 'clsx';
+import React from "react";
+import { Link } from "react-router-dom";
+import clsx from "clsx";
 import {
   Drawer,
   IconButton,
   List,
   ListItem,
   ListItemIcon,
-  ListItemText, Typography
-} from '@material-ui/core';
-import {useStyles} from "./index.style";
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import {mockDataSidebar} from "./SideBarMenu";
-import {MenuProps} from "./SideBar";
+  ListItemText,
+  Typography,
+} from "@material-ui/core";
+import { useStyles } from "./index.style";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
+import MailIcon from "@material-ui/icons/Mail";
+import { mockDataSidebar } from "./SideBarMenu";
+import { MenuProps } from "./SideBar";
 import useUI from "../../stores/UIstore/UIStore";
 import Header from "../Header";
-
 
 const SideBar: React.FC = () => {
   const [state, action] = useUI();
@@ -29,9 +29,11 @@ const SideBar: React.FC = () => {
 
   return (
     <>
-      <Header className={clsx(classes.appBar, {
-        [classes.appBarShift]: state.sideBar.collapsed,
-      })}/>
+      <Header
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: state.sideBar.collapsed,
+        })}
+      />
       <Drawer
         variant="permanent"
         className={clsx(classes.drawer, {
@@ -50,20 +52,29 @@ const SideBar: React.FC = () => {
             MebX
           </Typography>
           <IconButton onClick={handlerDrawer}>
-            {state.sideBar.collapsed ? <ChevronLeftIcon/> : <ChevronRightIcon/>}
+            {state.sideBar.collapsed ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
           </IconButton>
         </div>
         <List>
           {mockDataSidebar.menus.map((menu: MenuProps, index: number) => (
             <Link
-              key={`${menu.title}_${index}`} className={`${classes.link}`}
-              to={menu.to}>
+              key={`${menu.title}_${index}`}
+              className={`${classes.link}`}
+              to={menu.to}
+            >
               <ListItem button>
                 <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon className={classes.IconMenu}/> :
-                    <MailIcon className={classes.IconMenu}/>}
+                  {index % 2 === 0 ? (
+                    <InboxIcon className={classes.IconMenu} />
+                  ) : (
+                    <MailIcon className={classes.IconMenu} />
+                  )}
                 </ListItemIcon>
-                <ListItemText primary={menu.title}/>
+                <ListItemText primary={menu.title} />
               </ListItem>
             </Link>
           ))}
@@ -71,6 +82,6 @@ const SideBar: React.FC = () => {
       </Drawer>
     </>
   );
-}
+};
 
-export default SideBar
+export default SideBar;

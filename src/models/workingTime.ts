@@ -5,7 +5,7 @@ import { AppointmentModel } from "@devexpress/dx-react-scheduler";
 export type IWorkingTime = Pick<
   WorkingTime,
   "id" | "doctorId" | "status" | "date" | "sessions"
-  >;
+>;
 
 export interface ISession {
   from: number;
@@ -23,10 +23,10 @@ export class WorkingTime extends BaseModel {
       },
     });
   }
-  id: string = '';
-  doctorId: string = '';
-  status: string = '';
-  date: string = '';
+  id: string = "";
+  doctorId: string = "";
+  status: string = "";
+  date: string = "";
   sessions: ISession[] = [];
 
   static toSchedule(workingTimes: WorkingTime[]) {

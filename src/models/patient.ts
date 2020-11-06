@@ -10,7 +10,7 @@ export type IPatient = IAccount &
     | "nationCode"
     | "nationalityCode"
     | "job"
-    >;
+  >;
 
 export class Patient extends Account {
   constructor(props: IPatient) {

@@ -3,22 +3,28 @@ import React, {
   ComponentType,
   useState,
   useLayoutEffect,
-  useEffect
-} from 'react';
+  useEffect,
+} from "react";
 
-import { UIContainer, storeKey, initialState as initialStoreState } from './UIStore';
+import {
+  UIContainer,
+  storeKey,
+  initialState as initialStoreState,
+} from "./UIStore";
 import databases from "storages";
-import {useLocale} from "../Locale/LocaleStore";
-import {useLoaderActions} from "../Loader";
-import {RootThemeProvider} from "../../themes/Providers";
+import { useLocale } from "../Locale/LocaleStore";
+import { useLoaderActions } from "../Loader";
+import { RootThemeProvider } from "../../themes/Providers";
 
-const withUIPersist = <P extends object>(Component: ComponentType<P>): FC<P & any> => ({ ...props }: any) => {
+const withUIPersist = <P extends object>(
+  Component: ComponentType<P>,
+): FC<P & any> => ({ ...props }: any) => {
   const [storePersisted, setStorePersisted] = useState(initialStoreState);
   const loader = useLoaderActions();
   const [, localeActions] = useLocale();
-  useEffect(()=>{
+  useEffect(() => {
     loader.push(localeActions.load());
-  },[]);
+  }, []);
   useLayoutEffect(() => {
     (async function getPersistData() {
       const data = await databases.getItem(storeKey).catch((err: Error) => {

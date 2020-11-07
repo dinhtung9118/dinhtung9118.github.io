@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Link} from "react-router-dom";
 import {
   Box,
   Typography,
@@ -8,14 +8,14 @@ import {
   createStyles,
   makeStyles,
 } from "@material-ui/core";
-import { useI18n } from "../../stores/Locale/LocaleStore";
+import {useI18n} from "../../stores/Locale/LocaleStore";
 import CommonPage from "../CommonPage";
 import ConsultationPatient from "./ConsultaionWrapper/patientList";
-import { doctor as repoDoctor } from "../../services/repos";
+import {doctor as repoDoctor} from "../../services/repos";
 
-import { BookingStatus } from "../../constants/enums";
-import { Booking } from "../../models/booking";
-import { RouteList } from "../../routeList";
+import {BookingStatus} from "../../constants/enums";
+import {Booking} from "../../models/booking";
+import {RouteList} from "../../routeList";
 import moment from "moment";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -41,13 +41,13 @@ const defaultPropsBorder = {
   borderColor: "text.primary.light",
   m: 1,
   border: 3,
-  style: { width: 8, height: 8 },
+  style: {width: 8, height: 8},
 };
 
 const ConsultationSchedule: React.FC = () => {
   const classes = useStyles();
   const i18n = useI18n();
-  const { pages } = i18n;
+  const {pages} = i18n;
   const advanceFilterValue = ["start", "status", "type"];
 
   const mapStatusToColor = (status: BookingStatus | string) => {
@@ -113,6 +113,9 @@ const ConsultationSchedule: React.FC = () => {
             {pages.consultationSchedule.title}
           </Box>
         </Typography>
+        <Link className={classes.link} to={RouteList.consultationCreate}> Create Schedule time
+          consultation
+        </Link>
       </Box>
       <Paper className={classes.root}>
         <CommonPage

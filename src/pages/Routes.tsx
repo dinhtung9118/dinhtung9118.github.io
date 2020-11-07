@@ -1,7 +1,7 @@
 import React from "react";
-import { lazy } from "react";
-import { Route, Switch } from "react-router-dom";
-import { RouteList } from "../routeList";
+import {lazy} from "react";
+import {Route, Switch} from "react-router-dom";
+import {RouteList} from "../routeList";
 import Login from "./Login";
 import LinearIndeterminate from "../components/LinearIndeterminate";
 import PrivateRoute from "./PrivateRoute";
@@ -11,13 +11,14 @@ const Profile = lazy(() => import("./Profile"));
 const SchedulesPage = lazy(() => import("./Schedules"));
 const ConsultationSchedule = lazy(() => import("./ConsultationSchedule"));
 const BookingInfo = lazy(() => import("./ConsultationSchedule/BookingInfo"));
+const ConsulteantionCreate = lazy(() => import('./ConsultationSchedule/Create'));
 
 const Routes: React.FC = (): JSX.Element => {
   return (
     <>
-      <LinearIndeterminate />
+      <LinearIndeterminate/>
       <Switch>
-        <Route path={RouteList.auth.login} component={Login} />
+        <Route path={RouteList.auth.login} component={Login}/>
         <PrivateRoute
           exact={true}
           path={RouteList.dashboard}
@@ -42,6 +43,11 @@ const Routes: React.FC = (): JSX.Element => {
           exact={true}
           path={RouteList.bookingInfo}
           component={BookingInfo}
+        />
+        <PrivateRoute
+          exact={true}
+          path={RouteList.consultationCreate}
+          component={ConsulteantionCreate}
         />
       </Switch>
     </>

@@ -84,7 +84,7 @@ const Store = createStore({
       });
     },
   },
-  name: BLOCKSPLITTIME_STORE
+  name: BLOCKSPLITTIME_STORE,
 });
 
 export const Container = createContainer(Store, {

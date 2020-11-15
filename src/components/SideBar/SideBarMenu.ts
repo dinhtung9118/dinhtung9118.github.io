@@ -9,7 +9,7 @@ export const mockDataSidebar: MockDataSidebarProps = {
       icon: "fa-youtube-play",
       subCreateMenus: [],
       subMenus: [],
-      to: RouteList.profile,
+      to: RouteList.examinationSchedule,
     },
     {
       title: "Lich Tu Van",
@@ -36,12 +36,12 @@ export const mockDataSidebar: MockDataSidebarProps = {
       to: RouteList.profile,
     },
     {
-      title: "Ho So Cong Viec",
+      title: "Lich tư vấn Làm Việc",
       featureName: "",
       icon: "fa-youtube-play",
       subCreateMenus: [],
       subMenus: [],
-      to: RouteList.profile,
+      to: RouteList.consultationWorkingTime,
     },
     {
       title: "Lich lam viec",

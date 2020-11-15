@@ -19,10 +19,10 @@ export type IPopoverConfirmProps = Omit<IAnchorProps, "children"> & {
 };
 
 export const PopoverConfirm = ({
-                                 i18n,
-                                 onAccept,
-                                 ...props
-                               }: IPopoverConfirmProps) => {
+  i18n,
+  onAccept,
+  ...props
+}: IPopoverConfirmProps) => {
   const { system } = useI18n();
   return (
     <PopoverAnchor disableBackdropClick {...props}>

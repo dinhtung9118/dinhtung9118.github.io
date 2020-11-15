@@ -11,25 +11,25 @@ import { AddButton } from "./AddButton";
 import { WorkingTime } from "models";
 
 const Spliter = ({
-                   label,
-                   classes,
-                 }: {
+  label,
+  classes,
+}: {
   label: string;
   classes: { root: string; label: string };
 }) => {
   return (
     <div className={classes.root}>
-    <div className={classes.label}>
-      <span>{label}</span>
-      <ChevronRight />
+      <div className={classes.label}>
+        <span>{label}</span>
+        <ChevronRight />
       </div>
-      </div>
+    </div>
   );
 };
 
 const BlockSplit = ({
-                      onSelected,
-                    }: {
+  onSelected,
+}: {
   onSelected?: (blocks: IBlock[]) => any;
 }) => {
   const classes = useStyles();
@@ -40,10 +40,10 @@ const BlockSplit = ({
   const spliter = (minus: number, key?: string) => (
     <Spliter
       key={key}
-  label={WorkingTime.minusFormat(minus)}
-  classes={{ root: classes.spliter, label: classes.spliterTime }}
-  />
-);
+      label={WorkingTime.minusFormat(minus)}
+      classes={{ root: classes.spliter, label: classes.spliterTime }}
+    />
+  );
 
   useEffect(() => {
     onSelected?.(selected);
@@ -53,37 +53,37 @@ const BlockSplit = ({
     <div className={classes.root}>
       {spliter(begin)}
       <div className={classes.content}>
-    {blocks
-      .map((block, index) => {
-        const height = (block.value / length) * 100 + 0.5 + "%";
-        return (
-          <div
-            key={`block-${index}`}
-        className={classes.block}
-        style={{ height }}
-      >
-        {isEdit ? (
-            <BlockEdit
-              key={index}
-          index={index}
-          className={classes.noRipper}
-          />
-        ) : (
-          <BlockSelect key={index} index={index} />
-        )}
-        </div>
-      );
-      })
-        .seperate((index) => spliter(blocks[index].to, `spriter-${index}`))}
-    <AddButton className={classes.addButton} />
-  </div>
-  {spliter(begin + length)}
+        {blocks
+          .map((block, index) => {
+            const height = (block.value / length) * 100 + 0.5 + "%";
+            return (
+              <div
+                key={`block-${index}`}
+                className={classes.block}
+                style={{ height }}
+              >
+                {isEdit ? (
+                  <BlockEdit
+                    key={index}
+                    index={index}
+                    className={classes.noRipper}
+                  />
+                ) : (
+                  <BlockSelect key={index} index={index} />
+                )}
+              </div>
+            );
+          })
+          .seperate((index) => spliter(blocks[index].to, `spriter-${index}`))}
+        <AddButton className={classes.addButton} />
+      </div>
+      {spliter(begin + length)}
 
-  <IconButton color="secondary" size="small" onClick={actions.editToggle}>
-    {isEdit ? <DoneAll /> : <Edit />}
-    </IconButton>
+      <IconButton color="secondary" size="small" onClick={actions.editToggle}>
+        {isEdit ? <DoneAll /> : <Edit />}
+      </IconButton>
     </div>
-);
+  );
 };
 
 type BlockSplitProps = {
@@ -95,7 +95,7 @@ type BlockSplitProps = {
 export default ({ onSelected, ...props }: BlockSplitProps) => {
   return (
     <Container {...props}>
-    <BlockSplit onSelected={onSelected} />
-  </Container>
-);
+      <BlockSplit onSelected={onSelected} />
+    </Container>
+  );
 };

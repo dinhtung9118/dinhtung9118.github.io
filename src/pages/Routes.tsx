@@ -1,24 +1,28 @@
 import React from "react";
-import {lazy} from "react";
-import {Route, Switch} from "react-router-dom";
-import {RouteList} from "../routeList";
+import { lazy } from "react";
+import { Route, Switch } from "react-router-dom";
+import { RouteList } from "../routeList";
 import Login from "./Login";
 import LinearIndeterminate from "../components/LinearIndeterminate";
 import PrivateRoute from "./PrivateRoute";
+import { Box, Button, FormControl } from "@material-ui/core";
 
 const DashBoard = lazy(() => import("./DashBoard"));
 const Profile = lazy(() => import("./Profile"));
 const SchedulesPage = lazy(() => import("./Schedules"));
 const ConsultationSchedule = lazy(() => import("./ConsultationSchedule"));
+const Examinationchedule = lazy(() => import("./Examination"));
 const BookingInfo = lazy(() => import("./ConsultationSchedule/BookingInfo"));
-const ConsulteantionCreate = lazy(() => import('./ConsultationSchedule/Create'));
+const SchedulesConsultationPage = lazy(
+  () => import("./Schedules/ConsultationWorkingTime"),
+);
 
 const Routes: React.FC = (): JSX.Element => {
   return (
     <>
-      <LinearIndeterminate/>
+      <LinearIndeterminate />
       <Switch>
-        <Route path={RouteList.auth.login} component={Login}/>
+        <Route path={RouteList.auth.login} component={Login} />
         <PrivateRoute
           exact={true}
           path={RouteList.dashboard}
@@ -46,8 +50,13 @@ const Routes: React.FC = (): JSX.Element => {
         />
         <PrivateRoute
           exact={true}
-          path={RouteList.consultationCreate}
-          component={ConsulteantionCreate}
+          path={RouteList.consultationWorkingTime}
+          component={SchedulesConsultationPage}
+        />
+        <PrivateRoute
+          exact={true}
+          path={RouteList.examinationSchedule}
+          component={Examinationchedule}
         />
       </Switch>
     </>

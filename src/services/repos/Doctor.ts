@@ -2,7 +2,12 @@ import moment from "moment";
 
 import { config, http } from "../Clients/Http";
 import { Doctor, IDoctor, ModelStatus } from "models";
-import { IReqPaging, IResList, IResponse } from "./interface";
+import {
+  IReqPaging,
+  IResList,
+  IResponse,
+  PDoctorsWorkingTime,
+} from "./interface";
 import { RepoAccount } from "./Account";
 import { WorkingTime } from "models/workingTime";
 import { Booking } from "../../models/booking";
@@ -15,24 +20,6 @@ interface PayloadStatusBooking {
   notes: string;
   cancelReason?: string;
 }
-
-const demoWokingTime = Array.from({ length: 30 }, ($, index) => {
-  time.add(1, "day");
-  return new WorkingTime({
-    id: "",
-    doctorId: "",
-    status: "",
-    date: time.format("YYYY-MM-DD"),
-    sessions: [
-      { from: 480, to: 600 },
-      { from: 600, to: 720 },
-      { from: 780, to: 840 },
-      { from: 840, to: 930 },
-      { from: 975, to: 1005 },
-      { from: 1005, to: 1125 },
-    ],
-  });
-});
 
 class RepoDoctor extends RepoAccount<Doctor> {
   constructor() {
@@ -60,17 +47,13 @@ class RepoDoctor extends RepoAccount<Doctor> {
     await http.patch(`doctors/me/update-password`, data);
   };
 
-  schedules = async (id: string) => {
-    return Promise.delay(500, demoWokingTime);
-  };
-
   updateWorkingTime = async (payload: WorkingTime) => {
     const model = new WorkingTime(payload);
     model.status =
       model.status === ModelStatus.ACTIVE
         ? ModelStatus.INACTIVE
         : ModelStatus.ACTIVE;
-    const body = model.pickPayload(["status", "date", "sessions"]);
+    const body = model.pickPayload(["status", "date"]);
     const { data } = await http.patch<IResponse<WorkingTime>>(
       `/working-time/${payload.id}`,
       {
@@ -85,6 +68,28 @@ class RepoDoctor extends RepoAccount<Doctor> {
     const {
       data: { data, total },
     } = await http.get<IResList<WorkingTime>>("/working-time", {
+      params: payload,
+    });
+    return {
+      data: data?.map((item: WorkingTime) => new WorkingTime(item)),
+      total,
+    };
+  };
+
+  batchCreate = async (payload: PDoctorsWorkingTime) => {
+    const { data } = await http.post<IResList<WorkingTime>>(
+      "/working-time/consult",
+      {
+        ...payload,
+      },
+    );
+    return data.data?.map((item: WorkingTime) => new WorkingTime(item));
+  };
+
+  getConsultationWorkingTime = async (payload: any) => {
+    const {
+      data: { data, total },
+    } = await http.get<IResList<WorkingTime>>("/working-time/consult", {
       params: payload,
     });
     return {

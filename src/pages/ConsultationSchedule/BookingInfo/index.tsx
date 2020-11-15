@@ -3,7 +3,14 @@ import { useLocation } from "react-router";
 import { parse } from "querystring";
 import { deepOrange } from "@material-ui/core/colors";
 import AddIcCallIcon from "@material-ui/icons/AddIcCall";
-import { Avatar, Paper, Box, Grid, Button , makeStyles} from "@material-ui/core";
+import {
+  Avatar,
+  Paper,
+  Box,
+  Grid,
+  Button,
+  makeStyles,
+} from "@material-ui/core";
 import get from "lodash/get";
 
 import { Booking } from "models/booking";

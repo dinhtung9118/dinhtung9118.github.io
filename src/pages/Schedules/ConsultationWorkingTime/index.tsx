@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import {
   Paper,
@@ -7,12 +7,11 @@ import {
   FormControlLabel,
   Switch,
   useTheme,
-  Theme,
-  makeStyles,
+  Button,
 } from "@material-ui/core";
 import moment from "moment";
 import { doctor as repoDoctor } from "services/repos";
-import { useApi } from "../../stores/UseApi/useApi";
+import { useApi } from "stores/UseApi/useApi";
 import useAuthentication from "stores/AuthenticationsStore/authentication";
 import { WorkingTime } from "models/workingTime";
 import {
@@ -29,9 +28,10 @@ import {
 
 import { ViewState } from "@devexpress/dx-react-scheduler";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
-import { AccountStatus, ModelStatus } from "../../models";
+import { AccountStatus, ModelStatus } from "models";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
-import { RouteList } from "../../routeList";
+import { RouteList } from "routeList";
+import { useStyles } from "./style";
 
 interface IMapped {
   startDay: number;
@@ -39,16 +39,11 @@ interface IMapped {
   schedules: any[];
 }
 
-const useStyles = makeStyles((theme: Theme) => ({
-  link: {
-    textDecoration: "none",
-    color: theme.palette.primary.main,
-  },
-}));
-
-const SchedulesPage: React.FC = () => {
+const SchedulesConsultationPage: React.FC = () => {
   const theme = useTheme();
   const classes = useStyles();
+  const history = useHistory();
+
   const resourcesData = [
     {
       text: "Active",
@@ -77,7 +72,7 @@ const SchedulesPage: React.FC = () => {
     // date: timeExpired,
   };
 
-  const dataRs = useApi(() => repoDoctor.getWorkingTime(payload));
+  const dataRs = useApi(() => repoDoctor.getConsultationWorkingTime(payload));
   useEffect(() => {
     dataRs && setData(dataRs.data);
   }, [dataRs]);
@@ -121,6 +116,10 @@ const SchedulesPage: React.FC = () => {
         setData([...newWorkingTime]);
       }
     });
+  };
+
+  const handleAddConsultationWorkingTime = () => {
+    history.push({ hash: RouteList.consultationCreate });
   };
 
   const renderDetailSession = (props: any) => {
@@ -185,6 +184,16 @@ const SchedulesPage: React.FC = () => {
 
   return (
     <Paper>
+      <Box display="flex" alignItems="flex-end">
+        <Button
+          onClick={handleAddConsultationWorkingTime}
+          variant="contained"
+          color="primary"
+          type="submit"
+        >
+          Tạo Lịch Tư Vấn
+        </Button>
+      </Box>
       <Scheduler data={mapped.schedules}>
         <ViewState
           currentDate={currentDate}
@@ -225,4 +234,4 @@ const SchedulesPage: React.FC = () => {
   );
 };
 
-export default SchedulesPage;
+export default SchedulesConsultationPage;

@@ -1,10 +1,18 @@
 import { BaseModel } from "./base";
 import moment from "moment";
+import dayjs from "dayjs";
 import { AppointmentModel } from "@devexpress/dx-react-scheduler";
 
 export type IWorkingTime = Pick<
   WorkingTime,
-  "id" | "doctorId" | "status" | "date" | "sessions"
+  | "id"
+  | "doctorId"
+  | "status"
+  | "date"
+  | "from"
+  | "to"
+  | "remainSeats"
+  | "seats"
 >;
 
 export interface ISession {
@@ -23,24 +31,29 @@ export class WorkingTime extends BaseModel {
       },
     });
   }
+
   id: string = "";
   doctorId: string = "";
   status: string = "";
   date: string = "";
-  sessions: ISession[] = [];
+  from!: number;
+  to!: number;
+  remainSeats!: number;
+  seats!: number;
 
   static toSchedule(workingTimes: WorkingTime[]) {
-    return workingTimes.reduce<AppointmentModel[]>((schedules, workingTime) => {
-      const date = moment(workingTime.date);
-      workingTime.sessions.forEach((section) => {
+    return workingTimes.reduce<(AppointmentModel & { working: WorkingTime })[]>(
+      (schedules, workingTime) => {
+        const date = dayjs(workingTime.date);
         schedules.push({
-          startDate: date.clone().add(section.from, "minutes").toDate(),
-          endDate: date.clone().add(section.to, "minutes").toDate(),
-          data: workingTime,
+          working: workingTime,
+          startDate: date.clone().add(workingTime.from, "minute").toDate(),
+          endDate: date.clone().add(workingTime.to, "minute").toDate(),
         });
-      });
-      return schedules;
-    }, []);
+        return schedules;
+      },
+      [],
+    );
   }
 
   static minusFormat(minus: number) {

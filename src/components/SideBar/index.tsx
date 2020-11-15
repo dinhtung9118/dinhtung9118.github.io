@@ -17,7 +17,7 @@ import InboxIcon from "@material-ui/icons/MoveToInbox";
 import MailIcon from "@material-ui/icons/Mail";
 import { mockDataSidebar } from "./SideBarMenu";
 import { MenuProps } from "./SideBar";
-import useUI from "../../stores/UIstore/UIStore";
+import useUI from "stores/UIstore/UIStore";
 import Header from "../Header";
 
 const SideBar: React.FC = () => {

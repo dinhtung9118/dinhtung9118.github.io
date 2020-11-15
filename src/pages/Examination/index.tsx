@@ -10,7 +10,7 @@ import {
 } from "@material-ui/core";
 import { useI18n } from "../../stores/Locale/LocaleStore";
 import CommonPage from "../CommonPage";
-import ConsultationPatient from "./ConsultaionWrapper/patientList";
+import ConsultationPatient from "../ConsultationSchedule/ConsultaionWrapper/patientList";
 import { doctor as repoDoctor } from "../../services/repos";
 
 import { BookingStatus } from "../../constants/enums";
@@ -44,7 +44,7 @@ const defaultPropsBorder = {
   style: { width: 8, height: 8 },
 };
 
-const ConsultationSchedule: React.FC = () => {
+const Examinationchedule: React.FC = () => {
   const classes = useStyles();
   const i18n = useI18n();
   const { pages } = i18n;
@@ -113,10 +113,6 @@ const ConsultationSchedule: React.FC = () => {
             {pages.consultationSchedule.title}
           </Box>
         </Typography>
-        <Link className={classes.link} to={RouteList.consultationCreate}>
-          {" "}
-          Create Schedule time consultation
-        </Link>
       </Box>
       <Paper className={classes.root}>
         <CommonPage
@@ -131,4 +127,4 @@ const ConsultationSchedule: React.FC = () => {
   );
 };
 
-export default ConsultationSchedule;
+export default Examinationchedule;

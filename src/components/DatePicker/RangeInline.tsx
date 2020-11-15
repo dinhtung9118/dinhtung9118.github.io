@@ -13,9 +13,9 @@ type RangeInlineProps = {
 };
 
 export const RangeInline = ({
-                              onSelect,
-                              monthsShown = 2,
-                            }: RangeInlineProps) => {
+  onSelect,
+  monthsShown = 2,
+}: RangeInlineProps) => {
   const [dates, setDates] = useState<TimeRange>({});
   const selecting = !!dates.from && !dates.to;
   return (

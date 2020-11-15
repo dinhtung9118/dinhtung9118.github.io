@@ -10,7 +10,7 @@ type IChildrenBuilder = (setClose: () => void) => ReactNode;
 export type IAnchorProps = Omit<
   PopoverProps,
   "open" | "anchorEl" | "children"
-  > & {
+> & {
   renderAnchor: IAnchorBuilder;
   children: IChildrenBuilder;
 };

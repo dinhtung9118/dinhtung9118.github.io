@@ -169,7 +169,7 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
     };
     repoDoctor.getWorkingTime(payload).then((rs) => {
       if (rs.data && rs.data.length > 0) {
-        setListWorkingTime(rs?.data[0].sessions || []);
+        setListWorkingTime(rs?.data || []);
       }
     });
   }, []);

@@ -13,9 +13,9 @@ import { useBlockSplit } from "./Store";
 import { WorkingTime } from "models";
 
 export const BlockEdit = ({
-                            index,
-                            className,
-                          }: {
+  index,
+  className,
+}: {
   index: number;
   className: string;
 }) => {

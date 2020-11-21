@@ -113,10 +113,6 @@ const ConsultationSchedule: React.FC = () => {
             {pages.consultationSchedule.title}
           </Box>
         </Typography>
-        <Link className={classes.link} to={RouteList.consultationCreate}>
-          {" "}
-          Create Schedule time consultation
-        </Link>
       </Box>
       <Paper className={classes.root}>
         <CommonPage

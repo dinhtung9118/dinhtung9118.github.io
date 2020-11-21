@@ -123,7 +123,7 @@ const SchedulesConsultationPage: React.FC = () => {
   };
 
   const renderDetailSession = (props: any) => {
-    const workingTime: WorkingTime = props.appointmentData?.data;
+    const workingTime: WorkingTime = props.appointmentData?.working;
     const readOnly =
       new Date().getTime() >
       new Date(workingTime.date).getTime() + workingTime.to;

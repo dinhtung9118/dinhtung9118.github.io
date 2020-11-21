@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import {
   Box,
@@ -8,15 +8,15 @@ import {
   createStyles,
   makeStyles,
 } from "@material-ui/core";
-import { useI18n } from "../../stores/Locale/LocaleStore";
+import { useI18n } from "stores/Locale/LocaleStore";
 import CommonPage from "../CommonPage";
-import ConsultationPatient from "../ConsultationSchedule/ConsultaionWrapper/patientList";
-import { doctor as repoDoctor } from "../../services/repos";
+import { doctor as repoDoctor } from "services/repos";
 
 import { BookingStatus } from "../../constants/enums";
 import { Booking } from "../../models/booking";
 import { RouteList } from "../../routeList";
 import moment from "moment";
+import ExaminationPatient from "./ExaminationPatient";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -120,7 +120,7 @@ const Examinationchedule: React.FC = () => {
           dataMappingFunction={dataMappingFunction}
           query={repoDoctor.getBookings}
         >
-          {ConsultationPatient}
+          {ExaminationPatient}
         </CommonPage>
       </Paper>
     </>

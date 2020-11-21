@@ -13,16 +13,16 @@ import {
   InputBase,
 } from "@material-ui/core";
 
-import { ChildrenProps } from "../../CommonPage/CommonPage";
+import { ChildrenProps } from "../CommonPage/CommonPage";
 import CommonTable from "components/Table";
 import { TitleWithClassName } from "components/Table/Table";
 import { WorkingTime } from "models/workingTime";
 import DatePicker from "components/DatePicker";
-import { BookingStatus } from "../../../constants/enums";
-import { ISession } from "../../../models/workingTime";
-import { configTimeDate, getDateTimeNumber } from "../../../untils/Date";
-import { doctor as repoDoctor } from "../../../services/repos";
-import useAuthentication from "../../../stores/AuthenticationsStore/authentication";
+import { BookingStatus } from "constants/enums";
+import { ISession } from "models/workingTime";
+import { configTimeDate, getDateTimeNumber } from "untils/Date";
+import { doctor as repoDoctor } from "services/repos";
+import useAuthentication from "stores/AuthenticationsStore/authentication";
 import { useLocation } from "react-router";
 import get from "lodash/get";
 import { parse } from "querystring";
@@ -81,7 +81,7 @@ const BootstrapInput = withStyles((theme: Theme) =>
   }),
 )(InputBase);
 
-const ConsultationPatient: React.FC<ChildrenProps> = ({
+const ExaminationPatient: React.FC<ChildrenProps> = ({
   data,
   totals,
   handleOnAddAdvanceFilterField,
@@ -93,13 +93,17 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [listWorkingtime, setListWorkingTime] = useState<ISession[]>([]);
-  const [currentBookingType, setBookingType] = useState<string>("CONSULTATION");
+  const [currentBookingType, setBookingType] = useState<string>("EXAMINATION");
   const [currentBookingStatus, setBookingStatus] = useState<string>(
     BookingStatus.NEW,
   );
   const [timeWorking, setTimeWorking] = useState<string | number>("all");
   const [selectDate, setSelectDate] = useState(new Date());
   const [state] = useAuthentication();
+  const listBookingType = [
+    { value: "EXAMINATION", lable: "Examination" },
+    { value: "RE_EXAMINATION", lable: "Re-Examination" },
+  ];
   const listBookingStatus = [
     { value: BookingStatus.NEW, lable: "New" },
     { value: BookingStatus.CONFIRMED, lable: "Confirmed" },
@@ -204,6 +208,9 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
   ) => {
     setTimeWorking(event.target.value as string);
   };
+  const handleChangeType = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setBookingType(event.target.value as string);
+  };
   const handleChangeStatus = (event: React.ChangeEvent<{ value: unknown }>) => {
     setBookingStatus(event.target.value as string);
   };
@@ -212,6 +219,24 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
     <>
       <Box ml={1} display="flex" justifyContent="space-between">
         <Box display="flex">
+          <Box minWidth={80} display="flex" alignItems="center" ml={2}>
+            <InputLabel>Type Booking</InputLabel>
+            <FormControl className={classes.margin}>
+              <Select
+                labelId="demo-customized-select-label"
+                id="demo-customized-select"
+                value={currentBookingType}
+                onChange={handleChangeType}
+                input={<BootstrapInput />}
+              >
+                <MenuItem value="all">All</MenuItem>
+                {listBookingType.length > 0 &&
+                  listBookingType.map((type) => {
+                    return <MenuItem value={type.value}>{type.lable}</MenuItem>;
+                  })}
+              </Select>
+            </FormControl>
+          </Box>
           <Box minWidth={80} display="flex" alignItems="center" ml={2}>
             <InputLabel>Status:</InputLabel>
             <FormControl className={classes.margin}>
@@ -290,4 +315,4 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
   );
 };
 
-export default ConsultationPatient;
+export default ExaminationPatient;

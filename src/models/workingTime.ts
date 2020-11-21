@@ -2,6 +2,7 @@ import { BaseModel } from "./base";
 import moment from "moment";
 import dayjs from "dayjs";
 import { AppointmentModel } from "@devexpress/dx-react-scheduler";
+import { convertToUTC7 } from "../untils/Date";
 
 export type IWorkingTime = Pick<
   WorkingTime,
@@ -25,9 +26,7 @@ export class WorkingTime extends BaseModel {
     super();
     this.assign(props, {
       date: (value) => {
-        return moment(new Date(value).getTime())
-          .format("YYYY-MM-DD")
-          .toString();
+        return convertToUTC7(value).format("YYYY-MM-DD").toString();
       },
     });
   }

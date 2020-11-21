@@ -1,23 +1,10 @@
 import React, { Props } from "react";
 import { FormikProps } from "formik";
-import {
-  FormControl,
-  TextField,
-  Grid,
-} from "@material-ui/core";
+import { FormControl, TextField, Grid } from "@material-ui/core";
 import { Account, IAccount } from "models";
-import {
-  IValidError,
-  createValidation,
-  IValidList,
-  validations,
-} from "untils";
+import { IValidError, createValidation, IValidList, validations } from "untils";
 
-const listFields: (keyof IAccount)[] = [
-  "firstName",
-  "lastName",
-  "phoneNumber",
-];
+const listFields: (keyof IAccount)[] = ["firstName", "lastName", "phoneNumber"];
 
 export default function AccountForm<T extends IAccount>(
   props: FormikProps<T> & Props<any>,

@@ -7,21 +7,20 @@ import {
   Box,
   FormHelperText,
 } from "@material-ui/core";
-import {IValidError} from "untils";
-import {useI18n} from "stores/Locale/LocaleStore";
+import { IValidError } from "untils";
+import { useI18n } from "stores/Locale/LocaleStore";
 
-export const AcademicRank: React.FC<Omit<SelectProps, "error"> & { error?: IValidError }> = ({
-                                                                                        error,
-                                                                                        ...props
-                                                                                      }) => {
+export const AcademicRank: React.FC<
+  Omit<SelectProps, "error"> & { error?: IValidError }
+> = ({ error, ...props }) => {
   const {
-    config: {academicLevel},
+    config: { academicLevel },
     component: {
-      inputs: {academicRank},
+      inputs: { academicRank },
     },
   } = useI18n();
 
-  const {errors = {}} = academicRank;
+  const { errors = {} } = academicRank;
 
   return (
     <>

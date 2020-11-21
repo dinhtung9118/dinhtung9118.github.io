@@ -1,11 +1,14 @@
-import { FieldValidator } from 'formik';
-import { ReactDatePickerProps } from 'react-datepicker';
+import { FieldValidator } from "formik";
+import { ReactDatePickerProps } from "react-datepicker";
 
 /**
  * The origin props of react-datepicker which will be used as options
  */
 export interface OptionalDatePickerProps extends ReactDatePickerProps {
-  onChange (date: Date | null, event: React.SyntheticEvent<any> | undefined): void;
+  onChange(
+    date: Date | null,
+    event: React.SyntheticEvent<any> | undefined,
+  ): void;
 }
 
 /**
@@ -35,4 +38,3 @@ export interface CustomHeaderProps {
   prevMonthButtonDisabled: boolean;
   nextMonthButtonDisabled: boolean;
 }
-

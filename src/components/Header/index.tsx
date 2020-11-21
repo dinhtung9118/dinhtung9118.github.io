@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -7,13 +7,13 @@ import {
   IconButton,
   Badge,
   MenuItem,
-  Menu
-} from '@material-ui/core';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import AdjustIcon from '@material-ui/icons/Adjust';
+  Menu,
+} from "@material-ui/core";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import AdjustIcon from "@material-ui/icons/Adjust";
 import useAuthentication from "stores/AuthenticationsStore/authentication";
-import MoreIcon from '@material-ui/icons/MoreVert';
+import MoreIcon from "@material-ui/icons/MoreVert";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -22,23 +22,23 @@ const useStyles = makeStyles((theme) => ({
   appBar: {
     background: theme.palette.grey[50],
     zIndex: theme.zIndex.drawer,
-    boxShadow: 'none',
+    boxShadow: "none",
   },
   sectionDesktop: {
-    display: 'none',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
+    display: "none",
+    [theme.breakpoints.up("md")]: {
+      display: "flex",
     },
   },
   sectionMobile: {
-    display: 'flex',
-    [theme.breakpoints.up('md')]: {
-      display: 'none',
+    display: "flex",
+    [theme.breakpoints.up("md")]: {
+      display: "none",
     },
   },
 }));
 
-const Header: React.FC<{className: string}> = ({className}) => {
+const Header: React.FC<{ className: string }> = ({ className }) => {
   const [, action] = useAuthentication();
   const classes = useStyles();
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
@@ -55,9 +55,9 @@ const Header: React.FC<{className: string}> = ({className}) => {
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
@@ -69,7 +69,7 @@ const Header: React.FC<{className: string}> = ({className}) => {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
-      <MenuItem >
+      <MenuItem>
         <IconButton
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
@@ -80,20 +80,20 @@ const Header: React.FC<{className: string}> = ({className}) => {
         </IconButton>
         <p>Profile</p>
       </MenuItem>
-      <MenuItem >
+      <MenuItem>
         <IconButton
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"
           aria-haspopup="true"
           color="primary"
         >
-          <AccountCircle  />
+          <AccountCircle />
         </IconButton>
         <p>Profile</p>
       </MenuItem>
-      <MenuItem >
+      <MenuItem>
         <IconButton onClick={action.logout}>
-          <AdjustIcon/>
+          <AdjustIcon />
         </IconButton>
         <p>Logout</p>
       </MenuItem>
@@ -104,18 +104,18 @@ const Header: React.FC<{className: string}> = ({className}) => {
     <div>
       <AppBar className={`${classes.appBar} ${className}`}>
         <Toolbar>
-          <div className={classes.grow}/>
+          <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
             <IconButton aria-label="show 17 new notifications" color="primary">
               <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon color='primary'/>
+                <NotificationsIcon color="primary" />
               </Badge>
             </IconButton>
-            <IconButton color='primary'>
-              <AccountCircle color='primary'/>
+            <IconButton color="primary">
+              <AccountCircle color="primary" />
             </IconButton>
-            <IconButton onClick={action.logout} color='primary'>
-              <AdjustIcon color='primary'/>
+            <IconButton onClick={action.logout} color="primary">
+              <AdjustIcon color="primary" />
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
@@ -132,8 +132,7 @@ const Header: React.FC<{className: string}> = ({className}) => {
       </AppBar>
       {renderMobileMenu}
     </div>
-  )
-}
-
+  );
+};
 
 export default Header;

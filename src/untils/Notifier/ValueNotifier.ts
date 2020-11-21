@@ -1,6 +1,7 @@
 import { ChangeNotifier, ValueListenable } from "./ChangeNotifier";
 
-export class ValueNotifier<T = any> extends ChangeNotifier
+export class ValueNotifier<T = any>
+  extends ChangeNotifier
   implements ValueListenable<T> {
   constructor(protected $value: T) {
     super();

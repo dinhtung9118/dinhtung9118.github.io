@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { TextField, InputProps } from "@material-ui/core";
-import {IValidError} from "untils";
-import {useI18n} from "stores/Locale/LocaleStore";
+import { IValidError } from "untils";
+import { useI18n } from "stores/Locale/LocaleStore";
 
 export const WorkPlace = (
   props: Omit<InputProps, "onChange" | "error" | "value"> & {
@@ -19,7 +19,10 @@ export const WorkPlace = (
 
   const options = useMemo(() => Object.entries(hospital), [hospital]);
   const inValues = useMemo(
-    () => options.filter(([value]) => props.value ? props.value.includes(value): null),
+    () =>
+      options.filter(([value]) =>
+        props.value ? props.value.includes(value) : null,
+      ),
     [options, props.value],
   );
 

@@ -1,4 +1,4 @@
-import React, {Props, useCallback} from "react";
+import React, { Props, useCallback } from "react";
 import {
   MuiThemeProvider,
   createMuiTheme,
@@ -11,15 +11,15 @@ import defaultTheme from "./default";
 import merge from "lodash.merge";
 
 const createProvider = (options?: ThemeOptions) => ({
-                                                      children,
-                                                    }: Props<any>) => {
+  children,
+}: Props<any>) => {
   const extend = useCallback((outerTheme: Theme) => {
     return merge({}, outerTheme, options);
   }, []);
   return <ThemeProvider theme={extend}>{children}</ThemeProvider>;
 };
 
-export const RootThemeProvider = ({children}: Props<any>) => {
+export const RootThemeProvider = ({ children }: Props<any>) => {
   return (
     <MuiThemeProvider theme={createMuiTheme(defaultTheme.theme)}>
       {children}

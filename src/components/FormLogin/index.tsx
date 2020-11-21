@@ -1,16 +1,18 @@
 import React from "react";
 import { Button, FormControl, TextField, Box } from "@material-ui/core";
-import {LoginFormValues, LoginFormProps} from './index.d'
-import {FormikBag, FormikProps, withFormik} from "formik";
+import { LoginFormValues, LoginFormProps } from "./index.d";
+import { FormikBag, FormikProps, withFormik } from "formik";
 
 const initialValue = {
-  email: '',
-  password:''
-}
+  email: "",
+  password: "",
+};
 
-const InsideFormLogin:React.FC<FormikProps<LoginFormValues> & LoginFormProps> = ({values,errors,touched, handleChange,handleSubmit}) => {
+const InsideFormLogin: React.FC<
+  FormikProps<LoginFormValues> & LoginFormProps
+> = ({ values, errors, touched, handleChange, handleSubmit }) => {
   return (
-    <Box >
+    <Box>
       <form onSubmit={handleSubmit}>
         <FormControl fullWidth margin="dense">
           <TextField
@@ -34,11 +36,7 @@ const InsideFormLogin:React.FC<FormikProps<LoginFormValues> & LoginFormProps> = 
           />
         </FormControl>
         <FormControl fullWidth margin="normal">
-          <Button
-            variant="contained"
-            color="primary"
-            type="submit"
-          >
+          <Button variant="contained" color="primary" type="submit">
             Login
           </Button>
         </FormControl>

@@ -26,3 +26,14 @@ export type IReqPaging = {
 };
 
 export type IQueryPaging<T> = (params: IReqPaging) => Promise<IResList<T>>;
+
+export type PDoctorWorkingTime = {
+  doctorId: string;
+  dates: number[];
+  from: number;
+  to: number;
+  seats: number;
+};
+export type PDoctorsWorkingTime = {
+  workingTimes: PDoctorWorkingTime[];
+};

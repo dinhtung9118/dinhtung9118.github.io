@@ -11,9 +11,9 @@ const Store = createStore({
   },
   actions: {
     push: (promise: Promise<any>, lazy = 250) => async ({
-                                                          getState,
-                                                          setState,
-                                                        }) => {
+      getState,
+      setState,
+    }) => {
       (() => {
         const { total } = getState();
         if (total === 0) {

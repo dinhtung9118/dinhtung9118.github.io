@@ -1,31 +1,36 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from "react";
 import {
   TablePagination,
   makeStyles,
   Box,
   InputLabel,
-  FormControl, Select, MenuItem, withStyles, Theme, createStyles, InputBase
-} from '@material-ui/core';
+  FormControl,
+  Select,
+  MenuItem,
+  withStyles,
+  Theme,
+  createStyles,
+  InputBase,
+} from "@material-ui/core";
 
-import {ChildrenProps} from "../../CommonPage/CommonPage";
+import { ChildrenProps } from "../../CommonPage/CommonPage";
 import CommonTable from "components/Table";
-import {TitleWithClassName} from "components/Table/Table";
-import {WorkingTime} from "models/workingTime";
+import { TitleWithClassName } from "components/Table/Table";
+import { WorkingTime } from "models/workingTime";
 import DatePicker from "components/DatePicker";
-import {BookingStatus} from "../../../constants/enums";
-import {ISession} from "../../../models/workingTime";
-import {configTimeDate, getDateTimeNumber} from "../../../untils/Date";
-import {doctor as repoDoctor} from "../../../services/repos";
-import useAuthentication
-  from "../../../stores/AuthenticationsStore/authentication";
-import {useLocation} from "react-router";
+import { BookingStatus } from "../../../constants/enums";
+import { ISession } from "../../../models/workingTime";
+import { configTimeDate, getDateTimeNumber } from "../../../untils/Date";
+import { doctor as repoDoctor } from "../../../services/repos";
+import useAuthentication from "../../../stores/AuthenticationsStore/authentication";
+import { useLocation } from "react-router";
 import get from "lodash/get";
-import {parse} from "querystring";
+import { parse } from "querystring";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: '100%',
+      width: "100%",
     },
     container: {
       maxHeight: 550,
@@ -35,121 +40,116 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(1),
     },
     link: {
-      textDecoration: 'none'
-    }
-  }));
+      textDecoration: "none",
+    },
+  }),
+);
 
 const BootstrapInput = withStyles((theme: Theme) =>
   createStyles({
     root: {
-      'label + &': {
+      "label + &": {
         marginTop: theme.spacing(0),
       },
     },
     input: {
       borderRadius: 4,
-      position: 'relative',
+      position: "relative",
       backgroundColor: theme.palette.background.paper,
-      border: '1px solid #ced4da',
+      border: "1px solid #ced4da",
       fontSize: 16,
-      padding: '10px 26px 10px 12px',
+      padding: "10px 26px 10px 12px",
       // Use the system font instead of the default Roboto font.
       fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
+        "-apple-system",
+        "BlinkMacSystemFont",
         '"Segoe UI"',
-        'Roboto',
+        "Roboto",
         '"Helvetica Neue"',
-        'Arial',
-        'sans-serif',
+        "Arial",
+        "sans-serif",
         '"Apple Color Emoji"',
         '"Segoe UI Emoji"',
         '"Segoe UI Symbol"',
-      ].join(','),
-      '&:focus': {
+      ].join(","),
+      "&:focus": {
         borderRadius: 4,
-        borderColor: '#80bdff',
-        boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+        borderColor: "#80bdff",
+        boxShadow: "0 0 0 0.2rem rgba(0,123,255,.25)",
       },
     },
   }),
 )(InputBase);
 
 const ConsultationPatient: React.FC<ChildrenProps> = ({
-                                                        data,
-                                                        totals,
-                                                        handleOnAddAdvanceFilterField
-                                                      }) => {
-
+  data,
+  totals,
+  handleOnAddAdvanceFilterField,
+}) => {
   const classes = useStyles();
   const location = useLocation();
-  const search = location.search.replace('?', '');
-  const dateParam = get(parse(search), 'date', '') as string;
+  const search = location.search.replace("?", "");
+  const dateParam = get(parse(search), "date", "") as string;
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [listWorkingtime, setListWorkingTime] = useState<ISession[]>([]);
-  const [currentBookingType, setBookingType] = useState<string>('RE_EXAMINATION');
-  const [currentBookingStatus, setBookingStatus] = useState<string>(BookingStatus.NEW);
-  const [timeWorking, setTimeWorking] = useState<string | number>('all');
+  const [currentBookingType, setBookingType] = useState<string>("CONSULTATION");
+  const [currentBookingStatus, setBookingStatus] = useState<string>(
+    BookingStatus.NEW,
+  );
+  const [timeWorking, setTimeWorking] = useState<string | number>("all");
   const [selectDate, setSelectDate] = useState(new Date());
   const [state] = useAuthentication();
-  const listBookingType = [
-    {value: 'EXAMINATION', lable: 'Examination'},
-    {value: 'CONSULTATION', lable: 'Consultation'},
-    {value: 'RE_EXAMINATION', lable: 'Re-Examination'},
-  ];
   const listBookingStatus = [
-    {value: BookingStatus.NEW, lable: 'New'},
-    {value: BookingStatus.CONFIRMED, lable: 'Confirmed'},
-    {value: BookingStatus.OUT_OF_DATE, lable: 'Out of Date'},
-    {value: BookingStatus.CANCELED, lable: 'Canceled'},
-    {value: BookingStatus.COMPELETED, lable: 'Compeleted'},
+    { value: BookingStatus.NEW, lable: "New" },
+    { value: BookingStatus.CONFIRMED, lable: "Confirmed" },
+    { value: BookingStatus.OUT_OF_DATE, lable: "Out of Date" },
+    { value: BookingStatus.CANCELED, lable: "Canceled" },
+    { value: BookingStatus.COMPELETED, lable: "Compeleted" },
   ];
 
-  const titleList: TitleWithClassName[] = [{
-    className: '',
-    cellRender: 'ID',
-    align: 'left',
-    minWidth: 120,
-  }, {
-    className: '',
-    cellRender: 'Name Patient',
-    align: 'left',
-    minWidth: 120,
-  }, {
-    className: '',
-    cellRender: 'Code Patient Consultation',
-    align: 'left',
-    minWidth: 120,
-  }, {
-    className: '',
-    cellRender: 'Specitialy',
-    align: 'left',
-    minWidth: 120,
-  }, {
-    className: '',
-    cellRender: 'Time Consultation',
-    align: 'left',
-    minWidth: 120,
-  }, {
-    className: '',
-    cellRender: 'Status',
-    align: 'left',
-    minWidth: 120,
-  }];
-  const pathList = [
-    'id',
-    'name',
-    'code',
-    'speciality',
-    'start',
-    'status',
+  const titleList: TitleWithClassName[] = [
+    {
+      className: "",
+      cellRender: "ID",
+      align: "left",
+      minWidth: 120,
+    },
+    {
+      className: "",
+      cellRender: "Name Patient",
+      align: "left",
+      minWidth: 120,
+    },
+    {
+      className: "",
+      cellRender: "Code Patient Consultation",
+      align: "left",
+      minWidth: 120,
+    },
+    {
+      className: "",
+      cellRender: "Specitialy",
+      align: "left",
+      minWidth: 120,
+    },
+    {
+      className: "",
+      cellRender: "Time Consultation",
+      align: "left",
+      minWidth: 120,
+    },
+    {
+      className: "",
+      cellRender: "Status",
+      align: "left",
+      minWidth: 120,
+    },
   ];
+  const pathList = ["id", "name", "code", "speciality", "start", "status"];
 
-  const handleChangePage = () => {
-  };
-  const handleChangeRowsPerPage = () => {
-  };
+  const handleChangePage = () => {};
+  const handleChangeRowsPerPage = () => {};
   useEffect(() => {
     dateParam && setSelectDate(new Date(dateParam));
   }, [dateParam]);
@@ -159,48 +159,50 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
       offset: 0,
       limit: 50,
       date: getDateTimeNumber(selectDate),
-    }
+    };
     repoDoctor.getWorkingTime(payload).then((rs) => {
       if (rs.data && rs.data.length > 0) {
-        setListWorkingTime(rs?.data[0].sessions || [])
+        setListWorkingTime(rs?.data || []);
       }
-    })
+    });
   }, []);
 
-  const getStartTime = () =>{
+  const getStartTime = () => {
     const hours = Number(Math.floor(Number(timeWorking) / 60).pad(2));
     const min = Number((Number(timeWorking) % 60).pad(2));
-    const totalTime = (hours * 60 *60) + (min *60);
-    return getDateTimeNumber(selectDate) + (totalTime * configTimeDate);
+    const totalTime = hours * 60 * 60 + min * 60;
+    return getDateTimeNumber(selectDate) + totalTime * configTimeDate;
   };
 
   useEffect(() => {
-    handleOnAddAdvanceFilterField && handleOnAddAdvanceFilterField([
-      {
-        label: 'status',
-        value: currentBookingStatus
-      },
-      {
-        label: 'type',
-        value: currentBookingType
-      },
-      {
-        label: 'start',
-        value: timeWorking === 'all' ? 'all' : getStartTime()
-      }
-    ])
+    handleOnAddAdvanceFilterField &&
+      handleOnAddAdvanceFilterField([
+        {
+          label: "status",
+          value: currentBookingStatus,
+        },
+        {
+          label: "type",
+          value: currentBookingType,
+        },
+        {
+          label: "start",
+          value: timeWorking === "all" ? "all" : getStartTime(),
+        },
+      ]);
   }, [currentBookingStatus, selectDate, currentBookingType, timeWorking]);
 
-
-  const handlerOnChangeDateTime = (date: Date, e: React.SyntheticEvent<any> | undefined) => {
+  const handlerOnChangeDateTime = (
+    date: Date,
+    e: React.SyntheticEvent<any> | undefined,
+  ) => {
     setSelectDate(date);
   };
 
-  const handleChangeTime = (event: React.ChangeEvent<{ value: unknown | unknown }>) => {
+  const handleChangeTime = (
+    event: React.ChangeEvent<{ value: unknown | unknown }>,
+  ) => {
     setTimeWorking(event.target.value as string);
-  };
-  const handleChangeType = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setBookingType(event.target.value as string);
   };
   const handleChangeStatus = (event: React.ChangeEvent<{ value: unknown }>) => {
     setBookingStatus(event.target.value as string);
@@ -211,25 +213,6 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
       <Box ml={1} display="flex" justifyContent="space-between">
         <Box display="flex">
           <Box minWidth={80} display="flex" alignItems="center" ml={2}>
-            <InputLabel>Type Booking</InputLabel>
-            <FormControl className={classes.margin}>
-              <Select
-                labelId="demo-customized-select-label"
-                id="demo-customized-select"
-                value={currentBookingType}
-                onChange={handleChangeType}
-                input={<BootstrapInput/>}
-              >
-                <MenuItem value='all'>All</MenuItem>
-                {listBookingType.length > 0 && listBookingType.map((type) => {
-                  return (
-                    <MenuItem value={type.value}>{type.lable}</MenuItem>
-                  )
-                })}
-              </Select>
-            </FormControl>
-          </Box>
-          <Box minWidth={80} display="flex" alignItems="center" ml={2}>
             <InputLabel>Status:</InputLabel>
             <FormControl className={classes.margin}>
               <Select
@@ -237,15 +220,15 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
                 id="status-booking-select"
                 value={currentBookingStatus}
                 onChange={handleChangeStatus}
-                input={<BootstrapInput/>}
+                input={<BootstrapInput />}
               >
-                <MenuItem value='all'>All</MenuItem>
-                {listBookingStatus.length > 0 && listBookingStatus.map((status) => {
-                  return (
-                    <MenuItem value={status.value}>{status.lable}</MenuItem>
-                  )
-                })}
-
+                <MenuItem value="all">All</MenuItem>
+                {listBookingStatus.length > 0 &&
+                  listBookingStatus.map((status) => {
+                    return (
+                      <MenuItem value={status.value}>{status.lable}</MenuItem>
+                    );
+                  })}
               </Select>
             </FormControl>
           </Box>
@@ -269,18 +252,19 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
                 id="demo-customized-select"
                 value={timeWorking}
                 onChange={handleChangeTime}
-                input={<BootstrapInput/>}
+                input={<BootstrapInput />}
               >
-                <MenuItem value='all'>All</MenuItem>
-                {listWorkingtime.length > 0 && listWorkingtime.map((time) => {
-                  const startTime = WorkingTime.minusFormat(time.from);
-                  const endTime = WorkingTime.minusFormat(time.to);
-                  return (
-                    <MenuItem
-                      value={time.from}>{startTime} - {endTime}</MenuItem>
-                  )
-                })}
-
+                <MenuItem value="all">All</MenuItem>
+                {listWorkingtime.length > 0 &&
+                  listWorkingtime.map((time) => {
+                    const startTime = WorkingTime.minusFormat(time.from);
+                    const endTime = WorkingTime.minusFormat(time.to);
+                    return (
+                      <MenuItem value={time.from}>
+                        {startTime} - {endTime}
+                      </MenuItem>
+                    );
+                  })}
               </Select>
             </FormControl>
           </Box>
@@ -291,7 +275,8 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
         data={data || []}
         pathList={pathList}
         titleList={titleList}
-        stickyHeader={true}/>
+        stickyHeader={true}
+      />
       <TablePagination
         rowsPerPageOptions={[25, 50, 100]}
         component="div"
@@ -302,7 +287,7 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
     </>
-  )
+  );
 };
 
 export default ConsultationPatient;

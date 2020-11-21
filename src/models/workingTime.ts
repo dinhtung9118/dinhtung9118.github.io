@@ -1,11 +1,20 @@
 import { BaseModel } from "./base";
 import moment from "moment";
+import dayjs from "dayjs";
 import { AppointmentModel } from "@devexpress/dx-react-scheduler";
+import { convertToUTC7 } from "../untils/Date";
 
 export type IWorkingTime = Pick<
   WorkingTime,
-  "id" | "doctorId" | "status" | "date" | "sessions"
-  >;
+  | "id"
+  | "doctorId"
+  | "status"
+  | "date"
+  | "from"
+  | "to"
+  | "remainSeats"
+  | "seats"
+>;
 
 export interface ISession {
   from: number;
@@ -17,30 +26,33 @@ export class WorkingTime extends BaseModel {
     super();
     this.assign(props, {
       date: (value) => {
-        return moment(new Date(value).getTime())
-          .format("YYYY-MM-DD")
-          .toString();
+        return convertToUTC7(value).format("YYYY-MM-DD").toString();
       },
     });
   }
-  id: string = '';
-  doctorId: string = '';
-  status: string = '';
-  date: string = '';
-  sessions: ISession[] = [];
+
+  id: string = "";
+  doctorId: string = "";
+  status: string = "";
+  date: string = "";
+  from!: number;
+  to!: number;
+  remainSeats!: number;
+  seats!: number;
 
   static toSchedule(workingTimes: WorkingTime[]) {
-    return workingTimes.reduce<AppointmentModel[]>((schedules, workingTime) => {
-      const date = moment(workingTime.date);
-      workingTime.sessions.forEach((section) => {
+    return workingTimes.reduce<(AppointmentModel & { working: WorkingTime })[]>(
+      (schedules, workingTime) => {
+        const date = dayjs(workingTime.date);
         schedules.push({
-          startDate: date.clone().add(section.from, "minutes").toDate(),
-          endDate: date.clone().add(section.to, "minutes").toDate(),
-          data: workingTime,
+          working: workingTime,
+          startDate: date.clone().add(workingTime.from, "minute").toDate(),
+          endDate: date.clone().add(workingTime.to, "minute").toDate(),
         });
-      });
-      return schedules;
-    }, []);
+        return schedules;
+      },
+      [],
+    );
   }
 
   static minusFormat(minus: number) {

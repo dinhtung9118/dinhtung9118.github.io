@@ -15,7 +15,7 @@ export type IDoctor = IAccount &
     | "diseasesConsultantCode"
     | "jobTitle"
     | "description"
-    >;
+  >;
 
 export class Doctor extends Account {
   constructor(props?: IDoctor) {

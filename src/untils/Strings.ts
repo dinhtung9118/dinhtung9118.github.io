@@ -8,16 +8,16 @@ declare global {
 }
 
 // eslint-disable-next-line no-extend-native
-Object.defineProperties(String.prototype ,{
-  decoding:{
-    value(){
-      return atob(this)
-    }
+Object.defineProperties(String.prototype, {
+  decoding: {
+    value() {
+      return atob(this);
+    },
   },
   encoding: {
-    value () {
+    value() {
       return btoa(this);
-    }
+    },
   },
 });
 

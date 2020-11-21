@@ -1,17 +1,10 @@
-import React, {
-  ComponentType,
-  FC,
-  useLayoutEffect,
-  useState
-} from "react";
-import {
-  I18NContainer,
-  initialState,
-  storeKey
-} from "./LocaleStore";
+import React, { ComponentType, FC, useLayoutEffect, useState } from "react";
+import { I18NContainer, initialState, storeKey } from "./LocaleStore";
 import databases from "storages";
 
-const withI18nPersist = <P extends object>(Component: ComponentType<P>): FC<P & any> => ({...props}: any) => {
+const withI18nPersist = <P extends object>(
+  Component: ComponentType<P>,
+): FC<P & any> => ({ ...props }: any) => {
   const [storePersisted, setStorePersisted] = useState(initialState);
 
   useLayoutEffect(() => {
@@ -22,12 +15,12 @@ const withI18nPersist = <P extends object>(Component: ComponentType<P>): FC<P & 
       if (data) {
         setStorePersisted({
           ...data,
-          initiated: true
+          initiated: true,
         });
       } else {
         setStorePersisted({
           ...initialState,
-          initiated: true
+          initiated: true,
         });
       }
     })();

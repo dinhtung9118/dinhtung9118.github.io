@@ -61,7 +61,6 @@ const Profile: React.FC = () => {
     (async function getPersistData() {
       if (state.account.id) {
         const doctor = await repoDoctor.single(state.account.id);
-        console.log("hdhdhd", doctor);
         setDoctorInfo(doctor);
       }
     })();

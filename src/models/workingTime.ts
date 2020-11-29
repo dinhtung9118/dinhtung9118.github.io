@@ -22,7 +22,7 @@ export interface ISession {
 }
 
 export class WorkingTime extends BaseModel {
-  constructor(props: IWorkingTime) {
+  constructor(props?: IWorkingTime) {
     super();
     this.assign(props, {
       date: (value) => {

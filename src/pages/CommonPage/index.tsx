@@ -21,17 +21,13 @@ const CommonPage: React.FC<CommonPageProps> = ({
   const data = get(result, "data", []);
   const total = get(result, "total", []);
   const handlerAdvanceFilter = (params: { label: string; value: any }[]) => {
-    console.log("asjdfkasd", params);
-    console.log("advanceFilterList", advanceFilterList);
     params.map((params) => {
       const indexOfParam = advanceFilterList.findIndex(
         (p) => p === params.label,
       );
-      console.log("newParam =>>>", indexOfParam);
       if (indexOfParam !== -1) {
         const newParam = currentParam;
         newParam[advanceFilterList[indexOfParam]] = params.value;
-        console.log("newParam =>>>", newParam);
 
         if (!params.value || params.value === "all") {
           delete newParam[advanceFilterList[indexOfParam]];

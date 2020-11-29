@@ -16,4 +16,5 @@ export const RouteList = {
   bookingInfo: "/booking-info",
   consultationCreate: "/consultation-working-time-create",
   consultationWorkingTime: "/consultation-working-time",
+  ReExamintionBooking: "/re-examintion-booking",
 };

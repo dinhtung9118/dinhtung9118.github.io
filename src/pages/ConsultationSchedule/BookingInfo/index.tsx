@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { parse } from "querystring";
 import { deepOrange } from "@material-ui/core/colors";
-import AddIcCallIcon from "@material-ui/icons/AddIcCall";
 import {
   Avatar,
   Paper,
@@ -20,6 +19,7 @@ import { Patient } from "models/patient";
 import { BookingStatus } from "constants/enums";
 import { CloseButton } from "components/Notistack";
 import { useSnackbar } from "notistack";
+import { RouteList } from "../../../routeList";
 
 const defaultPropsBorder = {
   bgcolor: "background.paper.light",
@@ -64,6 +64,7 @@ const BookingInfo: React.FC = () => {
   const location = useLocation();
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
+  const history = useHistory();
   const search = location.search.replace("?", "");
   const [, loader] = useLoader();
   const [bookingData, setBookingData] = useState<Booking>();
@@ -71,7 +72,6 @@ const BookingInfo: React.FC = () => {
   const bookingId = get(parse(search), "bookingId", "") as string;
 
   useEffect(() => {
-    console.log(parse(search));
     if (bookingId) {
       loader.push(
         repoDoctor.getBookingInfo(bookingId).then((rs) => {
@@ -109,7 +109,7 @@ const BookingInfo: React.FC = () => {
     const payload = {
       status: status,
       notes: "complete",
-      cancelReason: "off",
+      // cancelReason: "off",
     };
     repoDoctor
       .updateStatusBooking(bookingData!.id, payload)
@@ -129,6 +129,13 @@ const BookingInfo: React.FC = () => {
           variant: "error",
         });
       });
+  };
+
+  const handleReExmination = () => {
+    history.push({
+      pathname: RouteList.schedules,
+      search: `?bookingId=${bookingData?.id}`,
+    });
   };
 
   return (
@@ -190,29 +197,48 @@ const BookingInfo: React.FC = () => {
                       <Box>Cancele</Box>
                     </Box>
                   </Button>
+                  {bookingData?.status === BookingStatus.NEW && (
+                    <Button
+                      className={classes.btnStatus}
+                      onClick={() =>
+                        handleChangeStatus(BookingStatus.CONFIRMED)
+                      }
+                    >
+                      <Box ml={1}>
+                        <Box>Confirm</Box>
+                      </Box>
+                    </Button>
+                  )}
+                  {bookingData?.status === BookingStatus.CONFIRMED && (
+                    <Button
+                      className={classes.btnStatus}
+                      onClick={() =>
+                        handleChangeStatus(BookingStatus.PROCESSING)
+                      }
+                    >
+                      <Box ml={1}>
+                        <Box>PROCESSING</Box>
+                      </Box>
+                    </Button>
+                  )}
+                  {bookingData?.status === BookingStatus.PROCESSING && (
+                    <Button
+                      className={classes.btnStatus}
+                      onClick={() =>
+                        handleChangeStatus(BookingStatus.COMPELETED)
+                      }
+                    >
+                      <Box ml={1}>
+                        <Box>Compeleted</Box>
+                      </Box>
+                    </Button>
+                  )}
                   <Button
                     className={classes.btnStatus}
-                    onClick={() => handleChangeStatus(BookingStatus.CONFIRMED)}
+                    onClick={handleReExmination}
                   >
                     <Box ml={1}>
-                      <Box>Confirm</Box>
-                    </Box>
-                  </Button>
-                  <Button
-                    className={classes.btnStatus}
-                    onClick={() => handleChangeStatus(BookingStatus.COMPELETED)}
-                  >
-                    <Box ml={1}>
-                      <Box>Compeleted</Box>
-                    </Box>
-                  </Button>
-                  <Button
-                    className={classes.btnStatus}
-                    onClick={() => handleChangeStatus(BookingStatus.CONFIRMED)}
-                  >
-                    <AddIcCallIcon style={{ width: 16, height: 20 }} />
-                    <Box ml={1}>
-                      <Box>Call</Box>
+                      <Box>Đăt lịch tái Khám</Box>
                     </Box>
                   </Button>
                 </Box>

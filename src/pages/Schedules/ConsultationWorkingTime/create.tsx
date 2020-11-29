@@ -58,10 +58,6 @@ const ConsulteantionCreate: React.FC = () => {
       });
     }
 
-    console.log(
-      "session:",
-      blocks.map((block) => ({ ...block, seats: 10 })),
-    );
     const listSessions = blocks.map((block) => ({ ...block, seats: 10 }));
     const workingTimes = listSessions.map((sesions) => {
       return {

@@ -60,7 +60,6 @@ class RepoDoctor extends RepoAccount<Doctor> {
         ...body,
       },
     );
-    console.log("updateWorkingTime=>>", data);
     return new WorkingTime(data.data!);
   };
 
@@ -136,7 +135,11 @@ class RepoDoctor extends RepoAccount<Doctor> {
 
   getBookingInfo = async (id: string) => {
     const { data } = await http.get(`/booking/doctor/${id}`);
-    console.log("dattatata", data);
+    return new Booking(data);
+  };
+
+  reExaminationBooking = async (payload: any) => {
+    const { data } = await http.post(`/booking/doctor`, payload);
     return new Booking(data);
   };
 
@@ -150,8 +153,7 @@ class RepoDoctor extends RepoAccount<Doctor> {
         ...payloadStatusBooking,
       },
     );
-    console.log(data);
-    return new Booking(data.data!);
+    return new Booking(data.data);
   };
 
   async uploadAvatar(file: File, fileName: string) {

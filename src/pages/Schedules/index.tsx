@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 import {
   Paper,
@@ -9,6 +9,7 @@ import {
   useTheme,
   Theme,
   makeStyles,
+  Button,
 } from "@material-ui/core";
 import moment from "moment";
 import { doctor as repoDoctor } from "services/repos";
@@ -32,6 +33,9 @@ import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import { AccountStatus, ModelStatus } from "../../models";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import { RouteList } from "../../routeList";
+import { Booking } from "../../models/booking";
+import get from "lodash/get";
+import { parse } from "querystring";
 
 interface IMapped {
   startDay: number;
@@ -49,6 +53,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 const SchedulesPage: React.FC = () => {
   const theme = useTheme();
   const classes = useStyles();
+  const location = useLocation();
+  const search = location.search.replace("?", "");
   const resourcesData = [
     {
       text: "Active",
@@ -70,6 +76,8 @@ const SchedulesPage: React.FC = () => {
   const [state] = useAuthentication();
   const [active, setActive] = useState(false);
   const [data, setData] = useState<WorkingTime[]>();
+  const history = useHistory();
+  const bookingId = get(parse(search), "bookingId", "") as string;
   const payload = {
     doctorId: state.account.externalId,
     offset: 0,
@@ -81,6 +89,16 @@ const SchedulesPage: React.FC = () => {
   useEffect(() => {
     dataRs && setData(dataRs.data);
   }, [dataRs]);
+
+  const handleReExmination = (workingTime: WorkingTime) => {
+    history.push({
+      hash: RouteList.ReExamintionBooking,
+      search: `?bookingId=${bookingId}`,
+      state: {
+        workingTime,
+      },
+    });
+  };
 
   useEffect(() => {
     if (data) {
@@ -179,6 +197,15 @@ const SchedulesPage: React.FC = () => {
             }
           />
         </Box>
+        {bookingId && (
+          <Box>
+            <Button onClick={() => handleReExmination(workingTime)}>
+              <Box ml={1}>
+                <Box>Tái Khám</Box>
+              </Box>
+            </Button>
+          </Box>
+        )}
       </Box>
     );
   };
@@ -209,7 +236,6 @@ const SchedulesPage: React.FC = () => {
         <Resources data={resources} mainResourceName="status" />
         <AppointmentTooltip
           onAppointmentMetaChange={(props) => {
-            console.log(props.data);
             const workingTime: WorkingTime = props.data?.appointmentData?.data;
             setActive(workingTime?.status === ModelStatus.ACTIVE);
           }}

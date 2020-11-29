@@ -29,7 +29,6 @@ export const RangeInline = ({
       disabledKeyboardNavigation
       inline
       onChange={(date: Date) => {
-        console.log("date =>>>", date);
         if (!dates.from || (dates.from && dates.to)) {
           setDates({ from: date });
           onSelect?.({ from: date });

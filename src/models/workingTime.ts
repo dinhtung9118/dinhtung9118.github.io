@@ -2,7 +2,7 @@ import { BaseModel } from "./base";
 import moment from "moment";
 import dayjs from "dayjs";
 import { AppointmentModel } from "@devexpress/dx-react-scheduler";
-import { convertToUTC7 } from "../untils/Date";
+import { convertToUTC7 } from "../utils/Date";
 
 export type IWorkingTime = Pick<
   WorkingTime,

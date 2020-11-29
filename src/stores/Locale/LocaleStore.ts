@@ -5,7 +5,7 @@ import {
   StoreActionApi,
 } from "react-sweet-state";
 
-import { I18n, Locale } from "untils";
+import { I18n, Locale } from "utils";
 
 import { i18n as repoI18n } from "services/repos";
 

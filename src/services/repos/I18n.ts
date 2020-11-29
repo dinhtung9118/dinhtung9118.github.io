@@ -1,4 +1,4 @@
-import { I18n, Locale } from "untils";
+import { I18n, Locale } from "utils";
 import { config as clientConfig } from "../Clients/Http";
 import merge from "lodash.merge";
 

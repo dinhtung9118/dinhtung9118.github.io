@@ -5,7 +5,7 @@ import SideBar from "components/SideBar";
 import { makeStyles } from "@material-ui/core/styles";
 import useUI from "stores/UIstore/UIStore";
 import { drawerWidth } from "../../components/SideBar/index.style";
-import { I18n } from "../../untils";
+import { I18n } from "../../utils";
 import { OptionsObject, useSnackbar } from "notistack";
 import { connectNotifier } from "../../stores/Connection/Connection";
 import { CloseButton } from "../../components/Notistack";

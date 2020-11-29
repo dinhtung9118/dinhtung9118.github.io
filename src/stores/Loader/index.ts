@@ -1,6 +1,6 @@
 import { createStore, createHook, createContainer } from "react-sweet-state";
 
-import { Completer } from "untils";
+import { Completer } from "utils";
 
 const Store = createStore({
   name: "Loader",

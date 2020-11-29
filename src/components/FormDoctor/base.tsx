@@ -2,7 +2,7 @@ import React, { Props } from "react";
 import { FormikProps } from "formik";
 import { FormControl, TextField, Grid } from "@material-ui/core";
 import { Account, IAccount } from "models";
-import { IValidError, createValidation, IValidList, validations } from "untils";
+import { IValidError, createValidation, IValidList, validations } from "utils";
 
 const listFields: (keyof IAccount)[] = ["firstName", "lastName", "phoneNumber"];
 

@@ -20,7 +20,7 @@ import { WorkingTime } from "models/workingTime";
 import DatePicker from "components/DatePicker";
 import { BookingStatus } from "../../../constants/enums";
 import { ISession } from "../../../models/workingTime";
-import { configTimeDate, getDateTimeNumber } from "../../../untils/Date";
+import { configTimeDate, getDateTimeNumber } from "../../../utils/Date";
 import { doctor as repoDoctor } from "../../../services/repos";
 import useAuthentication from "../../../stores/AuthenticationsStore/authentication";
 import { useLocation } from "react-router";

@@ -19,7 +19,7 @@ import {
 } from "components/Input";
 import AccountForm, { createAccountValidation } from "./base";
 import { Specialty, IDoctor, Doctor, Clinic } from "models";
-import { IValidError } from "untils";
+import { IValidError } from "utils";
 
 import { useI18n } from "../../stores/Locale/LocaleStore";
 

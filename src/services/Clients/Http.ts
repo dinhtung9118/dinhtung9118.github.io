@@ -1,8 +1,8 @@
 import axios, { AxiosError } from "axios";
 import { IReqPaging } from "../repos/interface";
-import { ValueNotifier } from "untils/Notifier/ValueNotifier";
-import { ChangeNotifier } from "untils/Notifier/ChangeNotifier";
-import { Completer } from "../../untils";
+import { ValueNotifier } from "utils/Notifier/ValueNotifier";
+import { ChangeNotifier } from "utils/Notifier/ChangeNotifier";
+import { Completer } from "../../utils";
 
 export const http = axios.create({
   baseURL: process.env.REACT_APP_API_SERVER,

@@ -1,8 +1,8 @@
 import {
   ChangeNotifier,
   ValueListenable,
-} from "untils/Notifier/ChangeNotifier";
-import { useValueChanged } from "untils/Hooks";
+} from "utils/Notifier/ChangeNotifier";
+import { useValueChanged } from "utils/Hooks";
 
 class ConnectNotifier
   extends ChangeNotifier

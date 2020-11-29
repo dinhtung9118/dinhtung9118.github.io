@@ -7,7 +7,7 @@ import {
   Box,
   FormHelperText,
 } from "@material-ui/core";
-import { IValidError } from "untils";
+import { IValidError } from "utils";
 import { useI18n } from "stores/Locale/LocaleStore";
 
 export const AcademicRank: React.FC<

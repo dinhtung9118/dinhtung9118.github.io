@@ -37,7 +37,8 @@
     "react-sweet-state": "^2.3.1",
     "react-virtualized": "^9.21.2",
     "typescript": "^3.9.7",
-    "use-query-params": "^1.1.6"
+    "use-query-params": "^1.1.6",
+    "homepage": "http://dinhtung9118.github.io/"
   },
   "devDependencies": {
     "@types/enzyme": "^3.10.5",
@@ -54,6 +55,7 @@
     "tslint-react": "^5.0.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -68,7 +68,7 @@ const SchedulesConsultationPage: React.FC = () => {
   const payload = {
     doctorId: state.account.externalId,
     offset: 0,
-    limit: 50,
+    limit: 250,
     // date: timeExpired,
   };
 

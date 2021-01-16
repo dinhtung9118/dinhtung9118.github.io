@@ -23,6 +23,9 @@ const languages: Record<string, I18n> = {
         error404: {
           goToHome: "Quay về trang chủ.",
         },
+        profileInfor:{
+          title: "Thông Tin Cá Nhân",
+        }
       },
     }),
   ),

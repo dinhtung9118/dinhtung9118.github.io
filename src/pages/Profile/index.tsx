@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
   Container,
   Box,
@@ -8,17 +8,18 @@ import {
   Button,
   Paper,
 } from "@material-ui/core";
-import { deepOrange, green } from "@material-ui/core/colors";
+import {deepOrange, green} from "@material-ui/core/colors";
 
-import { makeStyles } from "@material-ui/core/styles";
-import { useHistory } from "react-router";
-import { RouteList } from "../../routeList";
-import { doctor as repoDoctor } from "services/repos";
-import useAuthentication from "../../stores/AuthenticationsStore/authentication";
-import { Doctor } from "../../models";
+import {makeStyles} from "@material-ui/core/styles";
+import {useHistory} from "react-router";
+import {RouteList} from "../../routeList";
+import {doctor as repoDoctor} from "services/repos";
+import useAuthentication
+  from "../../stores/AuthenticationsStore/authentication";
+import {Doctor, ModelStatus} from "../../models";
 import ChangePasswordModal from "./ChangePasswordModal";
-import { ChangePasswordFormValues } from "components/FormChangePassword/index.d";
-import { useI18n } from "../../stores/Locale/LocaleStore";
+import {ChangePasswordFormValues} from "components/FormChangePassword/index.d";
+import {useI18n} from "../../stores/Locale/LocaleStore";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,7 +56,7 @@ const Profile: React.FC = () => {
   const [state] = useAuthentication();
   const [toggole, setToggle] = useState(false);
   const [doctorInfo, setDoctorInfo] = useState<Doctor>();
-  const { config } = i18n;
+  const {config} = i18n;
 
   useEffect(() => {
     (async function getPersistData() {
@@ -73,6 +74,13 @@ const Profile: React.FC = () => {
       newPassword: value.newPassword,
     });
     setToggle(false);
+  };
+
+  const mapStatusToLanguage = (status?: ModelStatus) => {
+    if (status === ModelStatus.ACTIVE) {
+      return i18n.system.common.active;
+    }
+    return i18n.system.common.inactive
   };
 
   return (
@@ -105,23 +113,23 @@ const Profile: React.FC = () => {
                         {doctorInfo?.email}
                       </Typography>
                       <Typography variant="caption" component="span">
-                        Đã xác thực
+                        {mapStatusToLanguage(doctorInfo?.status)}
                       </Typography>
                     </Grid>
                     <Grid container>
                       <Grid item>
                         <Button color="primary" onClick={() => setToggle(true)}>
-                          Đổi mật khẩu
+                          {i18n.pages.profileInfor.changePassword}
                         </Button>
                       </Grid>
                       <Grid item>
                         <Button
                           color="primary"
                           onClick={() =>
-                            history.push({ hash: RouteList.profileEdit })
+                            history.push({hash: RouteList.profileEdit})
                           }
                         >
-                          Chỉnh sửa thông tin
+                          {i18n.pages.profileInfor.changeInfor}
                         </Button>
                       </Grid>
                     </Grid>
@@ -134,110 +142,96 @@ const Profile: React.FC = () => {
               <Grid item xs={6} sm={6}>
                 <div>
                   <Typography color="textSecondary" component="span">
-                    Ngay sinh:{" "}
+                    {i18n.system.common.birthDay}:{" "}
                   </Typography>
                   <Typography component="span">22/9/1984</Typography>
-                  <Box borderColor="grey.500" borderBottom={1} />
+                  <Box borderColor="grey.500" borderBottom={1}/>
                 </div>
                 <div>
                   <Typography color="textSecondary" component="span">
-                    Quoc tich:{" "}
+                    {i18n.system.common.nationality}:{" "}
                   </Typography>
                   <Typography component="span">Viet Nam</Typography>
-                  <Box borderColor="grey.500" borderBottom={1} />
+                  <Box borderColor="grey.500" borderBottom={1}/>
                 </div>
               </Grid>
               <Grid item xs={6} sm={6}>
                 <div>
                   <Typography color="textSecondary" component="span">
-                    Gioi tính:{" "}
+                    {i18n.system.common.gender}:{" "}
                   </Typography>
                   <Typography component="span">
                     {config.gender[doctorInfo?.genderCode || "m"]}
                   </Typography>
-                  <Box borderColor="grey.500" borderBottom={1} />
+                  <Box borderColor="grey.500" borderBottom={1}/>
                 </div>
                 <div>
                   <Typography color="textSecondary" component="span">
-                    Dan toc:{" "}
+                    {i18n.system.common.nationality}:{" "}
                   </Typography>
                   <Typography component="span">
                     {config.nations[doctorInfo?.nationCode || "ki"]}
                   </Typography>
-                  <Box borderColor="grey.500" borderBottom={1} />
+                  <Box borderColor="grey.500" borderBottom={1}/>
                 </div>
               </Grid>
               <Grid item xs={6} sm={6}>
                 <div>
                   <Typography color="textSecondary" component="span">
-                    Job Title:{" "}
+                    {i18n.system.common.jobTitle}:{" "}
                   </Typography>
                   <Typography component="span">
                     {config.nations[doctorInfo?.jobTitle || ""]}
                   </Typography>
-                  <Box borderColor="grey.500" borderBottom={1} />
+                  <Box borderColor="grey.500" borderBottom={1}/>
                 </div>
                 <div>
                   <Typography color="textSecondary" component="span">
-                    Diseases:{" "}
+                    {i18n.system.common.diseases}:{" "}
                   </Typography>
                   {doctorInfo?.diseasesConsultantCode &&
-                    doctorInfo?.diseasesConsultantCode.map((diseases) => {
-                      return (
-                        <Typography component="span">
-                          {config.diseases[diseases || ""]}
-                        </Typography>
-                      );
-                    })}
-                  <Box borderColor="grey.500" borderBottom={1} />
+                  doctorInfo?.diseasesConsultantCode.map((diseases) => {
+                    return (
+                      <Typography component="span">
+                        {config.diseases[diseases || ""]}
+                      </Typography>
+                    );
+                  })}
+                  <Box borderColor="grey.500" borderBottom={1}/>
                 </div>
               </Grid>
               <Grid item xs={6} sm={6}>
                 <div>
                   <Typography color="textSecondary" component="span">
-                    Work Place:{" "}
+                    {i18n.system.common.workSpace}:{" "}
                   </Typography>
                   {doctorInfo?.workplace &&
-                    doctorInfo?.workplace.map((workplace) => {
-                      return (
-                        <Typography component="span">
-                          {config.hospital[workplace || ""]}
-                        </Typography>
-                      );
-                    })}
-                  <Box borderColor="grey.500" borderBottom={1} />
+                  doctorInfo?.workplace.map((workplace) => {
+                    return (
+                      <Typography component="span">
+                        {config.hospital[workplace || ""]}
+                      </Typography>
+                    );
+                  })}
+                  <Box borderColor="grey.500" borderBottom={1}/>
                 </div>
                 <div>
                   <Typography color="textSecondary" component="span">
-                    Academic Rank:{" "}
+                    {i18n.system.common.academicRank}:{" "}
                   </Typography>
                   <Typography component="span">
                     {config.academicLevel[doctorInfo?.academicRankCode || ""]}
                   </Typography>
-                  <Box borderColor="grey.500" borderBottom={1} />
+                  <Box borderColor="grey.500" borderBottom={1}/>
                 </div>
               </Grid>
               <Grid item xs={12} sm={12}>
                 <div>
                   <Typography color="textSecondary" variant="body1">
-                    Mo ta
+                    {i18n.system.common.description}:
                   </Typography>
                   <Typography variant="body1" paragraph>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua. Rhoncus dolor purus non enim praesent elementum
-                    facilisis leo vel. Risus at ultrices mi tempus imperdiet.
-                    Semper risus in hendrerit gravida rutrum quisque non tellus.
-                    Convallis convallis tellus id interdum velit laoreet id
-                    donec ultrices. Odio morbi quis commodo odio aenean sed
-                    adipiscing. Amet nisl suscipit adipiscing bibendum est
-                    ultricies integer quis. Cursus euismod quis viverra nibh
-                    cras. Metus vulputate eu scelerisque felis imperdiet proin
-                    fermentum leo. Mauris commodo quis imperdiet massa
-                    tincidunt. Cras tincidunt lobortis feugiat vivamus at augue.
-                    At augue eget arcu dictum varius duis at consectetur lorem.
-                    Velit sed ullamcorper morbi tincidunt. Lorem donec massa
-                    sapien faucibus et molestie ac.
+                    {doctorInfo?.description}
                   </Typography>
                 </div>
               </Grid>

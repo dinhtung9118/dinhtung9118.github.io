@@ -75,7 +75,7 @@ const BookingInfo: React.FC = () => {
     if (bookingId) {
       loader.push(
         repoDoctor.getBookingInfo(bookingId).then((rs) => {
-          setBookingData(rs);
+          setBookingData(new Booking(rs));
           if (rs && rs.userId) {
             loader.push(
               repoPatient.single(rs.patient || rs.userId).then((rs_p) => {
@@ -86,9 +86,11 @@ const BookingInfo: React.FC = () => {
         }),
       );
     }
-  }, [bookingId]);
+  }, []);
 
   const mapStatusToColor = (status: BookingStatus | undefined) => {
+    console.log('bookingData', bookingData);
+    debugger
     if (!status) return "";
     switch (status) {
       case BookingStatus.NEW:
@@ -267,14 +269,11 @@ const BookingInfo: React.FC = () => {
                   </Box>
                   <Box pt={1} pb={1}>
                     {" "}
-                    stomach pain
+                    {bookingData.diseaseCodes.join(", ")}
                   </Box>
                   <Box pt={1} pb={1}>
                     {" "}
-                    FormGroup is a helpful wrapper used to group selection
-                    controls components that provides an easier API. However,
-                    you are encouraged you to use Checkboxes instead if multiple
-                    related controls are required. (See: When to use).
+                    {bookingData.description}
                   </Box>
                 </Box>
               </Box>

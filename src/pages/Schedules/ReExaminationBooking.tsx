@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import {
   Box,
   Container,
@@ -7,20 +7,23 @@ import {
   Avatar,
   TextField,
 } from "@material-ui/core";
-import { useHistory, useLocation } from "react-router";
-import { Booking } from "../../models/booking";
+import {useHistory, useLocation} from "react-router";
+import {Booking} from "../../models/booking";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
-import { parse } from "querystring";
+import {parse} from "querystring";
 import {
   doctor as repoDoctor,
   patient as repoPatient,
 } from "../../services/repos";
-import { makeStyles } from "@material-ui/core";
-import { WorkingTime } from "../../models";
-import { Patient } from "../../models/patient";
-import { BookingTypes } from "../../constants/enums";
+import {makeStyles} from "@material-ui/core";
+import {WorkingTime} from "../../models";
+import {Patient} from "../../models/patient";
+import {BookingTypes} from "../../constants/enums";
 import moment from "moment";
+import {CloseButton} from "../../components/Notistack";
+import {useSnackbar} from "notistack";
+import {Diseases} from "../../components/Input";
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,11 +40,13 @@ export const useStyles = makeStyles((theme) => ({
 const ReExaminationBooking: React.FC = () => {
   const classes = useStyles();
   const location = useLocation();
+  const {enqueueSnackbar} = useSnackbar();
   const search = location.search.replace("?", "");
   const [bookingData, setBookingData] = useState<Booking>();
   const [workingTime, setWorkingTime] = useState<WorkingTime>();
   const [patient, setPatient] = useState<Patient>();
   const [noteDoctor, setNoteDoctor] = useState<string>("");
+  const [diseaseCodes, setDiseaseCodes] = useState<string[]>([]);
   const history = useHistory();
   const bookingId = get(parse(search), "bookingId", "") as string;
   const workingTimeState: WorkingTime = get(
@@ -58,6 +63,7 @@ const ReExaminationBooking: React.FC = () => {
     if (bookingId) {
       repoDoctor.getBookingInfo(bookingId).then((rs) => {
         setBookingData(rs);
+        setDiseaseCodes(rs?.diseaseCodes);
         if (rs && rs.userId) {
           repoPatient.single(rs.patient || rs.userId).then((rs_p) => {
             setPatient(rs_p);
@@ -86,11 +92,23 @@ const ReExaminationBooking: React.FC = () => {
       start: timeStart,
       end: timeEnd,
       hasMedicalInsurance: true,
-      diseaseCodes: bookingData?.diseaseCodes,
+      diseaseCodes,
       additionalData: bookingData?.additionalData || {},
-      serialId: bookingData?.serialId,
+      serialId: bookingData?.id,
     };
-    repoDoctor.reExaminationBooking(newReExamination);
+    repoDoctor.reExaminationBooking(newReExamination).then((rs) => {
+      enqueueSnackbar(<CloseButton name={"reExameBookingSuccess"}
+                                   message={"Booking successfuly!"}/>, {
+        key: "reExameBookingSuccess",
+        variant: "success",
+      });
+    }).catch((e) => {
+      enqueueSnackbar(<CloseButton name={"reExameBookingError"}
+                                   message={e?.message}/>, {
+        key: "reExameBookingError",
+        variant: "error",
+      });
+    });
   };
 
   return (
@@ -107,14 +125,14 @@ const ReExaminationBooking: React.FC = () => {
       </Box>
       <Box display="flex" mt={2} mb={2}>
         <Box>
-          <Avatar alt="Remy Sharp" src={patient?.avatar} />
+          <Avatar alt="Remy Sharp" src={patient?.avatar}/>
         </Box>
         <Box ml={2}>
           <Box>{`Họ tên: ${patient?.fullName}`}</Box>
           <Box>{`Email: ${patient?.email}`}</Box>
         </Box>
       </Box>
-      <Divider />
+      <Divider/>
       <Box mt={2} mb={2}>
         <Box mb={1}>Thong tin tai kham</Box>
         <Box mb={1}>
@@ -125,6 +143,15 @@ const ReExaminationBooking: React.FC = () => {
           <Box>{`Thời gian dự kiến kết thúc: ${WorkingTime.minusFormat(
             workingTime?.to || 0,
           )}`}</Box>
+        </Box>
+        <Box mt={1}>
+          <Diseases
+            value={diseaseCodes || []}
+            onChange={(values) => {
+              console.log('values', values);
+              setDiseaseCodes(values || [])
+            }}
+          />
         </Box>
         <Box mt={1}>
           <TextField
@@ -140,7 +167,7 @@ const ReExaminationBooking: React.FC = () => {
           />
         </Box>
       </Box>
-      <Divider />
+      <Divider/>
       <Box>
         <Box mt={5}>
           <Box mt={2} mb={1}>

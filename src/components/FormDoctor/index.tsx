@@ -48,13 +48,14 @@ const InsideDoctorForm = (
     component: { doctorForm: i18nForm },
   } = useI18n();
 
+  const i18n = useI18n();
+
   const errorCode = (key: keyof IDoctor) => {
     return touched[key] ? (errors[key] as IValidError) : undefined;
   };
 
   const renderSpecialtyTypeBox = () => {
     const isError = Boolean(errors.specialties && touched.specialties);
-    console.log("values.workplace", values.workplace);
     return (
       <Autocomplete
         multiple
@@ -225,7 +226,7 @@ const InsideDoctorForm = (
           </FormControl>
           <Grid item xs={12}>
             <Button variant="contained" color="primary" type="submit">
-              submit
+              {i18n.system.common.save}
             </Button>
           </Grid>
         </Grid>
@@ -241,11 +242,11 @@ export default withFormik<IFormDoctorProps, IDoctor>({
     ...props.data,
   }),
   validate: createAccountValidation<IDoctor>({
-    genderCode: { required: Boolean },
-    nationCode: { required: Boolean },
-    nationalityCode: { required: Boolean },
-    academicRankCode: { required: Boolean },
-    specialties: { required: (list: any[]) => Boolean(list?.length) },
+    // genderCode: { required: Boolean },
+    // nationCode: { required: Boolean },
+    // nationalityCode: { required: Boolean },
+    // academicRankCode: { required: Boolean },
+    // specialties: { required: (list: any[]) => Boolean(list?.length) },
   }),
   handleSubmit: async (
     values: IDoctor,

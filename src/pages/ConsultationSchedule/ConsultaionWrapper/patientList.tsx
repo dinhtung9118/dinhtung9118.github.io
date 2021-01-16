@@ -157,7 +157,7 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
     const payload = {
       doctorId: state.account.externalId,
       offset: 0,
-      limit: 50,
+      limit: 250,
       date: getDateTimeNumber(selectDate),
     };
     repoDoctor.getWorkingTime(payload).then((rs) => {

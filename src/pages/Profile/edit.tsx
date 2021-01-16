@@ -9,6 +9,7 @@ import {
 import { Specialty, Doctor } from "models";
 import DoctorForm from "components/FormDoctor";
 import useAuthentication from "../../stores/AuthenticationsStore/authentication";
+import {useI18n} from "../../stores/Locale/LocaleStore";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -23,6 +24,11 @@ const useStyles = makeStyles((theme) => ({
     width: theme.spacing(10),
     height: theme.spacing(10),
   },
+  containerPage:{
+    background: theme.palette.common.white,
+    width: "600px",
+    height: '100%',
+  }
 }));
 
 type IQueryDatas = {
@@ -34,6 +40,7 @@ export default () => {
   const classes = useStyles();
   const [state] = useAuthentication();
   const [datas, setDatas] = useState<IQueryDatas>();
+  const i18n = useI18n();
 
   useEffect(() => {
     (async function getData() {
@@ -43,7 +50,7 @@ export default () => {
         setUrlAvatar(doctor.avatar || "");
         setDatas({
           specialties: specialties,
-          data: new Doctor(doctor),
+          data: doctor,
         });
       }
     })();
@@ -64,9 +71,9 @@ export default () => {
   };
 
   return (
-    <Container style={{ maxWidth: "100%", width: "600px" }} component="div">
+    <Container className={classes.containerPage} component="div">
       <Typography color="inherit" variant="subtitle1" component="div">
-        Create Account Doctor
+        {i18n.pages.profileInfor.editInfor}
       </Typography>
       <div>
         <div className={classes.containerAvatar}>
@@ -82,12 +89,12 @@ export default () => {
             variant="contained"
             color="primary"
           >
-            Add avatar
+            {i18n.pages.profileInfor.editAvatar}
           </Button>
         </div>
       </div>
       <Typography color="inherit" variant="subtitle1" component="div">
-        Info Doctor
+        {i18n.pages.profileInfor.infoDoctor}
       </Typography>
       {datas && (
         <DoctorForm

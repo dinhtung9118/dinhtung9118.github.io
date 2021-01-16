@@ -1,4 +1,4 @@
-import { IAccount, Account } from "./account";
+import {IAccount, Account, ModelStatus} from "./account";
 import { Specialty } from "models/specialty";
 
 export type IDoctor = IAccount &
@@ -15,6 +15,7 @@ export type IDoctor = IAccount &
     | "diseasesConsultantCode"
     | "jobTitle"
     | "description"
+    | "status"
   >;
 
 export class Doctor extends Account {
@@ -36,4 +37,5 @@ export class Doctor extends Account {
   education = "";
   academicRankCode = "";
   description = "";
+  status= ModelStatus.ACTIVE;
 }

@@ -1,9 +1,9 @@
-import { ThemeOptions } from "@material-ui/core";
+import {ThemeOptions} from "@material-ui/core";
 
 export default {
   palette: {
-    common: { black: "rgba(0, 0, 0, 1)", white: "#fff" },
-    background: { paper: "#fff", default: "rgba(238, 238, 238, 1)" },
+    common: {black: "rgba(0, 0, 0, 1)", white: "#fff"},
+    background: {paper: "#fff", default: "rgba(238, 238, 238, 1)"},
     primary: {
       light: "#4bc5ff",
       main: "#1eb7ff",
@@ -47,6 +47,12 @@ export default {
       hint: "rgba(0, 0, 0, 0.38)",
     },
   },
+  typography: {
+    fontFamily: [
+      'Raleway',
+      'Arial'
+    ].join(','),
+  },
   grey: {
     primary: "#8493a5",
   },
@@ -58,7 +64,7 @@ export default {
     },
     MuiCssBaseline: {
       "@global": {
-        "@font-face": [],
+        "@font-face": ['Helvetica Neue"'],
       },
     },
   },

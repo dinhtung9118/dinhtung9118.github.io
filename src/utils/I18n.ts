@@ -59,6 +59,21 @@ export class I18n {
       offline: "You lose connection.",
       online: "You are back online.",
     },
+    common:{
+      birthDay: "Ngày sinh",
+      gender: "Giới tính",
+      nationality: "Quốc gia",
+      nation: "Dân tộc",
+      jobTitle: "Chức danh",
+      workSpace: "Nơi làm việc",
+      academicRank: "Học Vấn",
+      description: "Mô tả",
+      diseases: "Bệnh Chuyên khoa",
+      active: "Đã xác nhận",
+      inactive: "Chưa xác nhận",
+      save: "Lưu",
+      wellcome: "Xin Chào"
+    },
   };
 
   component = {
@@ -95,90 +110,90 @@ export class I18n {
     },
     inputs: asFormFields({
       workplace: {
-        label: "Work places",
+        label: "Nơi làm việc",
         errors: {
-          required: "Worl places is required",
+          required: "Nơi làm việc bắt buộc",
         },
       },
       diseases: {
-        label: "Diseases",
+        label: "Bệnh Chuyên khoa",
         errors: {
-          required: "Diseases is required",
+          required: "Bệnh Chuyên khoa bắt buộc",
         },
       },
       jobTitle: {
-        label: "Job title",
+        label: "Chức danh",
         errors: {
-          required: "Job title is required",
+          required: "Chức danh là bắt buộc",
         },
       },
       gender: {
-        label: "Gender",
+        label: "Giới tính",
         errors: {
-          required: "Gender is required",
+          required: "Giới tính bắt buộc",
         },
       },
       academicRank: {
-        label: "Academic Rank",
-        placeholder: "Academic Rank",
+        label: "Học Vấn",
+        placeholder: "Nhập học vấn",
         errors: {
-          required: "Academic Rank is required",
+          required: "Học Vấn bắt buộc",
         },
       },
       nation: {
-        label: "Nation",
-        placeholder: "Nation",
+        label: "Dân tộc",
+        placeholder: "Nhập dân tộc",
         errors: {
-          required: "Nation can not empty.",
+          required: "dân tộc băt buộc",
         },
       },
       nationality: {
-        label: "Nationality",
-        placeholder: "Nationality",
+        label: "Quốc gia",
+        placeholder: "Nhập quốc gia",
         errors: {
-          required: "Nationality can not empty.",
+          required: "Quốc gia bắt buộc",
         },
       },
     }),
 
-    accountForm: asFormFields({
+    accountForm: {
       firstName: {
-        label: "First Name",
-        placeholder: "First Name",
+        label: "Họ",
+        placeholder: "Nhập Họ ...",
         errors: {
-          required: "First Name can not empty.",
+          required: "Họ bắt buộc",
         },
       },
       lastName: {
-        label: "Last Name",
-        placeholder: "Last Name",
+        label: "Tên",
+        placeholder: "nhập tên",
         errors: {
-          required: "Last Name can not empty.",
+          required: "Tên bắt buộc",
         },
       },
       phoneNumber: {
-        label: "Phone number",
-        placeholder: "Phone number",
+        label: "Số điện thoại",
+        placeholder: "Nhập số điện thoại",
         errors: {
-          required: "Phone number can not empty.",
+          required: "Số điện thoại bắt buộc",
         },
       },
       email: {
         label: "Email",
-        placeholder: "Email",
+        placeholder: "Nhập email ...",
         errors: {
-          required: "Email can not empty.",
-          pattern: "Email is invalid.",
+          required: "Email bắt buộc.",
+          pattern: "Email không hợp lệ.",
         },
       },
       password: {
-        label: "Password",
-        placeholder: "Password",
+        label: "Mật khẩu",
+        placeholder: "Nhập Mật khẩu",
         errors: {
-          required: "Password can not empty.",
+          required: "Mật khẩu bắt buộc",
         },
       },
-    }),
+    },
 
     formSpecialist: asFormFields({
       specialtyType: {
@@ -264,21 +279,21 @@ export class I18n {
         placeholder: "Education",
       },
       note: {
-        label: "Note",
-        placeholder: "Input description here",
+        label: "Mô tả",
+        placeholder: "Nhập mô tả ...",
       },
       partner: {
-        label: "Partner code",
-        placeholder: "Partner code",
+        label: "Phòng khám/Bệnh viện",
+        placeholder: "Nhập phong khám/Bệnh viện",
         errors: {
-          required: "Partner code can not empty.",
+          required: "Phòng khám/Bệnh viên bắt buộc",
         },
       },
       specialties: {
-        label: "Specialty Type code",
-        placeholder: "Specialty Type code",
+        label: "Chuyên khoa",
+        placeholder: "Nhập Chuyên khoa",
         errors: {
-          required: "Specialty Type can not empty.",
+          required: "Chuyên khoa bắt buộc",
         },
       },
     }),
@@ -358,5 +373,15 @@ export class I18n {
     error404: {
       goToHome: "Go to home",
     },
+    profileInfor: {
+      changePassword: "Đổi mật khẩu",
+      changeInfor: "Chỉnh sửa thông tin",
+      editInfor: "Chỉnh sửa thông tin",
+      editAvatar: "Cập nhật ảnh đại diện",
+      infoDoctor: "Thông tin bác sỹ",
+      firstName: "Họ",
+      lastName: "Tên",
+
+    }
   };
 }

@@ -11,6 +11,7 @@ export type IBooking = Pick<
   | "description"
   | "status"
   | "doctor"
+  | "type"
   | "partner"
   | "specialty"
   | "start"
@@ -56,7 +57,7 @@ export class Booking extends BaseModel {
   patient: any = "";
   hasMedicalInsurance: boolean = true;
   userId: string = "";
-  diseaseCodes: Array<string> = [];
+  diseaseCodes: string[] = [];
   additionalData: object = {};
   serialId: string = "";
 }

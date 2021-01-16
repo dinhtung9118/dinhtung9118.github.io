@@ -38,6 +38,7 @@ class RepoDoctor extends RepoAccount<Doctor> {
 
   single = async (id: string) => {
     const { data } = await http.get<Doctor>(`doctors/me`);
+    console.log('data=>>', data);
     return new Doctor(data);
   };
   updatePassword = async (data: {
@@ -147,7 +148,7 @@ class RepoDoctor extends RepoAccount<Doctor> {
     id: string,
     payloadStatusBooking: PayloadStatusBooking,
   ) => {
-    const { data } = await http.patch<IResponse<Booking>>(
+    const data = await http.patch<Booking>(
       `/booking/doctor/${id}`,
       {
         ...payloadStatusBooking,

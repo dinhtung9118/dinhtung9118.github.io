@@ -184,7 +184,10 @@ const SchedulesConsultationPage: React.FC = () => {
 
   return (
     <Paper>
-      <Box display="flex" alignItems="flex-end">
+      <Box display="flex"
+           alignItems="flex-end"
+           justifyContent="flex-end"
+           pt={2} pr={2}>
         <Button
           onClick={handleAddConsultationWorkingTime}
           variant="contained"

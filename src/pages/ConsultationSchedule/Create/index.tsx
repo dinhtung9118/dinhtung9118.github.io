@@ -5,8 +5,8 @@ import { RangeInline } from "components/DatePicker/RangeInline";
 import { IBlock } from "components/BlockSplit/Store";
 
 const ConsulteantionCreate: React.FC = () => {
-  const [blocks, setBlocks] = useState<IBlock[]>([]);
-  const [dates, setDates] = useState<{ from?: Date; to?: Date }>({});
+  const [, setBlocks] = useState<IBlock[]>([]);
+  const [, setDates] = useState<{ from?: Date; to?: Date }>({});
   return (
     <Container>
       <Grid container>

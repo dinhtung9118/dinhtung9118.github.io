@@ -158,10 +158,10 @@ const BookingInfo: React.FC = () => {
                     </Avatar>
                   </Box>
                   <Box>
-                    <Box>Name: {patient?.fullName}</Box>
+                    <Box>Họ và Tên: {patient?.fullName}</Box>
                     <Box>Emai: {patient?.email}</Box>
                     <Box display="flex" alignItems="center">
-                      Status:
+                      Trạng thái:
                       <Box
                         display="flex"
                         alignItems="center"
@@ -196,7 +196,7 @@ const BookingInfo: React.FC = () => {
                     onClick={() => handleChangeStatus(BookingStatus.CANCELED)}
                   >
                     <Box ml={1}>
-                      <Box>Cancele</Box>
+                      <Box>Hủy</Box>
                     </Box>
                   </Button>
                   {bookingData?.status === BookingStatus.NEW && (
@@ -207,7 +207,7 @@ const BookingInfo: React.FC = () => {
                       }
                     >
                       <Box ml={1}>
-                        <Box>Confirm</Box>
+                        <Box>Xác nhận</Box>
                       </Box>
                     </Button>
                   )}
@@ -219,7 +219,7 @@ const BookingInfo: React.FC = () => {
                       }
                     >
                       <Box ml={1}>
-                        <Box>PROCESSING</Box>
+                        <Box>Đang diễn ra</Box>
                       </Box>
                     </Button>
                   )}
@@ -231,7 +231,7 @@ const BookingInfo: React.FC = () => {
                       }
                     >
                       <Box ml={1}>
-                        <Box>Compeleted</Box>
+                        <Box>Hoàn thành</Box>
                       </Box>
                     </Button>
                   )}
@@ -248,18 +248,18 @@ const BookingInfo: React.FC = () => {
             </Grid>
             <Box mt={5}>
               <Box mt={2} mb={1}>
-                Info Detail
+                Thông tin chi tiết
               </Box>
               <Box display="flex">
                 <Box minWidth={200} mr={5}>
                   <Box pt={1} pb={1}>
-                    Time Consultation:
+                    Thời Gian diễn ra:
                   </Box>
                   <Box pt={1} pb={1}>
-                    Patient need Consulting
+                    Bệnh nhân tư vấn
                   </Box>
                   <Box pt={1} pb={1}>
-                    Patient notes
+                    Ghi chú bệnh nhân
                   </Box>
                 </Box>
                 <Box>
@@ -278,33 +278,30 @@ const BookingInfo: React.FC = () => {
                 </Box>
               </Box>
               <Box mt={2} mb={1}>
-                More Info
+                Thông tin thêm
               </Box>
               <Box display="flex">
                 <Box minWidth={200} mr={5}>
                   <Box pt={1} pb={1}>
-                    Allergy:
+                    Dị ứng:
                   </Box>
                   <Box pt={1} pb={1}>
-                    Height:
+                    Chiều cao:
                   </Box>
                   <Box pt={1} pb={1}>
-                    Weight:{" "}
+                    Cân nặng:{" "}
                   </Box>
                   <Box pt={1} pb={1}>
-                    Patient:{" "}
+                    Nhắc nhở:{" "}
                   </Box>
                   <Box pt={1} pb={1}>
-                    Patient:{" "}
-                  </Box>
-                  <Box pt={1} pb={1}>
-                    Last Re-examination:{" "}
+                    Lần tái khám:{" "}
                   </Box>
                 </Box>
                 <Box>
                   <Box pt={1} pb={1}>
                     {" "}
-                    Sea Food
+                    Hải sản
                   </Box>
                   <Box pt={1} pb={1}>
                     {" "}
@@ -316,11 +313,7 @@ const BookingInfo: React.FC = () => {
                   </Box>
                   <Box pt={1} pb={1}>
                     {" "}
-                    DO NOT use tobacco
-                  </Box>
-                  <Box pt={1} pb={1}>
-                    {" "}
-                    DO NOT use stimulants (alcohol, beer ...)
+                    Không hút thuốc lá
                   </Box>
                   <Box pt={1} pb={1}>
                     {" "}
@@ -328,7 +321,6 @@ const BookingInfo: React.FC = () => {
                   </Box>
                 </Box>
               </Box>
-              <Box>More Image</Box>
             </Box>
           </Box>
         </Paper>

@@ -10,11 +10,13 @@ type TimeRange = {
 type RangeInlineProps = {
   onSelect?: (range: TimeRange) => any;
   monthsShown?: number;
+  minDate?: Date;
 };
 
 export const RangeInline = ({
   onSelect,
   monthsShown = 2,
+  minDate
 }: RangeInlineProps) => {
   const [dates, setDates] = useState<TimeRange>({});
   const selecting = !!dates.from && !dates.to;
@@ -27,6 +29,7 @@ export const RangeInline = ({
       selectsEnd={selecting}
       monthsShown={monthsShown}
       disabledKeyboardNavigation
+      minDate={minDate}
       inline
       onChange={(date: Date) => {
         if (!dates.from || (dates.from && dates.to)) {

@@ -110,7 +110,7 @@ const Examinationchedule: React.FC = () => {
       >
         <Typography component="div">
           <Box fontSize="h6.fontSize" fontWeight="fontWeightMedium">
-            {pages.consultationSchedule.title}
+            {pages.examinationSchedule.title}
           </Box>
         </Typography>
       </Box>

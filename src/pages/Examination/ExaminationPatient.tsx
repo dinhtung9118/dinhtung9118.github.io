@@ -26,6 +26,7 @@ import useAuthentication from "stores/authenticationsStore/authentication";
 import { useLocation } from "react-router";
 import get from "lodash/get";
 import { parse } from "querystring";
+import {useI18n} from "../../stores/Locale/LocaleStore";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -91,6 +92,7 @@ const ExaminationPatient: React.FC<ChildrenProps> = ({
   const search = location.search.replace("?", "");
   const dateParam = get(parse(search), "date", "") as string;
   const [page, setPage] = React.useState(0);
+  const i18n = useI18n();
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [listWorkingtime, setListWorkingTime] = useState<ISession[]>([]);
   const [currentBookingType, setBookingType] = useState<string>("EXAMINATION");
@@ -101,51 +103,52 @@ const ExaminationPatient: React.FC<ChildrenProps> = ({
   const [selectDate, setSelectDate] = useState(new Date());
   const [state] = useAuthentication();
   const listBookingType = [
-    { value: "EXAMINATION", lable: "Examination" },
-    { value: "RE_EXAMINATION", lable: "Re-Examination" },
+    { value: "EXAMINATION", lable: i18n.system.common.typeBookingExamination},
+    { value: "RE_EXAMINATION", lable: i18n.system.common.typeBookingReExamination },
   ];
   const listBookingStatus = [
-    { value: BookingStatus.NEW, lable: "New" },
-    { value: BookingStatus.CONFIRMED, lable: "Confirmed" },
-    { value: BookingStatus.OUT_OF_DATE, lable: "Out of Date" },
-    { value: BookingStatus.CANCELED, lable: "Canceled" },
-    { value: BookingStatus.COMPELETED, lable: "Compeleted" },
+    { value: BookingStatus.NEW, lable: i18n.system.common.statusNew },
+    { value: BookingStatus.CONFIRMED, lable: i18n.system.common.statusConfirmed },
+    { value: BookingStatus.OUT_OF_DATE, lable: i18n.system.common.statusOutOfDate },
+    { value: BookingStatus.CANCELED, lable: i18n.system.common.statusCanceled },
+    { value: BookingStatus.COMPELETED, lable: i18n.system.common.statusCompeleted},
+    { value: BookingStatus.PROCESSING, lable: i18n.system.common.statusProcessing },
   ];
 
   const titleList: TitleWithClassName[] = [
     {
       className: "",
-      cellRender: "ID",
+      cellRender: i18n.pages.examinationSchedule.id,
       align: "left",
       minWidth: 120,
     },
     {
       className: "",
-      cellRender: "Name Patient",
+      cellRender: i18n.pages.examinationSchedule.namePatient,
       align: "left",
       minWidth: 120,
     },
     {
       className: "",
-      cellRender: "Code Patient Consultation",
+      cellRender: i18n.pages.examinationSchedule.codePatientExamination,
       align: "left",
       minWidth: 120,
     },
     {
       className: "",
-      cellRender: "Specitialy",
+      cellRender: i18n.pages.examinationSchedule.specitialy,
       align: "left",
       minWidth: 120,
     },
     {
       className: "",
-      cellRender: "Time Consultation",
+      cellRender: i18n.pages.examinationSchedule.timeExamination,
       align: "left",
       minWidth: 120,
     },
     {
       className: "",
-      cellRender: "Status",
+      cellRender: i18n.pages.examinationSchedule.status,
       align: "left",
       minWidth: 120,
     },
@@ -220,7 +223,7 @@ const ExaminationPatient: React.FC<ChildrenProps> = ({
       <Box ml={1} display="flex" justifyContent="space-between">
         <Box display="flex">
           <Box minWidth={80} display="flex" alignItems="center" ml={2}>
-            <InputLabel>Type Booking</InputLabel>
+            <InputLabel>{i18n.pages.examinationSchedule.titleType}</InputLabel>
             <FormControl className={classes.margin}>
               <Select
                 labelId="demo-customized-select-label"
@@ -229,7 +232,7 @@ const ExaminationPatient: React.FC<ChildrenProps> = ({
                 onChange={handleChangeType}
                 input={<BootstrapInput />}
               >
-                <MenuItem value="all">All</MenuItem>
+                <MenuItem value="all">{i18n.system.common.typeAll}</MenuItem>
                 {listBookingType.length > 0 &&
                   listBookingType.map((type) => {
                     return <MenuItem value={type.value}>{type.lable}</MenuItem>;
@@ -238,7 +241,7 @@ const ExaminationPatient: React.FC<ChildrenProps> = ({
             </FormControl>
           </Box>
           <Box minWidth={80} display="flex" alignItems="center" ml={2}>
-            <InputLabel>Status:</InputLabel>
+            <InputLabel>{i18n.pages.examinationSchedule.filteStatus}:</InputLabel>
             <FormControl className={classes.margin}>
               <Select
                 labelId="status-booking-label"
@@ -247,7 +250,7 @@ const ExaminationPatient: React.FC<ChildrenProps> = ({
                 onChange={handleChangeStatus}
                 input={<BootstrapInput />}
               >
-                <MenuItem value="all">All</MenuItem>
+                <MenuItem value="all">{i18n.system.common.typeAll}</MenuItem>
                 {listBookingStatus.length > 0 &&
                   listBookingStatus.map((status) => {
                     return (
@@ -261,7 +264,7 @@ const ExaminationPatient: React.FC<ChildrenProps> = ({
         <Box display="flex" alignItems="center" justifyContent="center">
           <Box display="flex" alignItems="center">
             <Box mr={1}>
-              <InputLabel>Date Consulting</InputLabel>
+              <InputLabel>{i18n.pages.examinationSchedule.titleDateExamination}</InputLabel>
             </Box>
             <DatePicker
               name="Date"
@@ -270,7 +273,7 @@ const ExaminationPatient: React.FC<ChildrenProps> = ({
             />
           </Box>
           <Box minWidth={80} display="flex" alignItems="center" ml={2}>
-            <InputLabel>Time Consultations</InputLabel>
+            <InputLabel>{i18n.pages.examinationSchedule.titleTimeExamination}</InputLabel>
             <FormControl className={classes.margin}>
               <Select
                 labelId="demo-customized-select-label"
@@ -279,7 +282,7 @@ const ExaminationPatient: React.FC<ChildrenProps> = ({
                 onChange={handleChangeTime}
                 input={<BootstrapInput />}
               >
-                <MenuItem value="all">All</MenuItem>
+                <MenuItem value="all">{i18n.system.common.typeAll}</MenuItem>
                 {listWorkingtime.length > 0 &&
                   listWorkingtime.map((time) => {
                     const startTime = WorkingTime.minusFormat(time.from);

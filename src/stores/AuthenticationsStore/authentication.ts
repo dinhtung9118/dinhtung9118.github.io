@@ -6,9 +6,9 @@ import {
 } from "react-sweet-state";
 import { LoginFormValues } from "components/FormLogin/index.d";
 import { auth as authRepo } from "services/repos/Auth/index";
-import { setHttpAuth } from "services/clients/Http";
 import { AccountRole, AccountStatus } from "models/account";
 import databases from "../../storages";
+import {setHttpAuth} from "../../services/clients/Http";
 
 type StoreApi = StoreActionApi<IAuthState>;
 type Actions = typeof actions;

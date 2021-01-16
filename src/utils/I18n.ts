@@ -72,7 +72,18 @@ export class I18n {
       active: "Đã xác nhận",
       inactive: "Chưa xác nhận",
       save: "Lưu",
-      wellcome: "Xin Chào"
+      wellcome: "Xin Chào",
+      statusNew: "Mới",
+      statusConfirmed: "Đã xác nhận",
+      statusOutOfDate: "Quá hạn",
+      statusCanceled: "Hủy",
+      statusCompeleted: "Hoàn thành",
+      statusProcessing: "Đang diễn ra",
+      typeBookingExamination: "Khám Bệnh",
+      typeBookingReExamination: "Tái Khám",
+      typeBookingConsultation: "Tư Vấn",
+      typeAll: "Tất cả",
+      noData: "Không có dữ liệu",
     },
   };
 
@@ -368,7 +379,29 @@ export class I18n {
       forgot: "Forgot password",
     },
     consultationSchedule: {
-      title: "Consultantion Schedule Partiens",
+      title: "Danh sách bệnh nhân tư vấn",
+      id: "Id",
+      namePatient: "Tên Bệnh Nhân",
+      codePatientConsultation: "Mã Tư Vấn",
+      specitialy: "Chuyên Khoa",
+      timeConsultation: "Thời Gian Tư vấn",
+      status: "Trạng Thái",
+      filteStatus: "Trạng thái",
+      titleDateConsultation: "Ngày tư vấn",
+      titleTimeConsultaion: "Thời gian tư vấn"
+    },
+    examinationSchedule: {
+      title: "Danh sách bệnh nhân khám bệnh",
+      id: "Id",
+      namePatient: "Tên Bệnh Nhân",
+      codePatientExamination: "Mã Khám Bệnh",
+      specitialy: "Chuyên Khoa",
+      timeExamination: "Thời Gian Khám Bệnh",
+      status: "Trạng Thái",
+      filteStatus: "Trạng thái",
+      titleDateExamination: "Ngày khám",
+      titleTimeExamination: "Thời gian khám",
+      titleType: "Loại"
     },
     error404: {
       goToHome: "Go to home",
@@ -381,7 +414,6 @@ export class I18n {
       infoDoctor: "Thông tin bác sỹ",
       firstName: "Họ",
       lastName: "Tên",
-
     }
   };
 }

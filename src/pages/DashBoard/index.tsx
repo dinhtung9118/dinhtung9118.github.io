@@ -29,8 +29,10 @@ export default () => {
   return (
     <>
       <div>
-        <Box height={"100%"}
+        <Box height={600}
+             display="flex"
              alignItems="center"
+             justifyContent="center"
              fontSize={22}
              fontWeight={700}>{i18n.system.common.wellcome}, {state.account.lastName}</Box>
       </div>

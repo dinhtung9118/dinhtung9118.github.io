@@ -4,7 +4,7 @@ import { RouteList } from "../../routeList";
 export const mockDataSidebar: MockDataSidebarProps = {
   menus: [
     {
-      title: "Lich Kham",
+      title: "Danh sách khám",
       featureName: "",
       icon: "fa-youtube-play",
       subCreateMenus: [],
@@ -12,7 +12,7 @@ export const mockDataSidebar: MockDataSidebarProps = {
       to: RouteList.examinationSchedule,
     },
     {
-      title: "Lich Tu Van",
+      title: "Danh sách tư Vấn",
       featureName: "",
       icon: "fa-youtube-play",
       subCreateMenus: [],
@@ -20,7 +20,7 @@ export const mockDataSidebar: MockDataSidebarProps = {
       to: RouteList.consultationSchedule,
     },
     {
-      title: "Hoat Dong",
+      title: "Thông tin cá nhân",
       featureName: "",
       icon: "fa-youtube-play",
       subCreateMenus: [],
@@ -28,15 +28,7 @@ export const mockDataSidebar: MockDataSidebarProps = {
       to: RouteList.profile,
     },
     {
-      title: "Ca nhan",
-      featureName: "",
-      icon: "fa-youtube-play",
-      subCreateMenus: [],
-      subMenus: [],
-      to: RouteList.profile,
-    },
-    {
-      title: "Lich tư vấn Làm Việc",
+      title: "Lịch tư vấn",
       featureName: "",
       icon: "fa-youtube-play",
       subCreateMenus: [],
@@ -44,7 +36,7 @@ export const mockDataSidebar: MockDataSidebarProps = {
       to: RouteList.consultationWorkingTime,
     },
     {
-      title: "Lich lam viec",
+      title: "Lịch làm việc",
       featureName: "",
       icon: "fa-youtube-play",
       subCreateMenus: [],

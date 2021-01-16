@@ -1,7 +1,7 @@
 import React, { createElement, useMemo, useRef, ReactNode } from "react";
 import { useHistory, matchPath, RouteProps } from "react-router-dom";
 import { Drawer } from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 
 export type IHashDrawerRoute = RouteProps & {
   position?: "top" | "right" | "bottom" | "left";
@@ -16,11 +16,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export const HashDrawerSwitch = ({
-                                   routes,
-                                 }: {
+  routes,
+}: {
   routes: IHashDrawerRoute[];
 }) => {
-  const classes = useStyles()
+  const classes = useStyles();
   const history = useHistory();
   const { location } = history;
   let { hash } = location;

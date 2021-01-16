@@ -1,14 +1,14 @@
 import React, { useMemo } from "react";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { TextField, TextFieldProps } from "@material-ui/core";
-import {IValidError} from "untils";
-import {useI18n} from "stores/Locale/LocaleStore";
+import { IValidError } from "utils";
+import { useI18n } from "stores/Locale/LocaleStore";
 
 export const JobTitle = ({
-                           onChange,
-                           error,
-                           ...props
-                         }: Omit<TextFieldProps, "onChange" | "error"> & {
+  onChange,
+  error,
+  ...props
+}: Omit<TextFieldProps, "onChange" | "error"> & {
   onChange: (value?: string) => void;
   error?: IValidError;
 }) => {

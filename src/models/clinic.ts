@@ -19,7 +19,7 @@ export type IClinic = Pick<
   | "updatedAt"
   | "id"
   | "type"
-  >;
+>;
 
 export class Clinic extends BaseModel {
   constructor(props?: IClinic) {

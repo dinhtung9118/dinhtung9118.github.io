@@ -1,5 +1,5 @@
-import {I18n, Locale} from "untils";
-import {config as clientConfig} from "../Clients/Http";
+import { I18n, Locale } from "utils";
+import { config as clientConfig } from "../Clients/Http";
 import merge from "lodash.merge";
 
 const en = new I18n();
@@ -23,6 +23,9 @@ const languages: Record<string, I18n> = {
         error404: {
           goToHome: "Quay về trang chủ.",
         },
+        profileInfor:{
+          title: "Thông Tin Cá Nhân",
+        }
       },
     }),
   ),
@@ -46,10 +49,10 @@ type TCSupports = "en" | "vi";
 interface ICSupports {
   code: string;
   en: string;
-  vn: string
+  vn: string;
 }
 type ICData = Record<string, ICSupports[]>;
-type TCCode = "en" | "vn"
+type TCCode = "en" | "vn";
 const mapCode: Record<TCSupports | string, TCCode> = { vi: "vn" };
 
 async function fetchConfig(code: TCCode) {
@@ -80,20 +83,20 @@ async function fetchConfig(code: TCCode) {
     }),
   );
 
-  code = (mapCode[code]) || code;
-  const mapDataI18n = ()=>{
+  code = mapCode[code] || code;
+  const mapDataI18n = () => {
     const out = {} as any;
     Object.entries(result).forEach(([key, value]) => {
       const out1 = {} as any;
       // @ts-ignore
       value?.map<ICSupports>((item: ICSupports) => {
-        return out1[item.code] = item[code];
+        return (out1[item.code] = item[code]);
       });
       out[key] = out1;
-      return out1
+      return out1;
     });
-    return out
-  }
+    return out;
+  };
 
   return {
     config: mapDataI18n(),

@@ -1,15 +1,17 @@
-import {BaseModel} from "./base";
-import {BookingStatus} from "../constants/enums";
-import {Doctor} from "./doctor";
-import {Clinic} from "./clinic";
-import isObject from 'lodash/isObject'
+import { BaseModel } from "./base";
+import { BookingStatus } from "../constants/enums";
+import { Doctor } from "./doctor";
+import { Clinic } from "./clinic";
+import isObject from "lodash/isObject";
 
-export type IBooking = Pick<Booking,
+export type IBooking = Pick<
+  Booking,
   | "id"
   | "notes"
   | "description"
   | "status"
   | "doctor"
+  | "type"
   | "partner"
   | "specialty"
   | "start"
@@ -17,7 +19,10 @@ export type IBooking = Pick<Booking,
   | "patient"
   | "hasMedicalInsurance"
   | "userId"
-  | "diseaseCodes">
+  | "diseaseCodes"
+  | "additionalData"
+  | "serialId"
+>;
 
 export class Booking extends BaseModel {
   constructor(props?: IBooking) {
@@ -31,26 +36,28 @@ export class Booking extends BaseModel {
     }
   }
 
-  id: string = '';
-  notes: string = '';
-  description: string = '';
+  id: string = "";
+  notes: string = "";
+  description: string = "";
   status: BookingStatus = BookingStatus.NEW;
-  type: string = '';
-  doctor: Doctor | string = '';
-  partner: Clinic | string = '';
+  type: string = "";
+  doctor?: Doctor;
+  partner?: Clinic;
   specialty: {
-    name: string,
-    id: string,
-    _id: string,
+    name: string;
+    id: string;
+    _id: string;
   } = {
-    name: '',
-    id: '',
-    _id: ''
+    name: "",
+    id: "",
+    _id: "",
   };
   start: string = "";
   end: string = "";
   patient: any = "";
   hasMedicalInsurance: boolean = true;
   userId: string = "";
-  diseaseCodes: Array<string> = [];
+  diseaseCodes: string[] = [];
+  additionalData: object = {};
+  serialId: string = "";
 }

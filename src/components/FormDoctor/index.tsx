@@ -1,5 +1,5 @@
-import React, {Props} from "react";
-import {FormikBag, FormikProps, withFormik} from "formik";
+import React, { Props } from "react";
+import { FormikBag, FormikProps, withFormik } from "formik";
 import {
   TextareaAutosize,
   Grid,
@@ -16,13 +16,12 @@ import {
   Nationality,
   Diseases,
   JobTitle,
-} from "components/Input"
-import AccountForm, {createAccountValidation} from "./base";
-import {Specialty, IDoctor, Doctor, Clinic} from "models";
-import {IValidError} from 'untils'
+} from "components/Input";
+import AccountForm, { createAccountValidation } from "./base";
+import { Specialty, IDoctor, Doctor, Clinic } from "models";
+import { IValidError } from "utils";
 
-
-import {useI18n} from "../../stores/Locale/LocaleStore";
+import { useI18n } from "../../stores/Locale/LocaleStore";
 
 export interface IFormDoctorProps {
   submit: (values: IDoctor) => Promise<void>;
@@ -42,12 +41,14 @@ const InsideDoctorForm = (
     errors,
     touched,
     validateForm,
-    specialties
+    specialties,
   } = props;
 
   const {
-    component: {doctorForm: i18nForm},
+    component: { doctorForm: i18nForm },
   } = useI18n();
+
+  const i18n = useI18n();
 
   const errorCode = (key: keyof IDoctor) => {
     return touched[key] ? (errors[key] as IValidError) : undefined;
@@ -55,7 +56,6 @@ const InsideDoctorForm = (
 
   const renderSpecialtyTypeBox = () => {
     const isError = Boolean(errors.specialties && touched.specialties);
-    console.log('values.workplace', values.workplace);
     return (
       <Autocomplete
         multiple
@@ -99,7 +99,9 @@ const InsideDoctorForm = (
             size="small"
             variant="outlined"
             fullWidth
-            component={Grid} item md={6}
+            component={Grid}
+            item
+            md={6}
           >
             <AcademicRank
               name="academicRankCode"
@@ -215,16 +217,16 @@ const InsideDoctorForm = (
               value={values.description}
               name="description"
               onChange={handleChange}
-              title='description'
-              placeholder='description'
+              title="description"
+              placeholder="description"
               rowsMin={3}
               rowsMax={10}
-              style={{resize: "none"}}
+              style={{ resize: "none" }}
             />
           </FormControl>
           <Grid item xs={12}>
             <Button variant="contained" color="primary" type="submit">
-              submit
+              {i18n.system.common.save}
             </Button>
           </Grid>
         </Grid>
@@ -240,15 +242,15 @@ export default withFormik<IFormDoctorProps, IDoctor>({
     ...props.data,
   }),
   validate: createAccountValidation<IDoctor>({
-    genderCode: {required: Boolean},
-    nationCode: {required: Boolean},
-    nationalityCode: {required: Boolean},
-    academicRankCode: {required: Boolean},
-    specialties: {required: (list: any[]) => Boolean(list?.length)},
+    // genderCode: { required: Boolean },
+    // nationCode: { required: Boolean },
+    // nationalityCode: { required: Boolean },
+    // academicRankCode: { required: Boolean },
+    // specialties: { required: (list: any[]) => Boolean(list?.length) },
   }),
   handleSubmit: async (
     values: IDoctor,
-    {props, setSubmitting}: FormikBag<IFormDoctorProps, IDoctor>,
+    { props, setSubmitting }: FormikBag<IFormDoctorProps, IDoctor>,
   ) => {
     setSubmitting(true);
     await props.submit(values);

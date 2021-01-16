@@ -1,18 +1,16 @@
-import { ThemeOptions } from "@material-ui/core";
-
-
+import {ThemeOptions} from "@material-ui/core";
 
 export default {
   palette: {
-    common: { black: "rgba(0, 0, 0, 1)", white: "#fff" },
-    background: { paper: "#fff", default: "rgba(238, 238, 238, 1)" },
+    common: {black: "rgba(0, 0, 0, 1)", white: "#fff"},
+    background: {paper: "#fff", default: "rgba(238, 238, 238, 1)"},
     primary: {
       light: "#4bc5ff",
       main: "#1eb7ff",
       dark: "#1580b2",
       contrastText: "rgba(255, 255, 255, 1)",
     },
-    warning:{
+    warning: {
       light: "#ffb333",
       main: "#ffa000",
       dark: "#f27212",
@@ -49,8 +47,14 @@ export default {
       hint: "rgba(0, 0, 0, 0.38)",
     },
   },
-  grey:{
-    primary: '#8493a5'
+  typography: {
+    fontFamily: [
+      'Raleway',
+      'Arial'
+    ].join(','),
+  },
+  grey: {
+    primary: "#8493a5",
   },
   overrides: {
     MuiListItemIcon: {
@@ -58,10 +62,10 @@ export default {
         minWidth: 38,
       },
     },
-    MuiCssBaseline:{
-      '@global':{
-        '@font-face':[]
-      }
-    }
+    MuiCssBaseline: {
+      "@global": {
+        "@font-face": ['Helvetica Neue"'],
+      },
+    },
   },
 } as ThemeOptions;

@@ -1,6 +1,6 @@
 import { createStore, createHook, createContainer } from "react-sweet-state";
 
-import { Completer } from "untils";
+import { Completer } from "utils";
 
 const Store = createStore({
   name: "Loader",
@@ -11,9 +11,9 @@ const Store = createStore({
   },
   actions: {
     push: (promise: Promise<any>, lazy = 250) => async ({
-                                                          getState,
-                                                          setState,
-                                                        }) => {
+      getState,
+      setState,
+    }) => {
       (() => {
         const { total } = getState();
         if (total === 0) {

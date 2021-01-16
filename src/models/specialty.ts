@@ -3,7 +3,7 @@ import { BaseModel, ModelStatus } from "./base";
 export type ISpecialty = Pick<
   Specialty,
   "id" | "name" | "partnerId" | "description" | "specialtyType" | "status"
-  >;
+>;
 
 export class Specialty extends BaseModel {
   constructor(props?: ISpecialty) {

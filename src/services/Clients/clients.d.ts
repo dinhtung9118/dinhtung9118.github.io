@@ -1,5 +1,5 @@
-import { Method, CancelTokenSource } from 'axios';
-import { AnyObject } from 'constants/types';
+import { Method, CancelTokenSource } from "axios";
+import { AnyObject } from "constants/types";
 
 export interface DataProperty {
   url: string;
@@ -9,4 +9,3 @@ export interface DataProperty {
   data?: AnyObject | string;
   cancelTokenSource?: CancelTokenSource;
 }
-

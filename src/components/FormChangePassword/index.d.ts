@@ -1,4 +1,4 @@
-import {FnType} from "../../constants/types";
+import { FnType } from "../../constants/types";
 
 export interface ChangePasswordFormValues {
   currentPassword: string;
@@ -8,5 +8,5 @@ export interface ChangePasswordFormValues {
 
 export interface ChangePasswordFormProps {
   handleSubmit: (values: ChangePasswordFormValues) => void;
-  handleClose: FnType
+  handleClose: FnType;
 }

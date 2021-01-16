@@ -1,12 +1,11 @@
 import * as React from "react";
-import {IQueryPaging} from 'services/repos/interface'
+import { IQueryPaging } from "services/repos/interface";
 
 export interface ChildrenProps {
   data?: object[];
   totals?: number;
   handleOnAddAdvanceFilterField?: (params: any) => void;
 }
-
 
 export interface Params {
   [field: string]: string | string[] | undefined | null | number;

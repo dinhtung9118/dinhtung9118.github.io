@@ -1,8 +1,8 @@
 import { RepoAccount } from "./Account";
 import { http } from "../Clients/Http";
-import {Patient} from "../../models/patient";
-import {IReqPaging, IResList, IResponse} from "./interface";
-import {Doctor} from "../../models";
+import { Patient } from "../../models/patient";
+import { IReqPaging, IResList, IResponse } from "./interface";
+import { Doctor } from "../../models";
 
 class RepoPatient extends RepoAccount<Patient> {
   constructor() {
@@ -19,10 +19,9 @@ class RepoPatient extends RepoAccount<Patient> {
   };
 
   async single(id: string) {
-    const {data} = await http.get<IResponse<Patient>>(`patients/${id}`);
+    const { data } = await http.get<IResponse<Patient>>(`patients/${id}`);
     return new Patient(data.data!);
   }
-
 }
 
 export const patient = new RepoPatient();

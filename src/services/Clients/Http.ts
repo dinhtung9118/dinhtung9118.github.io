@@ -1,8 +1,8 @@
-import axios, {AxiosError} from "axios";
-import {IReqPaging} from "../repos/interface";
-import {ValueNotifier} from "untils/Notifier/ValueNotifier";
-import {ChangeNotifier} from "untils/Notifier/ChangeNotifier";
-import {Completer} from "../../untils";
+import axios, { AxiosError } from "axios";
+import { IReqPaging } from "../repos/interface";
+import { ValueNotifier } from "utils/Notifier/ValueNotifier";
+import { ChangeNotifier } from "utils/Notifier/ChangeNotifier";
+import { Completer } from "../../utils";
 
 export const http = axios.create({
   baseURL: process.env.REACT_APP_API_SERVER,
@@ -14,10 +14,7 @@ export const config = axios.create({
 
 const valueNotifier = new ValueNotifier<Error>({} as Error);
 
-function debounce<T = unknown>(
-  time: number,
-  gCall?: () => T,
-) {
+function debounce<T = unknown>(time: number, gCall?: () => T) {
   let completer: Completer<T>;
   let timeout: NodeJS.Timeout;
 
@@ -31,12 +28,12 @@ function debounce<T = unknown>(
       completer.resolve((call || gCall)?.());
     }, time);
   };
-};
+}
 
 class ErrorNotifier extends ChangeNotifier {
   constructor(protected valueChanged: ValueNotifier<Error>) {
     super();
-    valueChanged.listen(() => debounce(200,() => this.notify()));
+    valueChanged.listen(() => debounce(200, () => this.notify()));
   }
 
   listen(listener: (error: Error) => void) {
@@ -75,8 +72,8 @@ http.interceptors.response.use(
     return res;
   },
   async (error: AxiosError) => {
-    return Promise.reject(error)
-  }
+    return Promise.reject(error);
+  },
 );
 
 export const buildRequestParams = (req: IReqPaging) => {
@@ -84,10 +81,10 @@ export const buildRequestParams = (req: IReqPaging) => {
 
   const params: Record<string, any> = { offset, limit, ...filter };
   sort &&
-  Object.assign(params, {
-    sortField: sort.name,
-    sortType: sort.desc ? "desc" : "asc",
-  });
+    Object.assign(params, {
+      sortField: sort.name,
+      sortType: sort.desc ? "desc" : "asc",
+    });
   return params;
 };
 

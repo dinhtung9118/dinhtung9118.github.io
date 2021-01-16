@@ -1,24 +1,21 @@
-import React, {useEffect, useState} from "react"
-import {Link} from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 import {
   Paper,
   Box,
-  Button,
   FormControlLabel,
   Switch,
   useTheme,
   Theme,
-  makeStyles
-} from '@material-ui/core';
+  makeStyles,
+  Button,
+} from "@material-ui/core";
 import moment from "moment";
-import {
-  doctor as repoDoctor,
-} from "services/repos";
-import {useApi} from "../../stores/UseApi/useApi";
-import useAuthentication
-  from "stores/AuthenticationsStore/authentication";
-import {WorkingTime} from "models/workingTime";
+import { doctor as repoDoctor } from "services/repos";
+import { useApi } from "../../stores/UseApi/useApi";
+import useAuthentication from "stores/AuthenticationsStore/authentication";
+import { WorkingTime } from "models/workingTime";
 import {
   Scheduler,
   WeekView,
@@ -31,36 +28,41 @@ import {
   Resources,
 } from "@devexpress/dx-react-scheduler-material-ui";
 
-import {ViewState} from "@devexpress/dx-react-scheduler";
-import AccessTimeIcon from '@material-ui/icons/AccessTime';
-import {AccountStatus, ModelStatus} from "../../models";
-import AssignmentIndIcon from '@material-ui/icons/AssignmentInd';
-import {RouteList} from "../../routeList";
-
+import { ViewState } from "@devexpress/dx-react-scheduler";
+import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import { AccountStatus, ModelStatus } from "../../models";
+import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
+import { RouteList } from "../../routeList";
+import { Booking } from "../../models/booking";
+import get from "lodash/get";
+import { parse } from "querystring";
 
 interface IMapped {
-  startDay: number,
-  endDay: number,
-  schedules: any[],
+  startDay: number;
+  endDay: number;
+  schedules: any[];
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
-  link:{
-    textDecoration: 'none',
+  link: {
+    textDecoration: "none",
     color: theme.palette.primary.main,
-  }
+  },
 }));
 
 const SchedulesPage: React.FC = () => {
   const theme = useTheme();
   const classes = useStyles();
+  const location = useLocation();
+  const search = location.search.replace("?", "");
   const resourcesData = [
     {
-      text: 'Active',
+      text: "Active",
       id: AccountStatus.ACTIVE,
       color: theme.palette.success.main,
-    }, {
-      text: 'Inactive',
+    },
+    {
+      text: "Inactive",
       id: AccountStatus.INACTIVE,
       color: theme.palette.text.disabled,
     },
@@ -74,6 +76,8 @@ const SchedulesPage: React.FC = () => {
   const [state] = useAuthentication();
   const [active, setActive] = useState(false);
   const [data, setData] = useState<WorkingTime[]>();
+  const history = useHistory();
+  const bookingId = get(parse(search), "bookingId", "") as string;
   const payload = {
     doctorId: state.account.externalId,
     offset: 0,
@@ -81,40 +85,44 @@ const SchedulesPage: React.FC = () => {
     // date: timeExpired,
   };
 
-
   const dataRs = useApi(() => repoDoctor.getWorkingTime(payload));
-  useEffect(()=>{
-    dataRs && setData(dataRs.data)
+  useEffect(() => {
+    dataRs && setData(dataRs.data);
   }, [dataRs]);
 
+  const handleReExmination = (workingTime: WorkingTime) => {
+    history.push({
+      hash: RouteList.ReExamintionBooking,
+      search: `?bookingId=${bookingId}`,
+      state: {
+        workingTime,
+      },
+    });
+  };
+
   useEffect(() => {
-    console.log('useEffect1');
     if (data) {
       let startDay = 8;
       let endDay = 18;
 
-      const schedules = WorkingTime
-        .toSchedule(data || [])
-        .map((s) => {
-          console.log('ssssss=>', s);
-          const start = (s.startDate as Date).getHours();
-          const end = (s.endDate as Date).getHours() + 1;
-          if (startDay > start) startDay = start;
-          if (endDay < end) endDay = end;
-          return {...s, status: s.data.status}
-        });
-      console.log('useEffect 2');
+      const schedules = WorkingTime.toSchedule(data || []).map((s) => {
+        const start = (s.startDate as Date).getHours();
+        const end = (s.endDate as Date).getHours() + 1;
+        if (startDay > start) startDay = start;
+        if (endDay < end) endDay = end;
+        return s;
+      });
       setMapped({
         startDay,
         endDay,
         schedules,
-      })
+      });
     }
   }, [data]);
 
   const resources = [
     {
-      fieldName: 'status',
+      fieldName: "status",
       instances: resourcesData,
     },
   ];
@@ -122,48 +130,56 @@ const SchedulesPage: React.FC = () => {
   const handlerChangeStatusSessions = (sessionWorking: WorkingTime) => {
     setActive(!active);
     repoDoctor.updateWorkingTime(sessionWorking).then((rs) => {
-
       const newWorkingTime = data || [];
-      const indexOfScheduleUpdate = newWorkingTime.findIndex((value) => rs.id === value.id);
+      const indexOfScheduleUpdate = newWorkingTime.findIndex(
+        (value) => rs.id === value.id,
+      );
       if (newWorkingTime?.length > 0 && indexOfScheduleUpdate !== -1) {
         newWorkingTime[indexOfScheduleUpdate] = rs;
-        setData([...newWorkingTime])
+        setData([...newWorkingTime]);
       }
     });
   };
 
   const renderDetailSession = (props: any) => {
-    const workingTime: WorkingTime = props.appointmentData?.data;
-    const readOnly = new Date().getTime() > new Date(workingTime.date).getTime() + workingTime.sessions[0].to;
-    if (workingTime && !workingTime.sessions) return (<></>);
-    const startTime = WorkingTime.minusFormat(workingTime.sessions[0].from || 0) || '';
-    const endTime = WorkingTime.minusFormat(workingTime.sessions[0].to || 0) || '';
-    console.log('props', workingTime);
-    setActive(workingTime.status === ModelStatus.ACTIVE);
+    const workingTime: WorkingTime = props.appointmentData?.working;
+    const readOnly =
+      new Date().getTime() >
+      new Date(workingTime.date).getTime() + workingTime.to;
+    if (workingTime && !workingTime) return <></>;
+    const startTime = WorkingTime.minusFormat(workingTime.from || 0) || "";
+    const endTime = WorkingTime.minusFormat(workingTime.to || 0) || "";
     return (
       <Box p={2}>
         <Box alignItems="center" display="flex" flexDirection="row" mb={1}>
-          <Box width="1.5em" height="1.5em"
-               bgcolor={workingTime.status === "ACTIVE" ?
-                 'success.main' :
-                 'text.disabled'
-               } borderRadius="50%"/>
-          <Box ml={1}>{moment(workingTime.date).format('DD MMMM YYYY')}</Box>
+          <Box
+            width="1.5em"
+            height="1.5em"
+            bgcolor={
+              workingTime.status === "ACTIVE" ? "success.main" : "text.disabled"
+            }
+            borderRadius="50%"
+          />
+          <Box ml={1}>{moment(workingTime.date).format("DD MMMM YYYY")}</Box>
         </Box>
         <Box alignItems="center" display="flex" flexDirection="row">
           <Box mr={1}>
-            <AccessTimeIcon/>
+            <AccessTimeIcon />
           </Box>
-          <Box>{startTime} - {endTime}</Box>
+          <Box>
+            {startTime} - {endTime}
+          </Box>
         </Box>
         <Box alignItems="center" display="flex" flexDirection="row">
           <Box mr={1}>
-            <AssignmentIndIcon/>
+            <AssignmentIndIcon />
           </Box>
           <Link
             className={classes.link}
-           to={`${RouteList.consultationSchedule}?date=${workingTime.date}`}>
-            Go to Consultation Schedule</Link>
+            to={`${RouteList.consultationSchedule}?date=${workingTime.date}`}
+          >
+            Go to Consultation Schedule
+          </Link>
         </Box>
         <Box mb={2}>
           <FormControlLabel
@@ -176,16 +192,27 @@ const SchedulesPage: React.FC = () => {
                 color="secondary"
               />
             }
-            label={workingTime.status === ModelStatus.ACTIVE ? "Active" : "Inactive"}
+            label={
+              workingTime.status === ModelStatus.ACTIVE ? "Active" : "Inactive"
+            }
           />
         </Box>
-      </Box>)
-  }
+        {bookingId && (
+          <Box>
+            <Button onClick={() => handleReExmination(workingTime)}>
+              <Box ml={1}>
+                <Box>Tái Khám</Box>
+              </Box>
+            </Button>
+          </Box>
+        )}
+      </Box>
+    );
+  };
 
-  return (<Paper>
-      <Scheduler
-        data={mapped.schedules}
-      >
+  return (
+    <Paper>
+      <Scheduler data={mapped.schedules}>
         <ViewState
           currentDate={currentDate}
           onCurrentDateChange={setCurrentDate}
@@ -194,7 +221,7 @@ const SchedulesPage: React.FC = () => {
         <Toolbar
           flexibleSpaceComponent={() => (
             <>
-              <Box flex={1}/>
+              <Box flex={1} />
             </>
           )}
         />
@@ -203,14 +230,15 @@ const SchedulesPage: React.FC = () => {
           startDayHour={mapped.startDay}
           endDayHour={mapped.endDay}
         />
-        <DateNavigator/>
-        <TodayButton/>
-        <Appointments/>
-        <Resources
-          data={resources}
-          mainResourceName="status"
-        />
+        <DateNavigator />
+        <TodayButton />
+        <Appointments />
+        <Resources data={resources} mainResourceName="status" />
         <AppointmentTooltip
+          onAppointmentMetaChange={(props) => {
+            const workingTime: WorkingTime = props.data?.appointmentData?.data;
+            setActive(workingTime?.status === ModelStatus.ACTIVE);
+          }}
           contentComponent={(props) => renderDetailSession(props)}
         />
         <CurrentTimeIndicator
@@ -220,7 +248,7 @@ const SchedulesPage: React.FC = () => {
         />
       </Scheduler>
     </Paper>
-  )
+  );
 };
 
 export default SchedulesPage;

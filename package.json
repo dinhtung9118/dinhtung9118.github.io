@@ -2,7 +2,7 @@
   "name": "web-doctor",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://dinhtung9118.github.io/",
+  "homepage": "http://dinhtung9118.github.io/auth/login",
   "dependencies": {
     "@devexpress/dx-react-core": "^2.7.2",
     "@devexpress/dx-react-scheduler": "^2.7.2",

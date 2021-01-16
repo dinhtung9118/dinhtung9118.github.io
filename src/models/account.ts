@@ -1,5 +1,9 @@
 import {BaseModel} from "./base";
 
+export enum ModelStatus {
+  ACTIVE = "ACTIVE",
+  INACTIVE = "INACTIVE",
+}
 export enum AccountRole {
   ADMIN = "MEBX_ADMIN",
   CLINIC = "CLINIC_ADMIN",
@@ -24,50 +28,46 @@ export type IAccount = Pick<
   | "status"
   | "active"
   | "avatar"
+  | "groupId"
+  | "externalId"
   >;
 
 
 export class Account extends BaseModel {
-  constructor(props: IAccount) {
+  constructor(props?: IAccount) {
     super();
-    if (this instanceof Account) this.assign(props);
+    this.assign(props);
   }
 
   protected assign<K extends keyof this>(
     props: Partial<Record<K, any>> | any,
     map?: Partial<Record<K, (value: any) => this[K]>>,
   ) {
+    if (!props) return;
     props.createdAt = props.id ? BaseModel.ObjectIDTime(props.id) : new Date();
     super.assign(props, map);
   }
 
-  id!: string;
+  id = "";
 
-  firstName!: string;
-  lastName!: string;
-  phoneNumber!: string;
+  firstName = "";
+  lastName = "";
+  phoneNumber = "";
+  email = "";
+  status = ModelStatus.INACTIVE;
+  role = AccountRole.PATIENT;
+  groupId = "";
+  externalId = "";
   password?: string;
-  email!: string;
-  role!: AccountRole;
-  status!: AccountStatus;
   active?: boolean;
   avatar?: string;
-
-  createdAt!: Date;
+  createdAt = new Date();
 
   get fullName() {
     return `${this.firstName} ${this.lastName}`;
   }
 
   get isActive() {
-    return Account.statusToBool(this.status);
-  }
-
-  static statusFromBool(bool: boolean) {
-    return bool ? AccountStatus.ACTIVE : AccountStatus.INACTIVE;
-  }
-
-  static statusToBool(status: AccountStatus) {
-    return status === AccountStatus.ACTIVE;
+    return BaseModel.statusToBool(this.status);
   }
 }

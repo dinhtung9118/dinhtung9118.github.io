@@ -1,60 +1,68 @@
-import React, { Props, useMemo, FormEvent, ChangeEvent } from "react";
+import React from "react";
 import { Button, FormControl, TextField, Box } from "@material-ui/core";
+import {LoginFormValues, LoginFormProps} from './index.d'
+import {FormikBag, FormikProps, withFormik} from "formik";
 
-interface IProps extends Props<any> {
-  status?: "disable" | "error";
-  onSubmit?: (username: string, password: string) => any;
+const initialValue = {
+  email: '',
+  password:''
 }
 
-export default ({ children, status, onSubmit }: IProps) => {
-  const values = useMemo(() => ({ user: "", pass: "" }), []);
-
-  const actions = useMemo(
-    () => ({
-      submit(e: FormEvent) {
-        e.preventDefault();
-      },
-      userChanged(e: ChangeEvent<HTMLInputElement>) {
-        values.user = e.currentTarget.value;
-      },
-      passChanged(e: ChangeEvent<HTMLInputElement>) {
-        values.pass = e.currentTarget.value;
-      },
-    }),
-    [values, onSubmit],
-  );
-  const isDisabled = status === "disable";
-  const isError = status === "error";
+const InsideFormLogin:React.FC<FormikProps<LoginFormValues> & LoginFormProps> = ({values,errors,touched, handleChange,handleSubmit}) => {
   return (
-    <Box component="form" onSubmit={actions.submit}>
-      <FormControl fullWidth margin="dense">
-        <TextField
-          error={isError}
-          disabled={isDisabled}
-          label="useName"
-          variant="outlined"
-        />
-      </FormControl>
-      <FormControl fullWidth margin="dense" variant="outlined">
-        <TextField
-          error={isError}
-          disabled={isDisabled}
-          label="password"
-          variant="outlined"
-          type="password"
-        />
-      </FormControl>
-      <FormControl fullWidth margin="normal">
-        <Button
-          variant="contained"
-          color="primary"
-          type="submit"
-          disabled={isDisabled}
-        >
-          "Login"
-        </Button>
-      </FormControl>
-      {children}
+    <Box >
+      <form onSubmit={handleSubmit}>
+        <FormControl fullWidth margin="dense">
+          <TextField
+            error={!!(errors.email && touched.email)}
+            label="email"
+            name="email"
+            variant="outlined"
+            value={values.email}
+            onChange={handleChange}
+          />
+        </FormControl>
+        <FormControl fullWidth margin="dense" variant="outlined">
+          <TextField
+            error={!!(errors.password && touched.password)}
+            label="password"
+            name="password"
+            variant="outlined"
+            type="password"
+            value={values.password}
+            onChange={handleChange}
+          />
+        </FormControl>
+        <FormControl fullWidth margin="normal">
+          <Button
+            variant="contained"
+            color="primary"
+            type="submit"
+          >
+            Login
+          </Button>
+        </FormControl>
+      </form>
     </Box>
   );
 };
+
+const onSubmit = async (
+  values: LoginFormValues,
+  {
+    setErrors,
+    props,
+    setSubmitting,
+  }: FormikBag<LoginFormProps, LoginFormValues>,
+) => {
+  setSubmitting(true);
+  await props.submit(values);
+};
+
+export default withFormik<LoginFormProps, LoginFormValues>({
+  mapPropsToValues: () => ({
+    ...initialValue,
+  }),
+  handleSubmit: onSubmit,
+  displayName: "LoginForm",
+})(InsideFormLogin);

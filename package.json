@@ -2,6 +2,7 @@
   "name": "web-doctor",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://dinhtung9118.github.io/",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",

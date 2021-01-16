@@ -1,6 +1,5 @@
 import moment from "moment";
 
-import { config, http } from "../Clients/Http";
 import { Doctor, IDoctor, ModelStatus } from "models";
 import {
   IReqPaging,
@@ -12,6 +11,7 @@ import { RepoAccount } from "./Account";
 import { WorkingTime } from "models/workingTime";
 import { Booking } from "../../models/booking";
 import { BookingStatus } from "../../constants/enums";
+import {config, http} from "../clients/Http";
 
 const time = moment(moment().format("YYYY-MM-DD")).subtract(1, "day");
 

@@ -8,7 +8,7 @@ import {
 } from "services/repos";
 import { Specialty, Doctor } from "models";
 import DoctorForm from "components/FormDoctor";
-import useAuthentication from "../../stores/AuthenticationsStore/authentication";
+import useAuthentication from "../../stores/authenticationsStore/authentication";
 import {useI18n} from "../../stores/Locale/LocaleStore";
 const useStyles = makeStyles((theme) => ({
   root: {

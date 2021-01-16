@@ -15,7 +15,7 @@ import {useHistory} from "react-router";
 import {RouteList} from "../../routeList";
 import {doctor as repoDoctor} from "services/repos";
 import useAuthentication
-  from "../../stores/AuthenticationsStore/authentication";
+  from "../../stores/authenticationsStore/authentication";
 import {Doctor, ModelStatus} from "../../models";
 import ChangePasswordModal from "./ChangePasswordModal";
 import {ChangePasswordFormValues} from "components/FormChangePassword/index.d";

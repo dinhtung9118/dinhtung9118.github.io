@@ -9,8 +9,8 @@ import { I18n } from "../../utils";
 import { OptionsObject, useSnackbar } from "notistack";
 import { connectNotifier } from "../../stores/Connection/Connection";
 import { CloseButton } from "../../components/Notistack";
-import { errorNotifier } from "../../services/Clients";
 import { useI18n } from "../../stores/Locale/LocaleStore";
+import {errorNotifier} from "../../services/clients/Http";
 
 const useStyles = makeStyles((theme) => ({
   grow: {

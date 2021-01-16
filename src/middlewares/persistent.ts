@@ -1,6 +1,6 @@
 import { defaults, StoreState } from "react-sweet-state";
 import databases from "storages";
-import { AUTHENTICATION_STORE } from "stores/AuthenticationsStore/authentication";
+import { AUTHENTICATION_STORE } from "stores/authenticationsStore/authentication";
 import { UI_STORE } from "../stores/UIstore/UIStore";
 import { I18N_STORE } from "../stores/Locale/LocaleStore";
 import { BLOCKSPLITTIME_STORE } from "../components/BlockSplit/Store";

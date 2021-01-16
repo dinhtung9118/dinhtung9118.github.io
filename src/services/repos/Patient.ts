@@ -1,5 +1,5 @@
 import { RepoAccount } from "./Account";
-import { http } from "../Clients/Http";
+import { http } from "../clients/Http";
 import { Patient } from "../../models/patient";
 import { IReqPaging, IResList, IResponse } from "./interface";
 import { Doctor } from "../../models";

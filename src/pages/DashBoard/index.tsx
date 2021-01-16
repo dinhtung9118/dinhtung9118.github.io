@@ -3,7 +3,7 @@ import { Box } from "@material-ui/core";
 import useAuthentication, {
   AuthStatus,
   storeKey,
-} from "../../stores/AuthenticationsStore/authentication";
+} from "../../stores/authenticationsStore/authentication";
 import { RouteList } from "../../routeList";
 import { useHistory } from "react-router";
 import databases from "../../storages";

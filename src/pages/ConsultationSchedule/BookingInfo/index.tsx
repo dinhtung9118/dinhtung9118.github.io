@@ -13,7 +13,7 @@ import {
 import get from "lodash/get";
 
 import { Booking } from "models/booking";
-import { useLoader } from "stores/Loader";
+import { useLoader } from "stores/loader";
 import { doctor as repoDoctor, patient as repoPatient } from "services/repos";
 import { Patient } from "models/patient";
 import { BookingStatus } from "constants/enums";

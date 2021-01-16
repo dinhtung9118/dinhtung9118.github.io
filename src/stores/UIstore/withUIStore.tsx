@@ -13,7 +13,7 @@ import {
 } from "./UIStore";
 import databases from "storages";
 import { useLocale } from "../Locale/LocaleStore";
-import { useLoaderActions } from "../Loader";
+import { useLoaderActions } from "../loader";
 import { RootThemeProvider } from "../../themes/Providers";
 
 const withUIPersist = <P extends object>(

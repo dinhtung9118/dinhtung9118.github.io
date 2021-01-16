@@ -22,7 +22,7 @@ import { BookingStatus } from "../../../constants/enums";
 import { ISession } from "../../../models/workingTime";
 import { configTimeDate, getDateTimeNumber } from "../../../utils/Date";
 import { doctor as repoDoctor } from "../../../services/repos";
-import useAuthentication from "../../../stores/AuthenticationsStore/authentication";
+import useAuthentication from "../../../stores/authenticationsStore/authentication";
 import { useLocation } from "react-router";
 import get from "lodash/get";
 import { parse } from "querystring";

@@ -1,5 +1,5 @@
 import { I18n, Locale } from "utils";
-import { config as clientConfig } from "../Clients/Http";
+import { config as clientConfig } from "../clients/Http";
 import merge from "lodash.merge";
 
 const en = new I18n();

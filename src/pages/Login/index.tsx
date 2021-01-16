@@ -6,7 +6,7 @@ import { RouteList } from "routeList";
 import { LoginFormValues } from "components/FormLogin/index.d";
 import useAuthentication, {
   AuthStatus,
-} from "stores/AuthenticationsStore/authentication";
+} from "stores/authenticationsStore/authentication";
 import { useStyles } from "./index.type";
 
 export default () => {

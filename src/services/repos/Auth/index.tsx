@@ -1,4 +1,4 @@
-import { http } from "../../Clients";
+import { http } from "../../clients/Http";
 import { IResAuthLogin } from "./index.d";
 import ApiConfig from "config";
 import { Account } from "models/account";

@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { Redirect, Route, RouteProps } from "react-router";
 import useAuthentication, {
   AuthStatus,
-} from "stores/AuthenticationsStore/authentication";
+} from "stores/authenticationsStore/authentication";
 import { RouteList } from "../routeList";
 import Layout from "./Layout";
 import Spinner from "components/Spinner";

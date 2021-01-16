@@ -12,7 +12,7 @@ import {
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import AdjustIcon from "@material-ui/icons/Adjust";
-import useAuthentication from "stores/AuthenticationsStore/authentication";
+import useAuthentication from "stores/authenticationsStore/authentication";
 import MoreIcon from "@material-ui/icons/MoreVert";
 
 const useStyles = makeStyles((theme) => ({

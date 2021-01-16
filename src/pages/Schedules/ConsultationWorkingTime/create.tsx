@@ -3,7 +3,7 @@ import { Container, Grid, Box, Button, IconButton } from "@material-ui/core";
 import BlockSplit from "components/BlockSplit";
 import { RangeInline } from "components/DatePicker/RangeInline";
 import { IBlock } from "components/BlockSplit/Store";
-import useAuthentication from "stores/AuthenticationsStore/authentication";
+import useAuthentication from "stores/authenticationsStore/authentication";
 import { CloseButton } from "components/Notistack";
 import { doctor as repoDoctor } from "services/repos";
 

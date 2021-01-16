@@ -9,7 +9,7 @@ import { I18n } from "../../utils";
 import { OptionsObject, useSnackbar } from "notistack";
 import { connectNotifier } from "../../stores/Connection/Connection";
 import { CloseButton } from "../../components/Notistack";
-import { errorNotifier } from "../../services/Clients";
+import { errorNotifier } from "../../services/clients";
 import { useI18n } from "../../stores/Locale/LocaleStore";
 
 const useStyles = makeStyles((theme) => ({
@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   content: {
+    minHeight: 600,
     background: theme.palette.grey[50],
     flexGrow: 1,
     marginTop: theme.spacing(6),

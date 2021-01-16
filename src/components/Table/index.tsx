@@ -15,6 +15,7 @@ import {
   TitleWithClassName,
   TTableProps,
 } from "./Table.d";
+import {useI18n} from "../../stores/Locale/LocaleStore";
 
 const CommonTable: React.FC<TTableProps> = ({
   stickyHeader = true,
@@ -24,6 +25,7 @@ const CommonTable: React.FC<TTableProps> = ({
   children,
   className,
 }) => {
+  const i18n = useI18n();
   const renderEmptyBody = () => {
     return (
       children || (
@@ -33,7 +35,7 @@ const CommonTable: React.FC<TTableProps> = ({
             colSpan={pathList!.length}
             className="text-center"
           >
-            'NO_DATA'
+            {i18n.system.common.noData}
           </TableCell>
         </TableRow>
       )

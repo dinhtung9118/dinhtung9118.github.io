@@ -3,7 +3,7 @@ import { Box } from "@material-ui/core";
 import useAuthentication, {
   AuthStatus,
   storeKey,
-} from "../../stores/AuthenticationsStore/authentication";
+} from "../../stores/authenticationsStore/authentication";
 import { RouteList } from "../../routeList";
 import { useHistory } from "react-router";
 import databases from "../../storages";
@@ -29,8 +29,10 @@ export default () => {
   return (
     <>
       <div>
-        <Box height={"100%"}
+        <Box height={600}
+             display="flex"
              alignItems="center"
+             justifyContent="center"
              fontSize={22}
              fontWeight={700}>{i18n.system.common.wellcome}, {state.account.lastName}</Box>
       </div>

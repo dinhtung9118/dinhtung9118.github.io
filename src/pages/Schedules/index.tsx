@@ -14,7 +14,7 @@ import {
 import moment from "moment";
 import { doctor as repoDoctor } from "services/repos";
 import { useApi } from "../../stores/UseApi/useApi";
-import useAuthentication from "stores/AuthenticationsStore/authentication";
+import useAuthentication from "stores/authenticationsStore/authentication";
 import { WorkingTime } from "models/workingTime";
 import {
   Scheduler,

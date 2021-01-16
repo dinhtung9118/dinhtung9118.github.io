@@ -3,7 +3,7 @@ import { Account } from "models";
 
 import { IReqPaging, IResList, IResponse } from "./interface";
 
-import { http, buildRequestParams } from "../Clients/Http";
+import { http, buildRequestParams } from "../clients/Http";
 
 export abstract class RepoAccount<T extends Account> {
   constructor(protected sub: string) {}

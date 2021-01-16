@@ -1,5 +1,5 @@
 import { IReqPaging, IResList, IResponse } from "./interface";
-import { config, http, buildRequestParams } from "../Clients/Http";
+import { config, http, buildRequestParams } from "../clients/Http";
 import { Clinic, SpecialtyType } from "models";
 
 class RepoClinic {

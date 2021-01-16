@@ -12,7 +12,7 @@ import {
 import moment from "moment";
 import { doctor as repoDoctor } from "services/repos";
 import { useApi } from "stores/UseApi/useApi";
-import useAuthentication from "stores/AuthenticationsStore/authentication";
+import useAuthentication from "stores/authenticationsStore/authentication";
 import { WorkingTime } from "models/workingTime";
 import {
   Scheduler,
@@ -184,7 +184,10 @@ const SchedulesConsultationPage: React.FC = () => {
 
   return (
     <Paper>
-      <Box display="flex" alignItems="flex-end">
+      <Box display="flex"
+           alignItems="flex-end"
+           justifyContent="flex-end"
+           pt={2} pr={2}>
         <Button
           onClick={handleAddConsultationWorkingTime}
           variant="contained"

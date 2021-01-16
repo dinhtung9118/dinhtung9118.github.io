@@ -3,7 +3,7 @@ import { Container, Grid, Box, Button, IconButton } from "@material-ui/core";
 import BlockSplit from "components/BlockSplit";
 import { RangeInline } from "components/DatePicker/RangeInline";
 import { IBlock } from "components/BlockSplit/Store";
-import useAuthentication from "stores/AuthenticationsStore/authentication";
+import useAuthentication from "stores/authenticationsStore/authentication";
 import { CloseButton } from "components/Notistack";
 import { doctor as repoDoctor } from "services/repos";
 
@@ -101,7 +101,7 @@ const ConsulteantionCreate: React.FC = () => {
       <Box>
         <Grid container>
           <Grid item component={Box} pr={2} flex={0} width={258}>
-            <RangeInline onSelect={setDates} />
+            <RangeInline onSelect={setDates} minDate={new Date()} />
           </Grid>
           <Grid item component={Box} height="calc(100vh - 200px)">
             <BlockSplit begin={8 * 60} end={18 * 60} onSelected={setBlocks} />

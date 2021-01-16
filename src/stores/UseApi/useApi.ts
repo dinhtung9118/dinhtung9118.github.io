@@ -1,4 +1,4 @@
-import { useLoaderActions } from "../Loader";
+import { useLoaderActions } from "../loader";
 import { useCallback, useEffect, useState } from "react";
 
 export function useApi<R>(query: () => Promise<R>, deps: any[] = []) {

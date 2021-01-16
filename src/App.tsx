@@ -1,5 +1,5 @@
 import React from "react";
-import withAuthPersist from "stores/AuthenticationsStore/withAuthPersist";
+import withAuthPersist from "stores/authenticationsStore/withAuthPersist";
 import Routes from "./pages/Routes";
 import "middlewares/logger";
 import "middlewares/persistent";

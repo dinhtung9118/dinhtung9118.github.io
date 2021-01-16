@@ -22,10 +22,11 @@ import { BookingStatus } from "../../../constants/enums";
 import { ISession } from "../../../models/workingTime";
 import { configTimeDate, getDateTimeNumber } from "../../../utils/Date";
 import { doctor as repoDoctor } from "../../../services/repos";
-import useAuthentication from "../../../stores/AuthenticationsStore/authentication";
+import useAuthentication from "../../../stores/authenticationsStore/authentication";
 import { useLocation } from "react-router";
 import get from "lodash/get";
 import { parse } from "querystring";
+import {useI18n} from "../../../stores/Locale/LocaleStore";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -88,6 +89,7 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
 }) => {
   const classes = useStyles();
   const location = useLocation();
+  const i18n = useI18n();
   const search = location.search.replace("?", "");
   const dateParam = get(parse(search), "date", "") as string;
   const [page, setPage] = React.useState(0);
@@ -101,47 +103,48 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
   const [selectDate, setSelectDate] = useState(new Date());
   const [state] = useAuthentication();
   const listBookingStatus = [
-    { value: BookingStatus.NEW, lable: "New" },
-    { value: BookingStatus.CONFIRMED, lable: "Confirmed" },
-    { value: BookingStatus.OUT_OF_DATE, lable: "Out of Date" },
-    { value: BookingStatus.CANCELED, lable: "Canceled" },
-    { value: BookingStatus.COMPELETED, lable: "Compeleted" },
+    { value: BookingStatus.NEW, lable: i18n.system.common.statusNew },
+    { value: BookingStatus.CONFIRMED, lable: i18n.system.common.statusConfirmed },
+    { value: BookingStatus.OUT_OF_DATE, lable: i18n.system.common.statusOutOfDate },
+    { value: BookingStatus.CANCELED, lable: i18n.system.common.statusCanceled },
+    { value: BookingStatus.COMPELETED, lable: i18n.system.common.statusCompeleted},
+    { value: BookingStatus.PROCESSING, lable: i18n.system.common.statusProcessing },
   ];
 
   const titleList: TitleWithClassName[] = [
     {
       className: "",
-      cellRender: "ID",
+      cellRender: i18n.pages.consultationSchedule.id,
       align: "left",
       minWidth: 120,
     },
     {
       className: "",
-      cellRender: "Name Patient",
+      cellRender: i18n.pages.consultationSchedule.namePatient,
       align: "left",
       minWidth: 120,
     },
     {
       className: "",
-      cellRender: "Code Patient Consultation",
+      cellRender: i18n.pages.consultationSchedule.codePatientConsultation,
       align: "left",
       minWidth: 120,
     },
     {
       className: "",
-      cellRender: "Specitialy",
+      cellRender: i18n.pages.consultationSchedule.specitialy,
       align: "left",
       minWidth: 120,
     },
     {
       className: "",
-      cellRender: "Time Consultation",
+      cellRender: i18n.pages.consultationSchedule.timeConsultation,
       align: "left",
       minWidth: 120,
     },
     {
       className: "",
-      cellRender: "Status",
+      cellRender: i18n.pages.consultationSchedule.status,
       align: "left",
       minWidth: 120,
     },
@@ -213,7 +216,7 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
       <Box ml={1} display="flex" justifyContent="space-between">
         <Box display="flex">
           <Box minWidth={80} display="flex" alignItems="center" ml={2}>
-            <InputLabel>Status:</InputLabel>
+            <InputLabel>{i18n.pages.consultationSchedule.filteStatus}:</InputLabel>
             <FormControl className={classes.margin}>
               <Select
                 labelId="status-booking-label"
@@ -222,7 +225,7 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
                 onChange={handleChangeStatus}
                 input={<BootstrapInput />}
               >
-                <MenuItem value="all">All</MenuItem>
+                <MenuItem value="all">{i18n.system.common.typeAll}</MenuItem>
                 {listBookingStatus.length > 0 &&
                   listBookingStatus.map((status) => {
                     return (
@@ -236,7 +239,7 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
         <Box display="flex" alignItems="center" justifyContent="center">
           <Box display="flex" alignItems="center">
             <Box mr={1}>
-              <InputLabel>Date Consulting</InputLabel>
+              <InputLabel>{i18n.pages.consultationSchedule.codePatientConsultation}</InputLabel>
             </Box>
             <DatePicker
               name="Date"
@@ -245,7 +248,7 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
             />
           </Box>
           <Box minWidth={80} display="flex" alignItems="center" ml={2}>
-            <InputLabel>Time Consultations</InputLabel>
+            <InputLabel>{i18n.pages.consultationSchedule.timeConsultation}</InputLabel>
             <FormControl className={classes.margin}>
               <Select
                 labelId="demo-customized-select-label"
@@ -254,7 +257,7 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
                 onChange={handleChangeTime}
                 input={<BootstrapInput />}
               >
-                <MenuItem value="all">All</MenuItem>
+                <MenuItem value="all">{i18n.system.common.typeAll}</MenuItem>
                 {listWorkingtime.length > 0 &&
                   listWorkingtime.map((time) => {
                     const startTime = WorkingTime.minusFormat(time.from);

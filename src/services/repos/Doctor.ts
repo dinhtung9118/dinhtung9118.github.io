@@ -1,6 +1,6 @@
 import moment from "moment";
 
-import { config, http } from "../Clients/Http";
+import { config, http } from "../clients/Http";
 import { Doctor, IDoctor, ModelStatus } from "models";
 import {
   IReqPaging,

@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { Redirect, Route, RouteProps } from "react-router";
 import useAuthentication, {
   AuthStatus,
-} from "stores/AuthenticationsStore/authentication";
+} from "stores/authenticationsStore/authentication";
 import { RouteList } from "../routeList";
 import Layout from "./Layout";
 import Spinner from "components/Spinner";
@@ -31,7 +31,7 @@ const PrivateRoute: React.FC<IProps & RouteProps> = ({
   const [state] = useAuthentication();
   if (state?.status === AuthStatus.LOGGED) {
     return (
-      <>
+      <div>
         <Layout>
           <Route {...rest} component={renderRoute(component)} />
         </Layout>
@@ -45,7 +45,7 @@ const PrivateRoute: React.FC<IProps & RouteProps> = ({
             })}
           />
         }
-      </>
+      </div>
     );
   }
   return <Redirect to={{ pathname: RouteList.auth.login }} />;

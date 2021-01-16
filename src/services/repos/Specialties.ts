@@ -1,5 +1,5 @@
 import { IReqPaging, IResList, IResponse } from "./interface";
-import { http } from "../Clients/Http";
+import { http } from "../clients/Http";
 import { Specialty, SpecialtyType } from "models";
 
 class RepoSpecialties {

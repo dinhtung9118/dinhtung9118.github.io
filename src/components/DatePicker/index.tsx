@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
 import ReactDatePicker from "react-datepicker";
-import moment from "moment";
 import { makeStyles, createStyles, Theme } from "@material-ui/core";
 import DateRangeOutlinedIcon from "@material-ui/icons/DateRangeOutlined";
-import range from "lodash/range";
 
 import {
   DatePickerProps,
   OptionalDatePickerProps,
-  CustomHeaderProps,
 } from "./DateTimePicker";
-import { format, getMonth, getYear, isValid } from "date-fns";
-import { DEFAULT_YEAR_DROPDOWN_ITEM } from "../../constants";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -70,14 +65,11 @@ const useStyles = makeStyles((theme: Theme) =>
 type TDatePicker = OptionalDatePickerProps & DatePickerProps;
 
 const DatePicker: React.FC<TDatePicker> = ({
-  dateFormat,
   onChange,
-  useCustomHeader,
-  yearDropdownItemNumber = DEFAULT_YEAR_DROPDOWN_ITEM,
   dateValue,
 }) => {
   const classes = useStyles();
-  const [isFocusDatePicker, setFocusDatePicker] = useState(false);
+  const [, setFocusDatePicker] = useState(false);
   const [value, setValue] = useState(new Date());
   useEffect(() => {
     dateValue && setValue(dateValue);

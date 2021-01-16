@@ -92,10 +92,10 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
   const i18n = useI18n();
   const search = location.search.replace("?", "");
   const dateParam = get(parse(search), "date", "") as string;
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [page] = React.useState(0);
+  const [rowsPerPage] = React.useState(5);
   const [listWorkingtime, setListWorkingTime] = useState<ISession[]>([]);
-  const [currentBookingType, setBookingType] = useState<string>("CONSULTATION");
+  const [currentBookingType] = useState<string>("CONSULTATION");
   const [currentBookingStatus, setBookingStatus] = useState<string>(
     BookingStatus.NEW,
   );
@@ -168,6 +168,7 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
         setListWorkingTime(rs?.data || []);
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getStartTime = () => {
@@ -193,6 +194,7 @@ const ConsultationPatient: React.FC<ChildrenProps> = ({
           value: timeWorking === "all" ? "all" : getStartTime(),
         },
       ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentBookingStatus, selectDate, currentBookingType, timeWorking]);
 
   const handlerOnChangeDateTime = (

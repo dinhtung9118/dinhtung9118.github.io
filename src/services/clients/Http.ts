@@ -69,7 +69,6 @@ http.interceptors.response.use(
     } else {
       return res;
     }
-    return res;
   },
   async (error: AxiosError) => {
     return Promise.reject(error);

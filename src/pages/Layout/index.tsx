@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import clsx from "clsx";
-import Header from "components/Header";
 import SideBar from "components/SideBar";
 import { makeStyles } from "@material-ui/core/styles";
 import useUI from "stores/UIstore/UIStore";

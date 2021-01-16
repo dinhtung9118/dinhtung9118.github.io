@@ -1,5 +1,4 @@
 import { BaseModel } from "./base";
-import moment from "moment";
 import dayjs from "dayjs";
 import { AppointmentModel } from "@devexpress/dx-react-scheduler";
 import { convertToUTC7 } from "../utils/Date";

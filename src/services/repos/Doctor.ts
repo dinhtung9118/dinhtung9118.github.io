@@ -1,5 +1,3 @@
-import moment from "moment";
-
 import { Doctor, IDoctor, ModelStatus } from "models";
 import {
   IReqPaging,
@@ -12,8 +10,6 @@ import { WorkingTime } from "models/workingTime";
 import { Booking } from "../../models/booking";
 import { BookingStatus } from "../../constants/enums";
 import {config, http} from "../clients/Http";
-
-const time = moment(moment().format("YYYY-MM-DD")).subtract(1, "day");
 
 interface PayloadStatusBooking {
   status: BookingStatus | string;

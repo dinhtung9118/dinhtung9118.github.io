@@ -19,9 +19,8 @@ const CommonPage: React.FC<CommonPageProps> = ({
   const [currentParam, setCurrentParam] = useState<Params>(initParam);
   const result = useApi(() => query(currentParam), [currentParam]);
   const data = get(result, "data", []);
-  const total = get(result, "total", []);
   const handlerAdvanceFilter = (params: { label: string; value: any }[]) => {
-    params.map((params) => {
+    params.forEach((params) => {
       const indexOfParam = advanceFilterList.findIndex(
         (p) => p === params.label,
       );

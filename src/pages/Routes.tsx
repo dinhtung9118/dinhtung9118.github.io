@@ -5,7 +5,6 @@ import { RouteList } from "../routeList";
 import Login from "./Login";
 import LinearIndeterminate from "../components/LinearIndeterminate";
 import PrivateRoute from "./PrivateRoute";
-import { Box, Button, FormControl } from "@material-ui/core";
 
 const DashBoard = lazy(() => import("./DashBoard"));
 const Profile = lazy(() => import("./Profile"));

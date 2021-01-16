@@ -24,6 +24,7 @@ const withUIPersist = <P extends object>(
   const [, localeActions] = useLocale();
   useEffect(() => {
     loader.push(localeActions.load());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useLayoutEffect(() => {
     (async function getPersistData() {

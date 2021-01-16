@@ -33,7 +33,6 @@ import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import { AccountStatus, ModelStatus } from "../../models";
 import AssignmentIndIcon from "@material-ui/icons/AssignmentInd";
 import { RouteList } from "../../routeList";
-import { Booking } from "../../models/booking";
 import get from "lodash/get";
 import { parse } from "querystring";
 

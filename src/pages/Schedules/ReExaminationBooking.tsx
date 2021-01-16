@@ -7,7 +7,7 @@ import {
   Avatar,
   TextField,
 } from "@material-ui/core";
-import {useHistory, useLocation} from "react-router";
+import { useLocation} from "react-router";
 import {Booking} from "../../models/booking";
 import get from "lodash/get";
 import isEmpty from "lodash/isEmpty";
@@ -47,7 +47,6 @@ const ReExaminationBooking: React.FC = () => {
   const [patient, setPatient] = useState<Patient>();
   const [noteDoctor, setNoteDoctor] = useState<string>("");
   const [diseaseCodes, setDiseaseCodes] = useState<string[]>([]);
-  const history = useHistory();
   const bookingId = get(parse(search), "bookingId", "") as string;
   const workingTimeState: WorkingTime = get(
     location,

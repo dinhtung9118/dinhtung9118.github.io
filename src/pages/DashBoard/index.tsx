@@ -14,7 +14,7 @@ export default () => {
   const history = useHistory();
   useEffect(() => {
     (async function getPersistData() {
-      const data = await databases.getItem(storeKey).catch((err: Error) => {
+       await databases.getItem(storeKey).catch((err: Error) => {
         // tslint:disable-next-line:no-console
       });
     })();

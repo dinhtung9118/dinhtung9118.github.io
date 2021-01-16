@@ -91,9 +91,9 @@ const ExaminationPatient: React.FC<ChildrenProps> = ({
   const location = useLocation();
   const search = location.search.replace("?", "");
   const dateParam = get(parse(search), "date", "") as string;
-  const [page, setPage] = React.useState(0);
+  const [page] = React.useState(0);
   const i18n = useI18n();
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage] = React.useState(5);
   const [listWorkingtime, setListWorkingTime] = useState<ISession[]>([]);
   const [currentBookingType, setBookingType] = useState<string>("EXAMINATION");
   const [currentBookingStatus, setBookingStatus] = useState<string>(
@@ -172,6 +172,7 @@ const ExaminationPatient: React.FC<ChildrenProps> = ({
         setListWorkingTime(rs?.data || []);
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getStartTime = () => {
@@ -197,7 +198,8 @@ const ExaminationPatient: React.FC<ChildrenProps> = ({
           value: timeWorking === "all" ? "all" : getStartTime(),
         },
       ]);
-  }, [currentBookingStatus, selectDate, currentBookingType, timeWorking]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentBookingStatus, selectDate, currentBookingType, timeWorking, handleOnAddAdvanceFilterField]);
 
   const handlerOnChangeDateTime = (
     date: Date,

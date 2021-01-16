@@ -86,6 +86,7 @@ const BookingInfo: React.FC = () => {
         }),
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const mapStatusToColor = (status: BookingStatus | undefined) => {

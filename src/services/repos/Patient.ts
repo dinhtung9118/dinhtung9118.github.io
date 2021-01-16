@@ -1,8 +1,7 @@
 import { RepoAccount } from "./Account";
 import { http } from "../clients/Http";
 import { Patient } from "../../models/patient";
-import { IReqPaging, IResList, IResponse } from "./interface";
-import { Doctor } from "../../models";
+import { IReqPaging, IResponse } from "./interface";
 
 class RepoPatient extends RepoAccount<Patient> {
   constructor() {

@@ -3,7 +3,7 @@ import { createStore, createHook, createContainer } from "react-sweet-state";
 import { Completer } from "utils";
 
 const Store = createStore({
-  name: "Loader",
+  name: "loader",
   initialState: {
     count: 0,
     total: 0,

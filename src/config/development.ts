@@ -2,7 +2,7 @@ import {IConfig} from "./index";
 
 export const REACT_APP_API_SERVER = process.env.REACT_APP_API_SERVER;
 
-export const config: IConfig= {
+export const dev: IConfig= {
   API:{
     ROOT_ENDPOINT: `${REACT_APP_API_SERVER}`,
     DOCTOR_SERVICE: `${REACT_APP_API_SERVER}/doctors`,
